@@ -6,7 +6,7 @@
 2. CI und CodeQL für genau diesen Commit abwarten. Bei UI-Änderungen die relevanten Live-Foundry-Fälle aus VALIDIERUNG.md prüfen.
 3. GitHub → **Actions → Release → Run workflow → main**.
 
-Der Release-Workflow ruft zuerst den wiederverwendbaren CodeQL-Workflow auf. Nur nach dessen Erfolg läuft der Release-Job (`needs: codeql`). Dieser prüft Branch und Checkout, Quellcode/Metadaten, Node-Tests, Browsertest, Paketbau und tatsächliche Artefakte. Erst danach prüft er den aktuellen Remote-main und erstellt automatisch Tag `v<version>` und einen öffentlichen Release mit genau `module.json` und `website-to-scene.zip`.
+Der Release-Workflow ruft zuerst den wiederverwendbaren CodeQL-Workflow auf. Nur nach dessen Erfolg läuft der Release-Job (`needs: codeql`). Dieser prüft Branch und Checkout, Quellcode/Metadaten, Node-Tests, den vollständigen Browsertest in Chromium und Firefox, Paketbau und tatsächliche Artefakte. Erst danach prüft er den aktuellen Remote-main und erstellt automatisch Tag `v<version>` und einen öffentlichen Release mit genau `module.json` und `website-to-scene.zip`.
 
 Keine Dateien oder Tags manuell anlegen. Keine persönlichen Tokens für Actions erforderlich: Der Analysejob erhält `security-events: write`; nur der Release-Job erhält `contents: write`. CI hat `contents: read`. Normale Pushes veröffentlichen keine Version. Der Ablauf übernimmt die Prüfungen des Referenzmoduls und ergänzt die Browserprüfung sowie die CodeQL-Abhängigkeit vor Veröffentlichung.
 

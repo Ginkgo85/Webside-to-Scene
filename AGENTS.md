@@ -12,7 +12,7 @@
 
 - Bestehendes Verhalten verstehen, Fehler belegen und kleine nachvollziehbare Änderungen vornehmen. Keine unnötigen Abhängigkeiten oder Refactorings.
 - Vor Commit/Push: `npm test`, Browserprüfung bei UI-Änderungen, `npm run build:release`, `npm run test:release` und `git diff --check`; vollständigen Diff prüfen.
-- Vor jeder Veröffentlichung dieselben Prüfungen einschließlich Browser und CodeQL durchführen. Der Release-Workflow ruft den CodeQL-Workflow auf und wartet auf dessen Erfolg; alle Prüfungen laufen vor jeder Mutation auf GitHub. Keine Prüfungen abschwächen, um einen Release zu ermöglichen.
+- Vor jeder Veröffentlichung dieselben Prüfungen einschließlich Chromium, Firefox und CodeQL durchführen. Beide Browser müssen den vollständigen simulierten Test bestehen. Der Release-Workflow ruft den CodeQL-Workflow auf und wartet auf dessen Erfolg; alle Prüfungen laufen vor jeder Mutation auf GitHub. Keine Prüfungen abschwächen, um einen Release zu ermöglichen.
 - Nur tatsächlich ausgeführte Prüfungen als bestanden melden. Live-Foundry- und Mehrspielertests sind von simulierten Browser-/Node-Tests zu unterscheiden.
 - Keine Foundry-Core-Dateien, privaten Weltinhalte, Zugangsdaten oder lokalen Installationspfade einchecken. Tests nutzen künstliche Webseiten und veröffentlichen keine Daten.
 - Ausblenden der Oberfläche muss einen Rückweg bieten und beim Szenenwechsel vollständig bereinigt werden. Lokales Menüeinblenden darf keine Szene aktualisieren. Eingabefelder gehören in `.tab[data-tab="basics"][data-group="sheet"]`, nicht in den Navigationslink.

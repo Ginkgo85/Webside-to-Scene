@@ -16,17 +16,20 @@ Ohne npm sind die äquivalenten Befehle `node tools/check-project.mjs`, `node --
 
 ## Browser-Test
 
-Die CI und der Release installieren die feste Testversion Playwright 1.62.1 nur im Runner und laden Chromium:
+Die CI und der Release installieren die feste Testversion Playwright 1.62.1 nur im Runner und laden Chromium sowie Firefox. Beide führen denselben vollständigen Browser-Test aus; ein Fehler in einem der Browser verhindert die Veröffentlichung:
 
 ```sh
 npm install --no-save --package-lock=false --ignore-scripts playwright@1.62.1
-npx --no-install playwright install --with-deps chromium
+npx --no-install playwright install --with-deps chromium firefox
 npm run test:browser
+TEST_BROWSER=firefox npm run test:browser
 ```
 
-Der Browser-Test nutzt eine lokale HTTP-Fixture und künstliche Webseiten. Er prüft iframe-Klicks, volle Fläche nach Größenänderung, Foundry-Bedienelemente, Erhalt des Webseitenzustands bei Szeneupdates, den tatsächlichen Navigationslink und Inhaltsreiter der Szenenkonfiguration, Validierung/Flags, Menüausblendung/temporäre Wiederanzeige und Bereinigung beim Szenenwechsel. Screenshot-Ausgabe liegt in ignoriertem artifacts/.
+Der Browser-Test nutzt eine lokale HTTP-Fixture und künstliche Webseiten mit dem unveränderten Modulcode. Er prüft iframe-Klicks, volle Fläche nach Größenänderung, Foundry-Bedienelemente, Erhalt des Webseitenzustands bei Szeneupdates, den tatsächlichen Navigationslink und Inhaltsreiter der Szenenkonfiguration, Validierung/Flags, Menüausblendung/temporäre Wiederanzeige und Bereinigung beim Szenenwechsel. Es laufen echte Browser gegen simulierte Foundry-Hooks und Dokumente, keine vollständige Foundry-Installation. Playwright verwendet eine eigene Firefox-Testversion, nicht den persönlichen Firefox mit seinen Erweiterungen und Einstellungen. Screenshots liegen je Browser in `artifacts/browser-check-<browser>.png`.
 
-Alternativ `PLAYWRIGHT_PATH` auf `index.mjs` einer vorhandenen Playwright-Installation setzen. `TEST_BROWSER=msedge` oder `chrome` verwendet den bereits installierten Browser; ohne diese Variable wird Playwright-Chromium verwendet. Keine rechnerabhängigen Laufzeitpfade im Repository voraussetzen.
+Alternativ `PLAYWRIGHT_PATH` auf `index.mjs` einer vorhandenen Playwright-Installation setzen. `TEST_BROWSER=firefox` startet Playwright-Firefox; `msedge` oder `chrome` verwendet den bereits installierten Browser. Ohne diese Variable oder mit `chromium` wird Playwright-Chromium verwendet. Andere Werte brechen mit einem Fehler ab. Keine rechnerabhängigen Laufzeitpfade im Repository voraussetzen.
+
+Unter PowerShell vor dem Firefox-Aufruf `$env:TEST_BROWSER = 'firefox'` setzen und danach mit `Remove-Item Env:TEST_BROWSER` zurücksetzen. Ohne npm direkt `node tests/browser.mjs` ausführen. `PLAYWRIGHT_BROWSERS_PATH` kann auf einen lokalen Testbrowser-Ordner zeigen.
 
 ## Live-Foundry-Testplan
 
@@ -43,6 +46,8 @@ Alternativ `PLAYWRIGHT_PATH` auf `index.mjs` einer vorhandenen Playwright-Instal
 Am 9. Oktober 2026 wurden in der laufenden lokalen Foundry-Version 14.369 die Szenenfelder, iframe-Navigation des Notizbuchs, randlose Vollbildgröße, Seitenleistenbedienung sowie Speichern/Lesen des Menü-Hakens und Rückkehrknopf geprüft. Zusätzlich bestanden die lokalen Browserprüfungen der Entwicklungsstände bis 0.1.3.
 
 Der Nutzer hat am 9. Oktober 2026 bestätigt, dass der bisherige manuelle Praxistest durchgeführt wurde und bestanden ist. Diese Bestätigung ergänzt die bisherigen Live-Nachweise; sie bestätigt nicht pauschal sämtliche Fälle des Testplans oder weitere Browser-, Mehrspieler- und Proxy-/HTTPS-Konfigurationen.
+
+Am selben Tag bestand der vollständige simulierte Browser-Test zusätzlich mit Playwright-Firefox **153.0** unter Windows. Die bestehende Prüfung mit Microsoft Edge **154.0.4258.62** bestand nach der Erweiterung ebenfalls. CI und Release führen ab dieser Änderung Chromium und Firefox als getrennte Pflichtprüfungen aus. Ein Live-Foundry-Praxistest in Firefox ist damit nicht nachgewiesen.
 
 Für jede Veröffentlichung, aktuell 1.0.2, werden Quell-, Node-, Browser- und Paketprüfungen erneut ausgeführt. Aktuelle Ergebnisse und der genaue GitHub-Stand stehen in REVIEW.md. Mehrspielerverhalten, andere Browser/Foundry-Versionen und verschiedene Proxy-/HTTPS-Konfigurationen sind nicht vollständig live geprüft. Ein erfolgreiches iframe-Ladeereignis allein beweist keine erfolgreiche externe Seite.
 

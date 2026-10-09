@@ -30,10 +30,14 @@ jobs:
         run: npm test
       - name: Install pinned browser test dependency
         run: npm install --no-save --package-lock=false --ignore-scripts playwright@1.62.1
-      - name: Install Chromium
-        run: npx --no-install playwright install --with-deps chromium
-      - name: Test interactive scene in browser
+      - name: Install Chromium and Firefox
+        run: npx --no-install playwright install --with-deps chromium firefox
+      - name: Test interactive scene in Chromium
         run: npm run test:browser
+      - name: Test interactive scene in Firefox
+        run: npm run test:browser
+        env:
+          TEST_BROWSER: firefox
       - name: Build and verify release ZIP
         run: npm run build:release
       - name: Verify the generated release artifacts

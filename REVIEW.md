@@ -33,6 +33,7 @@ Am 9. Oktober 2026 lokal mit Node.js 24.19.0 ausgeführt:
 | Quellprüfung | Bestanden: Syntax, JSON, Metadaten und bekannte Secret-Muster |
 | Node-Tests | 26 bestanden, 0 Fehler, 0 Skips; einschließlich CodeQL-Abhängigkeit |
 | Browser-Fixture mit Edge | Bestanden: Interaktion, Vollbild, Menüs, Formular/Flags und Bereinigung |
+| Browser-Fixture mit Firefox 153.0 | Bestanden unter Windows: derselbe vollständige Simulationstest; auch Edge 154.0.4258.62 erneut erfolgreich |
 | Paketprüfung | Bestanden: 8 Dateien, Root-Manifest, reproduzierbare Bytes, CRC32/Quellenvergleich |
 | Workflowprüfung | actionlint für CI, CodeQL und Release bestanden, ohne separates ShellCheck |
 | Diff-Prüfung | git diff --check bestanden; Änderungen geprüft |
@@ -42,6 +43,8 @@ Am 9. Oktober 2026 lokal mit Node.js 24.19.0 ausgeführt:
 Lokal verwendet dieser Rechner Node.js 24 ohne npm. Es werden die äquivalenten direkten Node-Aufrufe verwendet; GitHub führt die npm-Kommandos und Chromium aus. Tatsächliche Ergebnisse und Abschluss-SHA werden nach Durchführung im Chat gemeldet.
 
 Live-Nachweise stammen aus Foundry 14.369 mit dem unveränderten Laufzeitcode des Entwicklungsstands 0.1.3. Am 9. Oktober 2026 hat der Nutzer den durchgeführten bisherigen manuellen Praxistest als bestanden bestätigt. Die Bestätigung ist in VALIDIERUNG.md dokumentiert. Mehrspielertests, andere Browser/Foundry-Versionen und spezielle Proxy-/HTTPS-Umgebungen sind nicht vollständig live geprüft.
+
+Chromium und Firefox sind nun in CI und Release getrennte Pflichtprüfungen gegen dieselbe lokale HTTP-Fixture. Sie verwenden den unveränderten Modulcode, simulieren aber Foundrys Hooks und Dokumente; daraus folgt kein vollständiger Firefox-Live-Foundry-Nachweis. Tests und Screenshots nennen die verwendete Browservariante, damit Ergebnisse nicht verwechselt oder überschrieben werden.
 
 ## Veröffentlichung
 

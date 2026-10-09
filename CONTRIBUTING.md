@@ -26,7 +26,7 @@ npm run test:release
 git diff --check
 ```
 
-Bei UI-Änderungen zusätzlich den Browser-Test aus VALIDIERUNG.md ausführen und relevante Fälle in einer eigenen Foundry-Testwelt prüfen. Den vollständigen Diff vor dem Commit prüfen.
+Bei UI-Änderungen zusätzlich die Browser-Tests mit Chromium und Firefox aus VALIDIERUNG.md ausführen und relevante Fälle in einer eigenen Foundry-Testwelt prüfen. Beide Browserprüfungen sind in CI und vor jedem Release verpflichtend. Den vollständigen Diff vor dem Commit prüfen.
 
 ## Version und Commits
 

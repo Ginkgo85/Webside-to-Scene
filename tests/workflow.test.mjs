@@ -206,7 +206,7 @@ test("workflow release is manual only, main-gated and publishes only after succe
   assert.match(source, /release:\r?\n    needs: codeql\r?\n    permissions:\r?\n      contents: write/);
   const commands = [...source.matchAll(/^\s+run: (.+)$/gm)].map(match => match[1]).filter(value => value !== "|");
   assert.deepEqual(commands, ["npm test", "npm install --no-save --package-lock=false --ignore-scripts playwright@1.62.1",
-    "npx --no-install playwright install --with-deps chromium", "npm run test:browser",
+    "npx --no-install playwright install --with-deps chromium firefox", "npm run test:browser", "npm run test:browser",
     "npm run build:release", "npm run test:release", "node tools/release.mjs --publish"]);
   assert.doesNotMatch(source, /continue-on-error|always\(\)|if:.*failure|write-all|allowUpdates|--clobber/);
   const ci = await readFile(".github/workflows/ci.yml", "utf8");
@@ -214,6 +214,10 @@ test("workflow release is manual only, main-gated and publishes only after succe
   assert.doesNotMatch(ci, /--publish|contents: write/);
   const ciCommands = [...ci.matchAll(/^\s+run: (.+)$/gm)].map(match => match[1]);
   assert.deepEqual(ciCommands, commands.slice(0, -1), "CI and release run the same pre-publication checks");
+  for (const workflow of [source, ci]) {
+    assert.match(workflow, /name: Test interactive scene in Chromium\r?\n        run: npm run test:browser/);
+    assert.match(workflow, /name: Test interactive scene in Firefox\r?\n        run: npm run test:browser\r?\n        env:\r?\n          TEST_BROWSER: firefox/);
+  }
   const codeql = await readFile(".github/workflows/codeql-analysis.yml", "utf8");
   assert.match(codeql, /^  workflow_call:/m);
   assert.match(codeql, /security-events: write/);

@@ -5,7 +5,13 @@ import { pathToFileURL } from "node:url";
 
 // Use a locally available Playwright without adding runtime dependencies to the module.
 const library = process.env.PLAYWRIGHT_PATH;
-const { chromium } = await import(library ? pathToFileURL(library).href : "playwright");
+const { chromium, firefox } = await import(library ? pathToFileURL(library).href : "playwright");
+const browserName = process.env.TEST_BROWSER || "chromium";
+if (!["chromium", "firefox", "chrome", "msedge"].includes(browserName)) {
+  throw new Error("TEST_BROWSER must be chromium, firefox, chrome or msedge");
+}
+const browserType = browserName === "firefox" ? firefox : chromium;
+const channel = ["chrome", "msedge"].includes(browserName) ? browserName : undefined;
 const fixture = `<!doctype html><html><head><link rel="stylesheet" href="/styles/website-to-scene.css">
 <style>
 html,body { margin:0; width:100%; height:100%; font:14px sans-serif; --z-index-canvas:0; }
@@ -54,7 +60,7 @@ try {
   for (const route of ["/module.json", "/scripts/../module.json", "/scripts/%2e%2e%2fmodule.json", "/scripts/main.js?path=module.json"]) {
     assert.equal((await fetch(baseUrl + route)).status, 404, "Fixture must refuse unlisted assets");
   }
-  browser = await chromium.launch({...(process.env.TEST_BROWSER ? {channel:process.env.TEST_BROWSER} : {}),headless:true});
+  browser = await browserType.launch({...(channel ? {channel} : {}),headless:true});
   const page = await browser.newPage({viewport:{width:1440,height:900}});
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
@@ -121,7 +127,7 @@ try {
   assert.equal(await page.locator('#interface').isVisible(), true);
   assert.equal(await page.locator('#wts-menu-toggle').isVisible(), false);
   await mkdir("artifacts", {recursive:true});
-  await page.screenshot({path:"artifacts/browser-check.png"});
+  await page.screenshot({path:`artifacts/browser-check-${browserName}.png`});
   await page.evaluate(() => {
     Hooks.call('canvasTearDown');
     game.user.isGM=false;
@@ -137,7 +143,7 @@ try {
   assert.equal(await page.locator('#wts-menu-toggle').count(), 0);
   assert.equal(await page.locator('#interface').isVisible(), true);
   assert.deepEqual(errors, []);
-  console.log("Browser checks passed: interactive fullscreen iframe, reachable Foundry UI, responsive viewport, no extra toolbar, retained browsing state, config validation, player role, scene cleanup.");
+  console.log(`Browser checks passed (${browserName}, ${browser.version()}): interactive fullscreen iframe, reachable Foundry UI, responsive viewport, no extra toolbar, retained browsing state, config validation, player role, scene cleanup.`);
 } finally {
   await browser?.close();
   await new Promise(done => server.close(done));
