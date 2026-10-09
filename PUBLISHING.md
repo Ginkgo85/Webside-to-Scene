@@ -44,4 +44,10 @@ CodeQL steht für das öffentliche Repository zur Verfügung und läuft bei Push
 
 ## Vertriebsumfang
 
-Der Nutzerauftrag vom 9. Oktober 2026 beschränkt die Veröffentlichung vorerst auf GitHub. Keine Einreichung oder automatische Registrierung im offiziellen Foundry-Modulverzeichnis. Die Installation per Manifest-URL funktioniert unabhängig davon; siehe [Foundrys Modulverwaltung](https://foundryvtt.com/article/modules/).
+Der Nutzer hat am 9. Oktober 2026 zusätzlich die Einreichung im offiziellen Foundry-Modulverzeichnis beauftragt und die Lizenzbestätigungen selbst vorgenommen. Paket `website-to-scene` und Version **1.0.2** sind in der Foundry-Paketverwaltung gespeichert. Kategorien: **External Integrations** und **Tools and Controls**; keine verpflichtende Bindung an ein Spielsystem.
+
+Der Paketeintrag ist im angemeldeten Konto sichtbar. Die anonyme Prüfung der [Modulseite](https://foundryvtt.com/packages/website-to-scene) führte noch zum allgemeinen Paketverzeichnis; die öffentliche Freischaltung steht aus. Erst nach öffentlicher Erreichbarkeit die README auf Installation über die Modulsuche umstellen. Bis dahin funktioniert die Installation per GitHub-Manifest weiterhin.
+
+Foundry verweist auf die bestehenden GitHub-Dateien. Der Versionseintrag verwendet `https://github.com/Ginkgo85/Webside-to-Scene/releases/download/v1.0.2/module.json`, die Release-Notizen `https://github.com/Ginkgo85/Webside-to-Scene/releases/tag/v1.0.2` und dieselbe Kompatibilität wie module.json: Minimum/Verified **14.369**, Maximum **14**. Den festen Manifest-Link pro Version verwenden; nicht `releases/latest` in den Foundry-Versionseintrag übernehmen.
+
+Künftige Versionen erst nach den bisherigen Quell-, Node-, Browser-, CodeQL- und Paketprüfungen sowie verifiziertem GitHub-Release bei Foundry eintragen. Die automatische Meldung über die Foundry Release API ist noch nicht eingerichtet. Dafür wäre ein gesondert autorisiertes GitHub-Actions-Secret erforderlich; den Paket-Token niemals in Chat, Dateien, Screenshots oder Logs übernehmen. Der bestehende GitHub-Workflow bleibt unverändert.

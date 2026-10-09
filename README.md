@@ -12,7 +12,7 @@
 
 Interaktive Webseiten als randlose Vollbild-Szenen in Foundry VTT anzeigen. Die Webseiten-Adresse wird für jede Szene frei eingetragen. Foundrys Menüs können darüberliegen oder mit einem Haken ausgeblendet werden.
 
-Das Modul ist öffentlich auf GitHub verfügbar. Die technische Modul-ID lautet `website-to-scene`; vorhandene Szeneneinstellungen bleiben erhalten. Die Veröffentlichung erfolgt vorerst ausschließlich auf GitHub.
+Das Modul ist öffentlich auf GitHub verfügbar. Die technische Modul-ID lautet `website-to-scene`; vorhandene Szeneneinstellungen bleiben erhalten. Die Aufnahme ins offizielle Foundry-Modulverzeichnis ist eingereicht; die öffentliche Freischaltung steht noch aus. Bis dahin die Manifest-URL unten verwenden.
 
 ### Installation
 
@@ -76,7 +76,7 @@ Autor: **Ginkgo85**. [MIT-Lizenz](LICENSE).
 
 Display interactive websites as borderless, full-screen scenes in Foundry VTT. Enter a website address for each scene and choose whether Foundry's menus remain visible or are hidden.
 
-The module is publicly available on GitHub. Its technical ID is `website-to-scene`; existing scene settings are preserved. Distribution currently takes place exclusively through GitHub.
+The module is publicly available on GitHub. Its technical ID is `website-to-scene`; existing scene settings are preserved. It has been submitted to Foundry's official module directory; public listing is still pending. Until then, use the manifest URL below.
 
 ### Installation
 

@@ -22,7 +22,7 @@ CodeQL wird aus dem Referenzablauf übernommen, mit gegen die offizielle GitHub-
 
 Der erste CodeQL-Lauf beanstandete eine aus HTTP-Anfragen abgeleitete Dateipfadprüfung im lokalen Browser-Testserver. Der Server lädt nun ausschließlich seine drei festen Assets vorab und liefert sie über eine exakte URL-Zuordnung. Unbekannte, Traversal- und Query-Pfade werden mit 404 abgewiesen und in der Browserprüfung kontrolliert. Der Testserver ist nicht Teil des Release-ZIPs.
 
-Der Nutzer hat Vertrieb **ausschließlich auf GitHub** festgelegt. Es wird kein Eintrag im offiziellen Foundry-Modulverzeichnis angelegt.
+Der Nutzer hat anschließend auch die Foundry-Einreichung beauftragt und die Lizenzbestätigungen selbst vorgenommen. Am 9. Oktober 2026 wurden der Paketeintrag und Version **1.0.2** mit festem GitHub-Manifest, Release-Notizen und passender Kompatibilität gespeichert. Die Kategorien sind **External Integrations** und **Tools and Controls**. Im angemeldeten Konto ist die Modulseite sichtbar; die anonyme Prüfung leitet noch auf das allgemeine Paketverzeichnis weiter. Öffentliche Freischaltung steht aus, die GitHub-Installation bleibt verfügbar. Details und Folgeschritte stehen in PUBLISHING.md; eine automatische Foundry-Release-Meldung ist noch nicht eingerichtet.
 
 ## Prüfungen
 
