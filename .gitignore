@@ -1,0 +1,26 @@
+/release/
+*.zip
+node_modules/
+/artifacts/
+/validation/
+/coverage/
+/backups/
+# Earlier local prototypes; root files are authoritative.
+/website-to-scene/
+.env
+.env.*
+/Data/
+/Config/
+/Logs/
+/worlds/
+.vscode/
+.idea/
+.codex/
+.agents/
+*.log
+*.bak
+*.tmp
+*.har
+.DS_Store
+Thumbs.db
+Desktop.ini

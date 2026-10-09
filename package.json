@@ -1,0 +1,17 @@
+{
+  "name": "website-to-scene",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Ginkgo85",
+  "repository": { "type": "git", "url": "https://github.com/Ginkgo85/Webside-to-Scene.git" },
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "pretest": "node tools/check-project.mjs",
+    "test": "node --test tests/*.test.js tests/*.test.mjs",
+    "test:browser": "node tests/browser.mjs",
+    "build:release": "node tools/build-release.mjs",
+    "test:release": "node tools/verify-release.mjs"
+  }
+}
