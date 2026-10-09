@@ -2,7 +2,7 @@
 
 [Deutsch](#deutsch) · [English — jump to the English guide](#english)
 
-**Version 1.0.1 · Foundry VTT 14.369 · Autor / Author: Ginkgo85 · MIT**
+**Version 1.0.2 · Foundry VTT 14.369 · Autor / Author: Ginkgo85 · MIT**
 
 ![Webseiten-Adresse und optionale Menüausblendung / Scene URL and optional menu hiding](docs/images/scene-settings.png)
 
@@ -27,7 +27,7 @@ Das Modul ist öffentlich auf GitHub verfügbar. Die technische Modul-ID lautet 
 
 Die Manifest-URL benötigt keine GitHub-Anmeldung. Neue Versionen lassen sich über Foundrys normale Modulaktualisierung beziehen. Die Installation per Manifest ist auch ohne Eintrag im offiziellen Modulverzeichnis möglich; siehe [Foundrys Anleitung](https://foundryvtt.com/article/modules/).
 
-**Manuelle Alternative:** Die Datei `website-to-scene.zip` aus dem [neuesten Release](https://github.com/Ginkgo85/Webside-to-Scene/releases/latest) herunterladen und in `Data/modules/website-to-scene/` entpacken. `module.json` muss direkt in diesem Ordner liegen. Anschließend Foundry neu starten und das Modul in der Welt aktivieren. Vor einem Update eigene geänderte Moduldateien sichern.
+**Manuelle Alternative:** Die ZIP-Datei `website-to-scene.zip` auf GitHub herunterladen und in `Data/modules/website-to-scene/` entpacken. `module.json` muss direkt in diesem Ordner liegen. Anschließend Foundry neu starten und das Modul in der Welt aktivieren. Vor einem Update eigene geänderte Moduldateien sichern.
 
 ### Webseite als Szene anzeigen
 
@@ -84,7 +84,7 @@ The module is publicly available on GitHub. Its technical ID is `website-to-scen
 
 No GitHub login is required. Use Foundry's regular module updater for future versions. Installing by manifest works without an official package listing; see [Foundry's module guide](https://foundryvtt.com/article/modules/).
 
-**Manual alternative:** Download `website-to-scene.zip` from the [latest release](https://github.com/Ginkgo85/Webside-to-Scene/releases/latest) and extract it into `Data/modules/website-to-scene/`. `module.json` must be directly inside that folder. Restart Foundry and enable the module in your world. Back up any personally modified module files before updating.
+**Manual alternative:** Download the ZIP file `website-to-scene.zip` from GitHub and extract it into `Data/modules/website-to-scene/`. `module.json` must be directly inside that folder. Restart Foundry and enable the module in your world. Back up any personally modified module files before updating.
 
 ### Display a website as a scene
 

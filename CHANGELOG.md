@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2 – 2026-10-09
+
+- Verbliebene Links zur Release-Seite aus der deutschen und englischen README entfernt. Installation über die Manifest-Adresse bleibt beschrieben.
+- README enthält keine private Release-Überschrift, Entwicklungsbefehle, Workflow- oder weiterführenden Dokumentationslinks.
+
 ## 1.0.1 – 2026-10-09
 
 - Öffentliche GitHub-Veröffentlichung mit direkter Installation und Updates über die Manifest-URL.

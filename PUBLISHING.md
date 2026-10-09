@@ -2,7 +2,7 @@
 
 ## Ablauf
 
-1. Gewünschte Änderungen und konsistente neue Version auf `main` pushen. **v1.0.0** ist bereits veröffentlicht und bleibt erhalten; die öffentliche Anpassung folgt als **v1.0.1**.
+1. Gewünschte Änderungen und konsistente neue Version auf `main` pushen. **v1.0.0** und **v1.0.1** sind bereits veröffentlicht und bleiben erhalten; die letzte README-Anpassung folgt als **v1.0.2**.
 2. CI und CodeQL für genau diesen Commit abwarten. Bei UI-Änderungen die relevanten Live-Foundry-Fälle aus VALIDIERUNG.md prüfen.
 3. GitHub → **Actions → Release → Run workflow → main**.
 
@@ -31,7 +31,7 @@ In Foundry unter **Zusatzmodule → Modul installieren → Manifest-URL** verwen
 Alternativ die ZIP aus dem öffentlichen Release herunterladen:
 
 ```sh
-gh release download v1.0.1 --repo Ginkgo85/Webside-to-Scene --pattern website-to-scene.zip --dir downloads/v1.0.1
+gh release download v1.0.2 --repo Ginkgo85/Webside-to-Scene --pattern website-to-scene.zip --dir downloads/v1.0.2
 ```
 
 Die ZIP enthält `module.json` im Root. In `Data/modules/website-to-scene/` entpacken und Foundry neu starten. Vor einem Update eigene geänderte Moduldateien sichern. Die README enthält deutsche und englische Anleitungen mit Sprunglinks.
