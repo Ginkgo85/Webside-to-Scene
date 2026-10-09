@@ -1,4 +1,4 @@
-# Validierung – Version 1.0.0
+# Validierung – Version 1.0.1
 
 ## Wiederholbare Prüfungen
 
@@ -42,4 +42,10 @@ Alternativ `PLAYWRIGHT_PATH` auf `index.mjs` einer vorhandenen Playwright-Instal
 
 Am 9. Oktober 2026 wurden in der laufenden lokalen Foundry-Version 14.369 die Szenenfelder, iframe-Navigation des Notizbuchs, randlose Vollbildgröße, Seitenleistenbedienung sowie Speichern/Lesen des Menü-Hakens und Rückkehrknopf geprüft. Zusätzlich bestanden die lokalen Browserprüfungen der Entwicklungsstände bis 0.1.3.
 
-Für 1.0.0 werden Quell-, Node-, Browser- und Paketprüfungen erneut ausgeführt. Aktuelle Ergebnisse und der genaue GitHub-Stand stehen in REVIEW.md. Mehrspielerverhalten, andere Browser/Foundry-Versionen und verschiedene Proxy-/HTTPS-Konfigurationen sind nicht vollständig live geprüft. Ein erfolgreiches iframe-Ladeereignis allein beweist keine erfolgreiche externe Seite.
+Für 1.0.1 werden Quell-, Node-, Browser- und Paketprüfungen erneut ausgeführt. Aktuelle Ergebnisse und der genaue GitHub-Stand stehen in REVIEW.md. Mehrspielerverhalten, andere Browser/Foundry-Versionen und verschiedene Proxy-/HTTPS-Konfigurationen sind nicht vollständig live geprüft. Ein erfolgreiches iframe-Ladeereignis allein beweist keine erfolgreiche externe Seite.
+
+## Öffentliche Veröffentlichung
+
+CodeQL analysiert JavaScript/TypeScript bei Push, Pull Request und manuellem Start. Der Release ruft denselben wiederverwendbaren Workflow auf und darf nur nach dessen Erfolg veröffentlichen. CI und CodeQL für den genauen Commit kontrollieren; bei Befunden Ursache prüfen/beheben, keine Prüfung umgehen. Workflow-Dateien zusätzlich mit actionlint prüfen.
+
+Vor dem Release README in GitHub prüfen: Deutsch steht vor Englisch; Sprachwechsel und Rücksprünge funktionieren, das Bild lädt. Nach dem Release Manifest und ZIP ohne GitHub-Token herunterladen. Latest-Manifest, Version, Tag-SHA, Assetnamen sowie ZIP und Manifest mit den lokal gebauten Dateien vergleichen. GitHub-Veröffentlichung bedeutet keine Registrierung im Foundry-Modulverzeichnis.

@@ -202,6 +202,8 @@ test("workflow release is manual only, main-gated and publishes only after succe
   assert.match(source, /ref: \$\{\{ github.sha \}\}/);
   assert.match(source, /contents: write/);
   assert.match(source, /cancel-in-progress: false/);
+  assert.match(source, /codeql:\r?\n    uses: \.\/\.github\/workflows\/codeql-analysis\.yml/);
+  assert.match(source, /release:\r?\n    needs: codeql\r?\n    permissions:\r?\n      contents: write/);
   const commands = [...source.matchAll(/^\s+run: (.+)$/gm)].map(match => match[1]).filter(value => value !== "|");
   assert.deepEqual(commands, ["npm test", "npm install --no-save --package-lock=false --ignore-scripts playwright@1.62.1",
     "npx --no-install playwright install --with-deps chromium", "npm run test:browser",
@@ -212,4 +214,12 @@ test("workflow release is manual only, main-gated and publishes only after succe
   assert.doesNotMatch(ci, /--publish|contents: write/);
   const ciCommands = [...ci.matchAll(/^\s+run: (.+)$/gm)].map(match => match[1]);
   assert.deepEqual(ciCommands, commands.slice(0, -1), "CI and release run the same pre-publication checks");
+  const codeql = await readFile(".github/workflows/codeql-analysis.yml", "utf8");
+  assert.match(codeql, /^  workflow_call:/m);
+  assert.match(codeql, /security-events: write/);
+  assert.match(codeql, /languages: javascript-typescript/);
+  assert.match(codeql, /build-mode: none/);
+  assert.match(codeql, /github\/codeql-action\/init@[0-9a-f]{40}/);
+  assert.match(codeql, /github\/codeql-action\/analyze@[0-9a-f]{40}/);
+  assert.doesNotMatch(codeql, /continue-on-error|always\(\)|if:.*failure|contents: write|--publish/);
 });

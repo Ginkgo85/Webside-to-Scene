@@ -1,39 +1,43 @@
 # Einrichtung und Release-Prüfstand
 
-Stand: 9. Oktober 2026. Ziel: erste finale Version **1.0.0** für Foundry **14.369**.
+Stand: 9. Oktober 2026. Ziel: öffentliche Anpassung **1.0.1** für Foundry **14.369**.
 
 ## Ausgangspunkt
 
-- Privates Repository Ginkgo85/Webside-to-Scene mit initialer README und MIT-Lizenz; keine vorhandenen Releases.
-- Lokales funktionsfähiges Modul 0.1.3; Benutzerbestätigung und Live-Prüfungen für Szenenfelder, Vollbild und Menüausblendung.
+- Repository Ginkgo85/Webside-to-Scene wurde vom Nutzer öffentlich gestellt.
+- v1.0.0 ist seit dem 9. Oktober 2026 veröffentlicht, Tag-SHA `1f5e3ab0da84bb74290b9987e771c8348a23840e`. Tag, Release und Assets werden nicht ersetzt.
+- Der ursprüngliche CI-Lauf für 1.0.0 bestand: [Run 37921563161](https://github.com/Ginkgo85/Webside-to-Scene/actions/runs/37921563161).
 - Lesende Referenz: Ginkgo85/foundry-world-status, Commit `14c4bb2ea6118efe8bdac507b3befa4c3e70914c`. Dort keine Dateien, Commits, Einstellungen oder Releases geändert.
 
-## Einrichtung
+## Öffentliche Anpassung
 
-Runtime-Dateien und Manifest liegen jetzt im Repository-Root. Technische ID/Flags bleiben website-to-scene. Version, Autor Ginkgo85, Repository/Issues, Lizenz und private Release-URLs sind ergänzt. Die vorhandene MIT-Lizenz bleibt erhalten.
+Version und Download-URL sind 1.0.1. Die Modulbeschreibung enthält keinen privaten Nutzungsvorbehalt. Autor Ginkgo85, technische ID/Flags, Laufzeitverhalten und MIT-Lizenz bleiben erhalten. `private: true` in package.json betrifft ausschließlich npm.
 
-Releasewerkzeuge und Schutztests wurden aus der Referenz angepasst; Laufzeitcode und Dateiliste beziehen sich ausschließlich auf Website to Scene. Actions-Pins für checkout v7.0.1 und setup-node v7.0.0 wurden gegen die offiziellen GitHub-Tagziele überprüft. CI und Release verwenden denselben Test-/Browser-/Build-/Artefaktablauf. CodeQL ist wegen privater Lizenzvoraussetzungen nicht automatisch aktiviert.
+README: Deutsch vor Englisch, Sprachwechsel- und Rücksprunglinks, Szenenbild, Installation über die öffentliche Manifest-URL, manuelle Alternative, Bedienung, Menüoptionen, Grenzen, Entwicklung und Support in beiden Sprachen. Die englische Anleitung erklärt die derzeit deutschen Modulbeschriftungen.
 
-Das vom Nutzer bereitgestellte Bild ist docs/images/scene-settings.png und Bestandteil von README und ZIP. Lokale Backups, Screenshots, alte Prototypen und ZIPs werden nicht eingecheckt.
+CodeQL wird aus dem Referenzablauf übernommen, mit gegen die offizielle GitHub-Tagauflösung geprüfter Action v4.38.0. Der Workflow ist zusätzlich wiederverwendbar; Release wartet mittels `needs: codeql` auf dessen Erfolg. Die bisherigen CI-/Browser-/Build-/Artefaktprüfungen bleiben erhalten.
 
-## Prüfstatus
+Der Nutzer hat Vertrieb **ausschließlich auf GitHub** festgelegt. Es wird kein Eintrag im offiziellen Foundry-Modulverzeichnis angelegt.
 
-Ausgeführt mit Node.js 24.19.0 am 9. Oktober 2026:
+## Prüfungen
 
-| Prüfung | Ergebnis |
+Am 9. Oktober 2026 lokal mit Node.js 24.19.0 ausgeführt:
+
+| Prüfung | Umfang |
 | --- | --- |
-| Quellsyntax, JSON, Manifest/Version/URLs, Secret-Muster | Bestanden |
-| Node-Testdateien einschließlich aller Release-Schutzfälle | 26 bestanden, 0 Fehler, 0 Skips |
-| Browser-Fixture mit vorhandenem Microsoft Edge | Bestanden |
-| Reproduzierbarer ZIP-Bau | Bestanden, 8 Dateien, Manifest im Root |
-| Tatsächliche Release-Dateien: CRC32/Quellenvergleich/Manifest | Bestanden |
-| actionlint für CI und Release, ohne separates ShellCheck | Bestanden |
-| git diff --check | Bestanden |
+| Quellprüfung | Bestanden: Syntax, JSON, Metadaten und bekannte Secret-Muster |
+| Node-Tests | 26 bestanden, 0 Fehler, 0 Skips; einschließlich CodeQL-Abhängigkeit |
+| Browser-Fixture mit Edge | Bestanden: Interaktion, Vollbild, Menüs, Formular/Flags und Bereinigung |
+| Paketprüfung | Bestanden: 8 Dateien, Root-Manifest, reproduzierbare Bytes, CRC32/Quellenvergleich |
+| Workflowprüfung | actionlint für CI, CodeQL und Release bestanden, ohne separates ShellCheck |
+| Diff-Prüfung | git diff --check bestanden; Änderungen geprüft |
+| README auf GitHub | Nach Push: Sprachwechsel, Rücksprünge und Bild kontrollieren |
+| GitHub | Nach Push: CI/CodeQL; nach Release: Tag-SHA, Assets und anonyme Downloads |
 
-Die npm-Kommandos wurden lokal mit den äquivalenten Node-Aufrufen ausgeführt, weil dieser Rechner die gebündelte Node-Laufzeit ohne npm verwendet. GitHub CI führt die originalen npm-Kommandos sowie Playwright-Chromium aus. Der Abschluss des CI-Laufs wird nach dem Push kontrolliert und im Chat mit dem genauen Commit gemeldet.
+Lokal verwendet dieser Rechner Node.js 24 ohne npm. Es werden die äquivalenten direkten Node-Aufrufe verwendet; GitHub führt die npm-Kommandos und Chromium aus. Tatsächliche Ergebnisse und Abschluss-SHA werden nach Durchführung im Chat gemeldet.
 
-Mehrspielertests und spezielle Proxy-/HTTPS-Umgebungen bleiben ergänzende Live-Prüfungen. Aktuelle Live-Funktionsnachweise stammen aus Foundry 14.369 mit dem unveränderten Laufzeitcode des Entwicklungsstands 0.1.3; 1.0.0 ergänzt Metadaten, Paketbau und Entwicklungs-/Releaseabläufe.
+Live-Nachweise stammen aus Foundry 14.369 mit dem unveränderten Laufzeitcode des Entwicklungsstands 0.1.3. Mehrspielertests, andere Browser/Foundry-Versionen und spezielle Proxy-/HTTPS-Umgebungen sind nicht vollständig live geprüft.
 
 ## Veröffentlichung
 
-1.0.0 wird vorbereitet, committed und auf main gepusht. Der manuelle Release-Workflow ist anschließend verfügbar. Dieser Einrichtungsauftrag startet noch keinen Release und legt keinen Tag an. Die erste Veröffentlichung erfolgt über Actions → Release → Run workflow → main.
+Nach erfolgreicher Prüfung wird der öffentliche Stand auf main gepusht, CI/CodeQL kontrolliert und der beauftragte Release **v1.0.1** über Actions gestartet. Bestehendes v1.0.0 bleibt erhalten. Die heruntergeladenen öffentlichen Assets werden anschließend mit dem lokalen Build verglichen.

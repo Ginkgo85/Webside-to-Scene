@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1 – 2026-10-09
+
+- Öffentliche GitHub-Veröffentlichung mit direkter Installation und Updates über die Manifest-URL.
+- Deutsche und englische README-Anleitung mit Sprachwechsel- und Rücksprunglinks; vorhandenes Szenenbild bleibt enthalten.
+- Öffentliche Modulbeschreibung und Entwicklungs-/Release-Dokumentation angepasst.
+- CodeQL aus dem Referenzablauf ergänzt; jeder Release verlangt einen erfolgreichen Sicherheitscheck sowie die bisherigen Tests und Paketprüfungen.
+- Veröffentlichung ausschließlich auf GitHub; Modul-ID, Szenenflags und Laufzeitverhalten bleiben erhalten. Bestehender Release v1.0.0 wird nicht verändert.
+
 ## 1.0.0 – 2026-10-09
 
 - Erste finale Version für Foundry VTT 14.369, Autor Ginkgo85.

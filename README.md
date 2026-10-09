@@ -1,50 +1,65 @@
 # Website to Scene
 
-**Version 1.0.0 · Foundry VTT 14.369 · Autor: Ginkgo85**
+[Deutsch](#deutsch) · [English — jump to the English guide](#english)
 
-Interaktive Webseiten als Vollbild-Szenen in Foundry VTT anzeigen. Die Webseiten-Adresse wird für jede Szene manuell eingetragen. Foundrys Menüs können darüberliegen oder über einen Haken ausgeblendet werden.
+**Version 1.0.1 · Foundry VTT 14.369 · Autor / Author: Ginkgo85 · MIT**
 
-Dieses Repository `Ginkgo85/Webside-to-Scene` bleibt privat und dient der eigenen Nutzung. Die technische Modul-ID lautet weiterhin `website-to-scene`, damit vorhandene Installationen und Szeneneinstellungen erhalten bleiben.
+![Webseiten-Adresse und optionale Menüausblendung / Scene URL and optional menu hiding](docs/images/scene-settings.png)
 
-![Webseiten-Adresse und optionale Menüausblendung in der Szenenkonfiguration](docs/images/scene-settings.png)
+## Deutsch
 
-## Einrichtung in Foundry
+[Zur englischen Anleitung ↓](#english) · [Zurück nach oben ↑](#website-to-scene)
 
-1. Im angemeldeten GitHub-Konto unter **Releases** die Datei `website-to-scene.zip` herunterladen. Falls noch kein Release existiert, zuerst den unten beschriebenen Release-Workflow starten.
-2. ZIP in den Benutzerdatenordner unter `Data/modules/website-to-scene/` entpacken. `module.json` liegt direkt im ZIP-Root; nach dem Entpacken muss `Data/modules/website-to-scene/module.json` existieren.
-3. Foundry neu starten, Welt öffnen und unter **Module verwalten** das Modul **Website to Scene** aktivieren.
-4. Szene bearbeiten → **Grundlagen → Website to Scene**. **Webseite als Szene anzeigen** anhaken, die Adresse eintragen und speichern.
-5. Die Szene öffnen. Zum Anzeigen für alle Spieler Foundrys normale Szenenaktivierung verwenden. Für selbstständigen Spielerzugriff **Zeige in Navigation** und die Berechtigung **Alle Spieler** aktivieren.
+Interaktive Webseiten als randlose Vollbild-Szenen in Foundry VTT anzeigen. Die Webseiten-Adresse wird für jede Szene frei eingetragen. Foundrys Menüs können darüberliegen oder mit einem Haken ausgeblendet werden.
 
-Eine vollständige URL wie `https://example.org/roadmap` oder ein Pfad innerhalb von Foundrys Data-Ordner wie `worlds/meine-welt/roadmap.html` ist möglich. Die Webseite füllt die ganze Szenenfläche, ohne eigenen Fensterrand oder Kopfzeile.
+Das Modul ist öffentlich auf GitHub verfügbar. Die technische Modul-ID lautet `website-to-scene`; vorhandene Szeneneinstellungen bleiben erhalten. Die Veröffentlichung erfolgt vorerst ausschließlich auf GitHub.
 
-## Foundry-Menüs ausblenden
+### Installation
+
+1. Foundrys Setup öffnen → **Zusatzmodule → Modul installieren**.
+2. Diese Adresse in **Manifest-URL** einfügen und installieren:
+
+   ```text
+   https://github.com/Ginkgo85/Webside-to-Scene/releases/latest/download/module.json
+   ```
+
+3. Welt öffnen → **Module verwalten** → **Website to Scene** aktivieren.
+
+Die Manifest-URL benötigt keine GitHub-Anmeldung. Neue Versionen lassen sich über Foundrys normale Modulaktualisierung beziehen. Die Installation per Manifest ist auch ohne Eintrag im offiziellen Modulverzeichnis möglich; siehe [Foundrys Anleitung](https://foundryvtt.com/article/modules/).
+
+**Manuelle Alternative:** Die Datei `website-to-scene.zip` aus dem [neuesten Release](https://github.com/Ginkgo85/Webside-to-Scene/releases/latest) herunterladen und in `Data/modules/website-to-scene/` entpacken. `module.json` muss direkt in diesem Ordner liegen. Anschließend Foundry neu starten und das Modul in der Welt aktivieren. Vor einem Update eigene geänderte Moduldateien sichern.
+
+### Webseite als Szene anzeigen
+
+1. Szene bearbeiten → **Grundlagen → Website to Scene**.
+2. **Webseite als Szene anzeigen** aktivieren.
+3. Unter **Webseiten-Adresse** eine vollständige URL wie `https://example.org/roadmap` oder einen Pfad innerhalb von Foundrys Data-Ordner wie `worlds/meine-welt/roadmap.html` eintragen.
+4. Szene speichern und öffnen. Die Webseite füllt den gesamten Browserbereich, ohne eigenes Fenster oder Kopfzeile.
+5. Für die ganze Runde Foundrys normale **Szenenaktivierung** verwenden. Für selbstständigen Spielerzugriff zusätzlich **Zeige in Navigation** und die Zugänglichkeit **Alle Spieler** aktivieren.
+
+Ein zusätzlicher „Alle hierher holen“-Knopf ist nicht erforderlich. Die Webseite muss für jeden Spieler erreichbar sein. Klicks, Scrollen und Anmeldung sind individuell; die Szenenaktivierung synchronisiert keine Aktionen innerhalb der Webseite.
+
+### Foundry-Menüs ausblenden
 
 Der Haken **Foundry-Menüs ausblenden** gilt pro Szene für alle Benutzer, die sie öffnen. Standardmäßig ist er ausgeschaltet. Er versteckt Szenennavigation, Werkzeuge, Spielerleiste, Chat, Makroleiste und die DSA-SC-/Kalenderleisten.
 
-Ein kleiner **☰**-Knopf oben rechts zeigt die Menüs vorübergehend nur für den eigenen Benutzer wieder an. Derselbe Knopf blendet sie wieder aus. Beim Verlassen der Szene erscheint die normale Oberfläche automatisch wieder. Bereits geöffnete Fenster und Benachrichtigungen bleiben erreichbar.
+Der kleine **☰**-Knopf oben rechts zeigt die Menüs vorübergehend nur für den eigenen Benutzer wieder an; **×** blendet sie wieder aus. Beim Verlassen der Szene erscheint die normale Oberfläche automatisch wieder. Bereits geöffnete Fenster und Benachrichtigungen bleiben erreichbar.
 
-## Private Releases und Updates
+### Hinweise und Grenzen
 
-Die GitHub-Automation erzeugt private Releases mit ZIP und Manifest. Die Downloadlinks erfordern Zugriff auf das private Repository. Foundrys normale Paketverwaltung übernimmt keine GitHub-Anmeldung aus deinem Browser; daher die ZIP angemeldet herunterladen und lokal installieren beziehungsweise aktualisieren. Keine Zugangsdaten in Manifest-URLs eintragen.
+- Die Webseite muss Einbettung im iframe erlauben. `X-Frame-Options` oder CSP `frame-ancestors` können sie blockieren.
+- Bei Foundry über HTTPS muss auch die Webseite HTTPS verwenden. `localhost` bezeichnet den Rechner des jeweiligen Spielers.
+- Nur vertraute Webseiten eintragen. Interaktive Skripte sind erlaubt; das Modul injiziert keine Foundry-API. Bei eigenen HTML-Dateien auf derselben Domain ist die iframe-Sandbox keine vollständige Sicherheitsgrenze.
+- Foundry-Werkzeuge bearbeiten keine Tokens oder Zeichnungen innerhalb der Webseite. Für Foundry-Tastenkürzel zuerst ein Foundry-Bedienelement anklicken.
+- Foundrys vollständig abgeschalteter Canvas wird nicht unterstützt. Andere Oberflächenmodule können zusätzliche Elemente einblenden.
+- Getestet mit Foundry **14.369**. Andere Versionen sowie Mehrspieler- und Proxy-/HTTPS-Konfigurationen sind nicht vollständig live geprüft.
+- Die Bedienelemente des Moduls sind derzeit deutsch beschriftet.
 
-- [Releases](https://github.com/Ginkgo85/Webside-to-Scene/releases)
-- [Release-Workflow](https://github.com/Ginkgo85/Webside-to-Scene/actions/workflows/release.yml)
-- Manifest: https://github.com/Ginkgo85/Webside-to-Scene/releases/latest/download/module.json
-- ZIP 1.0.0: https://github.com/Ginkgo85/Webside-to-Scene/releases/download/v1.0.0/website-to-scene.zip
+### Entwicklung, Support und Lizenz
 
-## Grenzen der Einbettung
+Fehler mit Foundry-Version und nachvollziehbaren Schritten unter [Issues](https://github.com/Ginkgo85/Webside-to-Scene/issues) melden. Keine Zugangsdaten oder privaten Weltinhalte anhängen.
 
-- Die Webseite muss die Anzeige im iframe erlauben. `X-Frame-Options` oder CSP `frame-ancestors` können sie blockieren. Das Modul hebt diese Sperren nicht auf.
-- Bei Foundry über HTTPS muss auch die Webseite HTTPS verwenden. Die Adresse muss für jeden Spieler erreichbar sein; `localhost` bezeichnet dessen eigenen Rechner.
-- Klicks, Scrollen und Anmeldung sind individuell. Nur eine eigene Synchronisierung der Webseite kann diese Aktionen teilen.
-- Nur vertraute Webseiten eintragen. Interaktive Skripte sind erlaubt; das Modul injiziert keine Foundry-API. Bei eigenen HTML-Dateien auf derselben Domain bietet die iframe-Sandbox keine vollständige Sicherheitsgrenze.
-- Der Inhalt wird von der Webseite selbst skaliert. Foundry-Werkzeuge bearbeiten keine Tokens oder Zeichnungen innerhalb der Webseite. Für Foundry-Tastenkürzel zuerst ein Foundry-Bedienelement anklicken.
-- Foundrys vollständig abgeschalteter Canvas wird nicht unterstützt. Fremde Oberflächenmodule können zusätzlich eigene Elemente einblenden.
-
-## Entwicklung und Veröffentlichung
-
-Node.js 24 verwenden. Tests und Paketbau benötigen keine Foundry-Installation und keine Paketinstallation:
+Node.js 24 verwenden:
 
 ```sh
 npm test
@@ -52,10 +67,80 @@ npm run build:release
 npm run test:release
 ```
 
-CI prüft bei Push und Pull Request auf `main` zusätzlich die Bedienung im Chromium-Browser. **Actions → Release → Run workflow → main** führt dieselben Prüfungen aus und erstellt danach automatisch `v<version>` sowie die beiden Release-Dateien. Normale Pushes veröffentlichen keinen Release.
+CI und CodeQL prüfen Änderungen auf `main`. [Actions → Release → Run workflow → main](https://github.com/Ginkgo85/Webside-to-Scene/actions/workflows/release.yml) führt CodeQL sowie die Tests einschließlich Browser- und Paketprüfung erneut aus und erstellt danach Tag, ZIP und Manifest. Normale Pushes veröffentlichen keinen Release.
 
-Weitere Informationen im Repository: [Entwicklung](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/CONTRIBUTING.md), [Veröffentlichung](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/PUBLISHING.md), [Validierung](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/VALIDIERUNG.md), [Agentenregeln](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/AGENTS.md).
+Weitere Dokumentation: [Entwicklung](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/CONTRIBUTING.md), [Veröffentlichung](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/PUBLISHING.md), [Validierung](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/VALIDIERUNG.md), [Agentenregeln](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/AGENTS.md).
 
-## Lizenz
+Autor: **Ginkgo85**. [MIT-Lizenz](LICENSE).
 
-Autor: **Ginkgo85**. Die bereits im Repository enthaltene [MIT-Lizenz](LICENSE) gilt weiter. Das Repository wird dadurch nicht öffentlich.
+[Zur englischen Anleitung ↓](#english) · [Zurück nach oben ↑](#website-to-scene)
+
+## English
+
+[Zur deutschen Anleitung / German guide ↑](#deutsch) · [Back to top ↑](#website-to-scene)
+
+Display interactive websites as borderless, full-screen scenes in Foundry VTT. Enter a website address for each scene and choose whether Foundry's menus remain visible or are hidden.
+
+The module is publicly available on GitHub. Its technical ID is `website-to-scene`; existing scene settings are preserved. Distribution currently takes place exclusively through GitHub.
+
+### Installation
+
+1. Open Foundry's Setup → **Add-on Modules → Install Module**.
+2. Paste this address into **Manifest URL**, then install:
+
+   ```text
+   https://github.com/Ginkgo85/Webside-to-Scene/releases/latest/download/module.json
+   ```
+
+3. Open your world → **Manage Modules** → enable **Website to Scene**.
+
+No GitHub login is required. Use Foundry's regular module updater for future versions. Installing by manifest works without an official package listing; see [Foundry's module guide](https://foundryvtt.com/article/modules/).
+
+**Manual alternative:** Download `website-to-scene.zip` from the [latest release](https://github.com/Ginkgo85/Webside-to-Scene/releases/latest) and extract it into `Data/modules/website-to-scene/`. `module.json` must be directly inside that folder. Restart Foundry and enable the module in your world. Back up any personally modified module files before updating.
+
+### Display a website as a scene
+
+The module's controls currently use German labels; their meanings are listed below.
+
+1. Edit a scene → **Basics → Website to Scene**.
+2. Enable **Webseite als Szene anzeigen** (“Display website as a scene”).
+3. Under **Webseiten-Adresse** (“Website address”), enter a full URL such as `https://example.org/roadmap` or a path inside Foundry's Data folder such as `worlds/my-world/roadmap.html`.
+4. Save and view the scene. The website fills the browser viewport without a separate window or title bar.
+5. Use Foundry's normal **scene activation** to show it to the group. For independent player access, also enable **Show in Navigation** and accessibility for **All Players**.
+
+No separate “Bring everyone here” button is needed. Each player must be able to access the website. Clicking, scrolling and signing in are individual; activating the scene does not synchronize actions within the website.
+
+### Hide Foundry's menus
+
+**Foundry-Menüs ausblenden** (“Hide Foundry menus”) applies to everyone viewing that scene and is off by default. It hides scene navigation, tools, the player list, chat, the macro bar and the DSA-SC/calendar bars.
+
+The small **☰** button in the top-right corner temporarily restores the menus for your own client; **×** hides them again. Leaving the scene automatically restores the normal interface. Already open windows and notifications remain accessible.
+
+### Notes and limitations
+
+- The website must allow iframe embedding. `X-Frame-Options` or CSP `frame-ancestors` can block it.
+- If Foundry uses HTTPS, the website must also use HTTPS. `localhost` refers to each player's own computer.
+- Only embed trusted websites. Interactive scripts are allowed; the module does not inject Foundry's API. For HTML hosted on Foundry's own domain, the iframe sandbox is not a complete security boundary.
+- Foundry tools cannot edit tokens or drawings inside the website. Click a Foundry control before using Foundry keyboard shortcuts.
+- Completely disabling Foundry's canvas is not supported. Other interface modules may show additional elements.
+- Tested with Foundry **14.369**. Other versions, multiplayer and proxy/HTTPS configurations have not been fully tested live.
+
+### Development, support and license
+
+Report bugs in [Issues](https://github.com/Ginkgo85/Webside-to-Scene/issues), including your Foundry version and steps to reproduce. Do not attach credentials or private world content.
+
+Use Node.js 24:
+
+```sh
+npm test
+npm run build:release
+npm run test:release
+```
+
+CI and CodeQL check changes on `main`. [Actions → Release → Run workflow → main](https://github.com/Ginkgo85/Webside-to-Scene/actions/workflows/release.yml) repeats CodeQL and all tests, including browser and package checks, before creating the tag, ZIP and manifest. Regular pushes do not publish a release.
+
+Additional documentation (German): [Contributing](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/CONTRIBUTING.md), [Publishing](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/PUBLISHING.md), [Validation](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/VALIDIERUNG.md), [Agent instructions](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/AGENTS.md).
+
+Author: **Ginkgo85**. [MIT license](LICENSE).
+
+[Back to the German guide ↑](#deutsch) · [Back to top ↑](#website-to-scene)

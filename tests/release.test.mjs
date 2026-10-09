@@ -9,7 +9,7 @@ import {verifyRelease} from '../tools/verify-release.mjs';
 const manifest = JSON.parse(await readFile('module.json','utf8'));
 const pkg = JSON.parse(await readFile('package.json','utf8'));
 
-test('final module identity, author, private package and tested Foundry generation match', () => {
+test('final module identity, author, npm publication disabled and tested Foundry generation match', () => {
   validateManifest(manifest,pkg);
   assert.equal(manifest.id,'website-to-scene');
   assert.equal(pkg.private,true);
