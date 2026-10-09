@@ -3,7 +3,7 @@
 ## 1.0.1 – 2026-10-09
 
 - Öffentliche GitHub-Veröffentlichung mit direkter Installation und Updates über die Manifest-URL.
-- Deutsche und englische README-Anleitung mit Sprachwechsel- und Rücksprunglinks; vorhandenes Szenenbild bleibt enthalten.
+- Deutsche und englische README-Anleitung mit Sprachwechsel- und Rücksprunglinks sowie aktualisiertem Szenenbild aus der letzten Nutzeraufnahme.
 - Öffentliche Modulbeschreibung und Entwicklungs-/Release-Dokumentation angepasst.
 - CodeQL aus dem Referenzablauf ergänzt; jeder Release verlangt einen erfolgreichen Sicherheitscheck sowie die bisherigen Tests und Paketprüfungen.
 - Browser-Testserver liefert ausschließlich drei fest definierte Testdateien; keine Dateipfade aus HTTP-Anfragen.
