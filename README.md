@@ -43,7 +43,14 @@ Ein zusätzlicher „Alle hierher holen“-Knopf ist nicht erforderlich. Die Web
 
 Der Haken **Foundry-Menüs ausblenden** gilt pro Szene für alle Benutzer, die sie öffnen. Standardmäßig ist er ausgeschaltet. Er versteckt Szenennavigation, Werkzeuge, Spielerleiste, Chat, Makroleiste und die DSA-SC-/Kalenderleisten.
 
-Der kleine **☰**-Knopf oben rechts zeigt die Menüs vorübergehend nur für den eigenen Benutzer wieder an; **×** blendet sie wieder aus. Beim Verlassen der Szene erscheint die normale Oberfläche automatisch wieder. Bereits geöffnete Fenster und Benachrichtigungen bleiben erreichbar.
+**Menüknopf oben rechts:** Damit kannst du die Foundry-Oberfläche vorübergehend für dich ein- oder ausblenden.
+
+| Knopf | Funktion |
+| :---: | --- |
+| <h2>☰</h2> | **Menüs anzeigen** – Blendet die Foundry-Menüs vorübergehend nur für deinen eigenen Benutzer wieder ein. |
+| <h2>×</h2> | **Menüs ausblenden** – Versteckt die Foundry-Menüs wieder, damit du die Webseite ungestört nutzen kannst. |
+
+Beim Verlassen der Szene erscheint die normale Oberfläche automatisch wieder. Bereits geöffnete Fenster und Benachrichtigungen bleiben erreichbar.
 
 ### Hinweise und Grenzen
 
@@ -102,7 +109,14 @@ No separate “Bring everyone here” button is needed. Each player must be able
 
 **Foundry-Menüs ausblenden** (“Hide Foundry menus”) applies to everyone viewing that scene and is off by default. It hides scene navigation, tools, the player list, chat, the macro bar and the DSA-SC/calendar bars.
 
-The small **☰** button in the top-right corner temporarily restores the menus for your own client; **×** hides them again. Leaving the scene automatically restores the normal interface. Already open windows and notifications remain accessible.
+**Menu button in the top-right corner:** Temporarily show or hide Foundry's interface for your own client.
+
+| Button | Function |
+| :---: | --- |
+| <h2>☰</h2> | **Show menus** – Temporarily restores Foundry's menus for your own client only. |
+| <h2>×</h2> | **Hide menus** – Hides Foundry's menus again so you can use the website without distractions. |
+
+Leaving the scene automatically restores the normal interface. Already open windows and notifications remain accessible.
 
 ### Notes and limitations
 
