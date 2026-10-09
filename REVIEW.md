@@ -41,7 +41,7 @@ Am 9. Oktober 2026 lokal mit Node.js 24.19.0 ausgeführt:
 
 Lokal verwendet dieser Rechner Node.js 24 ohne npm. Es werden die äquivalenten direkten Node-Aufrufe verwendet; GitHub führt die npm-Kommandos und Chromium aus. Tatsächliche Ergebnisse und Abschluss-SHA werden nach Durchführung im Chat gemeldet.
 
-Live-Nachweise stammen aus Foundry 14.369 mit dem unveränderten Laufzeitcode des Entwicklungsstands 0.1.3. Mehrspielertests, andere Browser/Foundry-Versionen und spezielle Proxy-/HTTPS-Umgebungen sind nicht vollständig live geprüft.
+Live-Nachweise stammen aus Foundry 14.369 mit dem unveränderten Laufzeitcode des Entwicklungsstands 0.1.3. Am 9. Oktober 2026 hat der Nutzer den durchgeführten bisherigen manuellen Praxistest als bestanden bestätigt. Die Bestätigung ist in VALIDIERUNG.md dokumentiert. Mehrspielertests, andere Browser/Foundry-Versionen und spezielle Proxy-/HTTPS-Umgebungen sind nicht vollständig live geprüft.
 
 ## Veröffentlichung
 
