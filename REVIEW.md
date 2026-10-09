@@ -13,7 +13,7 @@ Stand: 9. Oktober 2026. Ziel: öffentliche Anpassung **1.0.1** für Foundry **14
 
 Version und Download-URL sind 1.0.1. Die Modulbeschreibung enthält keinen privaten Nutzungsvorbehalt. Autor Ginkgo85, technische ID/Flags, Laufzeitverhalten und MIT-Lizenz bleiben erhalten. `private: true` in package.json betrifft ausschließlich npm.
 
-README: Deutsch vor Englisch, Sprachwechsel- und Rücksprunglinks, Szenenbild, Installation über die öffentliche Manifest-URL, manuelle Alternative, Bedienung, Menüoptionen, Grenzen, Entwicklung und Support in beiden Sprachen. Die englische Anleitung erklärt die derzeit deutschen Modulbeschriftungen.
+README: Deutsch vor Englisch, Sprachwechsel- und Rücksprunglinks, aktualisiertes Szenenbild, Installation über die öffentliche Manifest-URL, manuelle Alternative, Bedienung, Menüoptionen, Grenzen, Support und Lizenz in beiden Sprachen. Auf Nutzerwunsch stehen Entwicklungsbefehle und Release-Workflow nur in den separaten Dokumentationsdateien. Die englische Anleitung erklärt die derzeit deutschen Modulbeschriftungen.
 
 CodeQL wird aus dem Referenzablauf übernommen, mit gegen die offizielle GitHub-Tagauflösung geprüfter Action v4.38.0. Der Workflow ist zusätzlich wiederverwendbar; Release wartet mittels `needs: codeql` auf dessen Erfolg. Die bisherigen CI-/Browser-/Build-/Artefaktprüfungen bleiben erhalten.
 

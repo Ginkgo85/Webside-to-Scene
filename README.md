@@ -55,21 +55,9 @@ Der kleine **☰**-Knopf oben rechts zeigt die Menüs vorübergehend nur für de
 - Getestet mit Foundry **14.369**. Andere Versionen sowie Mehrspieler- und Proxy-/HTTPS-Konfigurationen sind nicht vollständig live geprüft.
 - Die Bedienelemente des Moduls sind derzeit deutsch beschriftet.
 
-### Entwicklung, Support und Lizenz
+### Support und Lizenz
 
 Fehler mit Foundry-Version und nachvollziehbaren Schritten unter [Issues](https://github.com/Ginkgo85/Webside-to-Scene/issues) melden. Keine Zugangsdaten oder privaten Weltinhalte anhängen.
-
-Node.js 24 verwenden:
-
-```sh
-npm test
-npm run build:release
-npm run test:release
-```
-
-CI und CodeQL prüfen Änderungen auf `main`. [Actions → Release → Run workflow → main](https://github.com/Ginkgo85/Webside-to-Scene/actions/workflows/release.yml) führt CodeQL sowie die Tests einschließlich Browser- und Paketprüfung erneut aus und erstellt danach Tag, ZIP und Manifest. Normale Pushes veröffentlichen keinen Release.
-
-Weitere Dokumentation: [Entwicklung](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/CONTRIBUTING.md), [Veröffentlichung](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/PUBLISHING.md), [Validierung](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/VALIDIERUNG.md), [Agentenregeln](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/AGENTS.md).
 
 Autor: **Ginkgo85**. [MIT-Lizenz](LICENSE).
 
@@ -125,21 +113,9 @@ The small **☰** button in the top-right corner temporarily restores the menus 
 - Completely disabling Foundry's canvas is not supported. Other interface modules may show additional elements.
 - Tested with Foundry **14.369**. Other versions, multiplayer and proxy/HTTPS configurations have not been fully tested live.
 
-### Development, support and license
+### Support and license
 
 Report bugs in [Issues](https://github.com/Ginkgo85/Webside-to-Scene/issues), including your Foundry version and steps to reproduce. Do not attach credentials or private world content.
-
-Use Node.js 24:
-
-```sh
-npm test
-npm run build:release
-npm run test:release
-```
-
-CI and CodeQL check changes on `main`. [Actions → Release → Run workflow → main](https://github.com/Ginkgo85/Webside-to-Scene/actions/workflows/release.yml) repeats CodeQL and all tests, including browser and package checks, before creating the tag, ZIP and manifest. Regular pushes do not publish a release.
-
-Additional documentation (German): [Contributing](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/CONTRIBUTING.md), [Publishing](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/PUBLISHING.md), [Validation](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/VALIDIERUNG.md), [Agent instructions](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/AGENTS.md).
 
 Author: **Ginkgo85**. [MIT license](LICENSE).
 
