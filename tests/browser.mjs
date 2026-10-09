@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
 import { readFile, mkdir } from "node:fs/promises";
-import { resolve, extname } from "node:path";
 import { pathToFileURL } from "node:url";
 
 // Use a locally available Playwright without adding runtime dependencies to the module.
@@ -31,23 +30,35 @@ globalThis.canvas = {ready:true,scene};
 globalThis.ui = {notifications:{warn:m=>messages.push(m),error:m=>messages.push(m),info:m=>messages.push(m)}};
 document.querySelector('#chat').onclick=()=>calls.push('chat');
 </script><script type="module">import "/scripts/main.js"; globalThis.moduleLoaded = true;</script></body></html>`;
+// Serve only fixture assets loaded from fixed paths, never a request-derived filesystem path.
+const assets = new Map(await Promise.all([
+  "scripts/main.js", "scripts/url.js", "styles/website-to-scene.css"
+].map(async file => ["/" + file, {
+  type: file.endsWith(".js") ? "text/javascript" : "text/css",
+  data: await readFile(new URL("../" + file, import.meta.url))
+}])));
 const server = createServer(async (req, res) => {
   try {
     if (req.url === "/") { res.setHeader("Content-Type", "text/html; charset=utf-8"); return res.end(fixture); }
     if (req.url === "/embedded") { res.setHeader("Content-Type", "text/html; charset=utf-8"); return res.end('<h1 style="margin-left:400px">Interaktive Roadmap</h1><button style="margin:150px 0 0 400px" onclick="this.textContent=\'Angeklickt\'">Eintrag öffnen</button>'); }
-    const path = resolve(`.${req.url}`);
-    if (!["scripts", "styles"].some(dir => path.startsWith(resolve(dir) + "/") || path.startsWith(resolve(dir) + "\\"))) {res.writeHead(404);return res.end();}
-    res.setHeader("Content-Type", extname(path) === ".js" ? "text/javascript" : "text/css");
-    res.end(await readFile(path));
+    const asset = assets.get(req.url);
+    if (!asset) {res.writeHead(404);return res.end();}
+    res.setHeader("Content-Type", asset.type);
+    res.end(asset.data);
   } catch {res.writeHead(404);res.end();}
 });
 await new Promise(done => server.listen(0, "127.0.0.1", done));
-const browser = await chromium.launch({...(process.env.TEST_BROWSER ? {channel:process.env.TEST_BROWSER} : {}),headless:true});
+const baseUrl = `http://127.0.0.1:${server.address().port}`;
+let browser;
 try {
+  for (const route of ["/module.json", "/scripts/../module.json", "/scripts/%2e%2e%2fmodule.json", "/scripts/main.js?path=module.json"]) {
+    assert.equal((await fetch(baseUrl + route)).status, 404, "Fixture must refuse unlisted assets");
+  }
+  browser = await chromium.launch({...(process.env.TEST_BROWSER ? {channel:process.env.TEST_BROWSER} : {}),headless:true});
   const page = await browser.newPage({viewport:{width:1440,height:900}});
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
-  await page.goto(`http://127.0.0.1:${server.address().port}`);
+  await page.goto(baseUrl);
   await page.waitForFunction(() => globalThis.moduleLoaded === true);
   await page.evaluate(() => Hooks.call("canvasReady", canvas));
   await page.locator("#wts-overlay iframe").waitFor();
@@ -128,6 +139,6 @@ try {
   assert.deepEqual(errors, []);
   console.log("Browser checks passed: interactive fullscreen iframe, reachable Foundry UI, responsive viewport, no extra toolbar, retained browsing state, config validation, player role, scene cleanup.");
 } finally {
-  await browser.close();
+  await browser?.close();
   await new Promise(done => server.close(done));
 }

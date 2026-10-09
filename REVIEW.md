@@ -17,6 +17,8 @@ README: Deutsch vor Englisch, Sprachwechsel- und Rücksprunglinks, Szenenbild, I
 
 CodeQL wird aus dem Referenzablauf übernommen, mit gegen die offizielle GitHub-Tagauflösung geprüfter Action v4.38.0. Der Workflow ist zusätzlich wiederverwendbar; Release wartet mittels `needs: codeql` auf dessen Erfolg. Die bisherigen CI-/Browser-/Build-/Artefaktprüfungen bleiben erhalten.
 
+Der erste CodeQL-Lauf beanstandete eine aus HTTP-Anfragen abgeleitete Dateipfadprüfung im lokalen Browser-Testserver. Der Server lädt nun ausschließlich seine drei festen Assets vorab und liefert sie über eine exakte URL-Zuordnung. Unbekannte, Traversal- und Query-Pfade werden mit 404 abgewiesen und in der Browserprüfung kontrolliert. Der Testserver ist nicht Teil des Release-ZIPs.
+
 Der Nutzer hat Vertrieb **ausschließlich auf GitHub** festgelegt. Es wird kein Eintrag im offiziellen Foundry-Modulverzeichnis angelegt.
 
 ## Prüfungen
@@ -31,7 +33,7 @@ Am 9. Oktober 2026 lokal mit Node.js 24.19.0 ausgeführt:
 | Paketprüfung | Bestanden: 8 Dateien, Root-Manifest, reproduzierbare Bytes, CRC32/Quellenvergleich |
 | Workflowprüfung | actionlint für CI, CodeQL und Release bestanden, ohne separates ShellCheck |
 | Diff-Prüfung | git diff --check bestanden; Änderungen geprüft |
-| README auf GitHub | Nach Push: Sprachwechsel, Rücksprünge und Bild kontrollieren |
+| README auf GitHub | Bestanden: Sprachwechsel Deutsch/Englisch, Rücksprung zum Anfang und geladenes Szenenbild |
 | GitHub | Nach Push: CI/CodeQL; nach Release: Tag-SHA, Assets und anonyme Downloads |
 
 Lokal verwendet dieser Rechner Node.js 24 ohne npm. Es werden die äquivalenten direkten Node-Aufrufe verwendet; GitHub führt die npm-Kommandos und Chromium aus. Tatsächliche Ergebnisse und Abschluss-SHA werden nach Durchführung im Chat gemeldet.

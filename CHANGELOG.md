@@ -6,6 +6,7 @@
 - Deutsche und englische README-Anleitung mit Sprachwechsel- und Rücksprunglinks; vorhandenes Szenenbild bleibt enthalten.
 - Öffentliche Modulbeschreibung und Entwicklungs-/Release-Dokumentation angepasst.
 - CodeQL aus dem Referenzablauf ergänzt; jeder Release verlangt einen erfolgreichen Sicherheitscheck sowie die bisherigen Tests und Paketprüfungen.
+- Browser-Testserver liefert ausschließlich drei fest definierte Testdateien; keine Dateipfade aus HTTP-Anfragen.
 - Veröffentlichung ausschließlich auf GitHub; Modul-ID, Szenenflags und Laufzeitverhalten bleiben erhalten. Bestehender Release v1.0.0 wird nicht verändert.
 
 ## 1.0.0 – 2026-10-09
