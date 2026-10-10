@@ -20,7 +20,7 @@ test('final module identity, author, npm publication disabled and tested Foundry
 });
 
 test('runtime references and relative README images/links are shipped and resolve', async () => {
-  for (const file of [...manifest.esmodules,...manifest.styles,manifest.readme,manifest.license]) {
+  for (const file of [...manifest.esmodules,...manifest.styles,...manifest.languages.map(language=>language.path),manifest.readme,manifest.license]) {
     await access(file);
     assert.ok(releaseFiles.includes(file), file);
   }
@@ -44,7 +44,7 @@ test('repeated builds are byte identical and contain only the explicit runtime f
   const second=await buildRelease(directory);
   assert.deepEqual(first.zip,second.zip);
   assert.deepEqual(await verifyRelease(directory), releaseFiles);
-  assert.equal(releaseFiles.length,8);
+  assert.equal(releaseFiles.length,10);
   assert.ok(releaseFiles.includes('docs/images/scene-settings.png'));
   assert.ok(releaseFiles.every(file=>!/(^|\/)(tests|tools|artifacts|node_modules|\.github)(\/|$)/.test(file)));
 });

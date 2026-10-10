@@ -1,7 +1,11 @@
-import { resolveWebsiteUrl } from "./url.js";
+import { resolveWebsiteUrl, WebsiteUrlError } from "./url.js";
 
 const ID = "website-to-scene";
 let overlay;
+
+const localize = key => game.i18n.localize(`${ID}.${key}`);
+const errorMessage = error => game.i18n.localize(error instanceof WebsiteUrlError
+  ? error.message : `${ID}.Errors.InvalidUrl`);
 
 class WebsiteOverlay {
   constructor(scene, url, config) {
@@ -9,7 +13,7 @@ class WebsiteOverlay {
     this.url = url;
     this.root = document.createElement("section");
     this.root.id = "wts-overlay";
-    this.root.setAttribute("aria-label", "Webseiten-Szene");
+    this.root.setAttribute("aria-label", localize("Scene.OverlayLabel"));
     this.frame = document.createElement("iframe");
     this.setSceneName(scene.name);
     // No parent-document access helper, no top-navigation or privileged device permissions.
@@ -27,7 +31,7 @@ class WebsiteOverlay {
   }
 
   setSceneName(name) {
-    this.frame.title = "Webseite: " + name;
+    this.frame.title = game.i18n.localize(`${ID}.Scene.FrameTitle`, {name});
   }
 
   configureMenus(config) {
@@ -42,7 +46,7 @@ class WebsiteOverlay {
   setMenusHidden(hidden) {
     this.menusHidden = hidden;
     document.body.classList.toggle("wts-hide-ui", hidden);
-    const label = hidden ? "Foundry-Menüs anzeigen" : "Foundry-Menüs ausblenden";
+    const label = localize(hidden ? "Menu.Show" : "Menu.Hide");
     this.menuToggle.textContent = hidden ? "☰" : "×";
     this.menuToggle.title = label;
     this.menuToggle.setAttribute("aria-label", label);
@@ -69,7 +73,7 @@ function syncScene(scene = canvas.scene) {
     url = resolveWebsiteUrl(config.url);
   } catch (error) {
     clearOverlay();
-    ui.notifications.warn(`Website to Scene: ${error.message}`);
+    ui.notifications.warn(`Website to Scene: ${errorMessage(error)}`);
     return;
   }
   if (overlay?.sceneId === scene.id && overlay.url === url) {
@@ -94,19 +98,24 @@ function addSceneFields(app, element) {
   // Static markup only; user-provided values are assigned through DOM properties below.
   fieldset.innerHTML = `
     <legend>Website to Scene</legend>
-    <div class="form-group"><label>Webseite als Szene anzeigen</label><div class="form-fields">
+    <div class="form-group"><label data-wts-i18n="Scene.Enabled"></label><div class="form-fields">
       <input type="checkbox" name="flags.website-to-scene.website.enabled" data-dtype="Boolean">
     </div></div>
-    <div class="form-group"><label>Foundry-Menüs ausblenden</label><div class="form-fields">
+    <div class="form-group"><label data-wts-i18n="Scene.HideMenus"></label><div class="form-fields">
       <input type="checkbox" name="flags.website-to-scene.website.hideMenus" data-dtype="Boolean">
-    </div><p class="hint">Blendet die Foundry-Oberfläche in dieser Szene aus. Ein kleiner Menüknopf oben rechts zeigt sie vorübergehend wieder an.</p></div>
-    <div class="form-group stacked"><label>Webseiten-Adresse</label><div class="form-fields">
-      <input type="text" name="flags.website-to-scene.website.url" placeholder="https://example.org oder worlds/meine-welt/roadmap.html">
-    </div><p class="hint">Adresse frei eintragen. Die Seite muss Einbettung erlauben.</p></div>
-    <p class="hint">Für selbstständigen Spielerzugriff oben bei Zugänglichkeit „Alle Spieler“ und die Szenennavigation aktivieren. Speichere die Szene, bevor du sie öffnest.</p>`;
+    </div><p class="hint" data-wts-i18n="Scene.HideMenusHint"></p></div>
+    <div class="form-group stacked"><label data-wts-i18n="Scene.Url"></label><div class="form-fields">
+      <input type="text" name="flags.website-to-scene.website.url">
+    </div><p class="hint" data-wts-i18n="Scene.UrlHint"></p></div>
+    <p class="hint" data-wts-i18n="Scene.AccessHint"></p>`;
+  // Translation text is never parsed as HTML, including third-party translations.
+  for (const node of fieldset.querySelectorAll("[data-wts-i18n]")) {
+    node.textContent = localize(node.dataset.wtsI18n);
+  }
   const enabled = fieldset.querySelector('[name="flags.website-to-scene.website.enabled"]');
   const hideMenus = fieldset.querySelector('[name="flags.website-to-scene.website.hideMenus"]');
   const url = fieldset.querySelector('input[type="text"]');
+  url.placeholder = localize("Scene.UrlPlaceholder");
   enabled.checked = Boolean(config.enabled);
   hideMenus.checked = Boolean(config.hideMenus);
   url.value = config.url ?? "";
@@ -121,7 +130,7 @@ function addSceneFields(app, element) {
     url.setCustomValidity("");
     if (!enabled.checked) return;
     try { resolveWebsiteUrl(url.value); }
-    catch (error) { url.setCustomValidity(error.message); }
+    catch (error) { url.setCustomValidity(errorMessage(error)); }
   };
   enabled.addEventListener("change", validate);
   url.addEventListener("input", validate);

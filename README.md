@@ -2,7 +2,7 @@
 
 [Deutsch](#deutsch) · [English — jump to the English guide](#english)
 
-**Version 1.0.2 · Foundry VTT 14.369 · Autor / Author: Ginkgo85 · MIT**
+**Version 1.1.0 (vorbereitet / unreleased) · Foundry VTT 14.369 · Autor / Author: Ginkgo85 · MIT**
 
 ![Webseiten-Adresse und optionale Menüausblendung / Scene URL and optional menu hiding](docs/images/scene-settings.png)
 
@@ -13,6 +13,14 @@
 Interaktive Webseiten als randlose Vollbild-Szenen in Foundry VTT anzeigen. Die Webseiten-Adresse wird für jede Szene frei eingetragen. Foundrys Menüs können darüberliegen oder mit einem Haken ausgeblendet werden.
 
 Das Modul ist öffentlich auf GitHub und im [offiziellen Foundry-Modulverzeichnis](https://foundryvtt.com/packages/website-to-scene) verfügbar. Die technische Modul-ID lautet `website-to-scene`; vorhandene Szeneneinstellungen bleiben erhalten.
+
+### Sprache
+
+Ab Version **1.1.0** erscheinen Beschriftungen, Erklärungen, URL-Fehlermeldungen und Menüknopf-Texte automatisch auf **Deutsch oder Englisch**, entsprechend der in Foundry eingestellten Sprache. Bei anderen Sprachen dienen die englischen Texte als Rückfall. Eine eigene Spracheinstellung im Modul ist nicht erforderlich. Nach einem Sprachwechsel Foundrys Aufforderung zum Neuladen folgen.
+
+Die eingebettete Webseite bestimmt ihre Sprache selbst. Das README-Bild oben zeigt die deutsche Ansicht und bleibt unverändert.
+
+**Veröffentlichungsstand:** Die Sprachunterstützung ist auf GitHub für 1.1.0 vorbereitet. Die derzeit veröffentlichte Version **1.0.2** verwendet weiterhin deutsche Modultexte; die folgenden Installationswege beziehen bis zum nächsten Release diese Version.
 
 ### Installation
 
@@ -61,7 +69,6 @@ Beim Verlassen der Szene erscheint die normale Oberfläche automatisch wieder. B
 - Foundry-Werkzeuge bearbeiten keine Tokens oder Zeichnungen innerhalb der Webseite. Für Foundry-Tastenkürzel zuerst ein Foundry-Bedienelement anklicken.
 - Foundrys vollständig abgeschalteter Canvas wird nicht unterstützt. Andere Oberflächenmodule können zusätzliche Elemente einblenden.
 - Manueller Praxistest mit Foundry **14.369** durchgeführt und vom Nutzer bestätigt. Andere Versionen sowie Mehrspieler- und Proxy-/HTTPS-Konfigurationen sind nicht vollständig live geprüft.
-- Die Bedienelemente des Moduls sind derzeit deutsch beschriftet.
 
 ### Support und Lizenz
 
@@ -78,6 +85,14 @@ Autor: **Ginkgo85**. [MIT-Lizenz](LICENSE).
 Display interactive websites as borderless, full-screen scenes in Foundry VTT. Enter a website address for each scene and choose whether Foundry's menus remain visible or are hidden.
 
 The module is publicly available on GitHub and in [Foundry's official module directory](https://foundryvtt.com/packages/website-to-scene). Its technical ID is `website-to-scene`; existing scene settings are preserved.
+
+### Language
+
+Starting with version **1.1.0**, labels, help text, URL validation messages and menu button text automatically appear in **German or English**, following the language selected in Foundry. Other languages fall back to English. No separate module language setting is needed. After changing the language, follow Foundry's prompt to reload.
+
+The embedded website controls its own language. The README image above shows the German interface and remains unchanged.
+
+**Release status:** Language support is prepared on GitHub for 1.1.0. The currently published version **1.0.2** still uses German module text; the installation methods below will install that version until the next release.
 
 ### Installation
 
@@ -97,11 +112,9 @@ No GitHub login is required. Use Foundry's regular module updater for future ver
 
 ### Display a website as a scene
 
-The module's controls currently use German labels; their meanings are listed below.
-
 1. Edit a scene → **Basics → Website to Scene**.
-2. Enable **Webseite als Szene anzeigen** (“Display website as a scene”).
-3. Under **Webseiten-Adresse** (“Website address”), enter a full URL such as `https://example.org/roadmap` or a path inside Foundry's Data folder such as `worlds/my-world/roadmap.html`.
+2. Enable **Display website as a scene**.
+3. Under **Website address**, enter a full URL such as `https://example.org/roadmap` or a path inside Foundry's Data folder such as `worlds/my-world/roadmap.html`.
 4. Save and view the scene. The website fills the browser viewport without a separate window or title bar.
 5. Use Foundry's normal **scene activation** to show it to the group. For independent player access, also enable **Show in Navigation** and accessibility for **All Players**.
 
@@ -109,7 +122,7 @@ No separate “Bring everyone here” button is needed. Each player must be able
 
 ### Hide Foundry's menus
 
-**Foundry-Menüs ausblenden** (“Hide Foundry menus”) applies to everyone viewing that scene and is off by default. It hides scene navigation, tools, the player list, chat, the macro bar and the DSA-SC/calendar bars.
+**Hide Foundry menus** applies to everyone viewing that scene and is off by default. It hides scene navigation, tools, the player list, chat, the macro bar and the DSA-SC/calendar bars.
 
 **Menu button in the top-right corner:** Temporarily show or hide Foundry's interface for your own client.
 

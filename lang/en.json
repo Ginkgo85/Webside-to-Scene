@@ -1,0 +1,19 @@
+{
+  "website-to-scene.Scene.Enabled": "Display website as a scene",
+  "website-to-scene.Scene.HideMenus": "Hide Foundry menus",
+  "website-to-scene.Scene.HideMenusHint": "Hides Foundry's interface in this scene. A small menu button in the top-right corner temporarily shows it again.",
+  "website-to-scene.Scene.Url": "Website address",
+  "website-to-scene.Scene.UrlPlaceholder": "https://example.org or worlds/my-world/roadmap.html",
+  "website-to-scene.Scene.UrlHint": "Enter an address of your choice. The website must allow embedding.",
+  "website-to-scene.Scene.AccessHint": "For independent player access, enable accessibility for “All Players” and scene navigation above. Save the scene before viewing it.",
+  "website-to-scene.Scene.OverlayLabel": "Website scene",
+  "website-to-scene.Scene.FrameTitle": "Website: {name}",
+  "website-to-scene.Menu.Show": "Show Foundry menus",
+  "website-to-scene.Menu.Hide": "Hide Foundry menus",
+  "website-to-scene.Errors.Required": "Please enter a website address.",
+  "website-to-scene.Errors.Ambiguous": "Please use a full https:// address or a relative Foundry path.",
+  "website-to-scene.Errors.Protocol": "Only HTTP(S) addresses or relative Foundry paths are allowed.",
+  "website-to-scene.Errors.Credentials": "Please do not include credentials in the address.",
+  "website-to-scene.Errors.MixedContent": "Foundry is running over HTTPS. Please use HTTPS for the website as well.",
+  "website-to-scene.Errors.InvalidUrl": "Please enter a valid website address."
+}

@@ -12,6 +12,10 @@ if (!["chromium", "firefox", "chrome", "msedge"].includes(browserName)) {
 }
 const browserType = browserName === "firefox" ? firefox : chromium;
 const channel = ["chrome", "msedge"].includes(browserName) ? browserName : undefined;
+const manifest = JSON.parse(await readFile(new URL("../module.json", import.meta.url), "utf8"));
+const dictionaries = Object.fromEntries(await Promise.all(manifest.languages.map(async language => [
+  language.lang, JSON.parse(await readFile(new URL("../" + language.path, import.meta.url), "utf8"))
+])));
 const fixture = `<!doctype html><html><head><link rel="stylesheet" href="/styles/website-to-scene.css">
 <style>
 html,body { margin:0; width:100%; height:100%; font:14px sans-serif; --z-index-canvas:0; }
@@ -32,6 +36,12 @@ globalThis.Hooks = { on(name,fn) { if(!hooks.has(name)) hooks.set(name,[]); hook
 globalThis.calls = []; globalThis.messages = [];
 globalThis.scene = {id:'roadmap',name:'Roadmap',config:{enabled:true,url:'/embedded'},getFlag(){return this.config}, async activate(options){calls.push(options)}};
 globalThis.game = {user:{isGM:true},scenes:new Map([['roadmap',scene]])};
+const dictionaries = ${JSON.stringify(dictionaries)};
+const language = new URL(location.href).searchParams.get('lang') || 'de';
+game.i18n = {lang:language,localize(key,data={}) {
+  const text = dictionaries[language]?.[key] ?? dictionaries.en[key] ?? key;
+  return text.replace(/\{([^}]+)\}/g, (match, name) => data[name] ?? match);
+}};
 globalThis.canvas = {ready:true,scene};
 globalThis.ui = {notifications:{warn:m=>messages.push(m),error:m=>messages.push(m),info:m=>messages.push(m)}};
 document.querySelector('#chat').onclick=()=>calls.push('chat');
@@ -45,7 +55,7 @@ const assets = new Map(await Promise.all([
 }])));
 const server = createServer(async (req, res) => {
   try {
-    if (req.url === "/") { res.setHeader("Content-Type", "text/html; charset=utf-8"); return res.end(fixture); }
+    if (["/", "/?lang=de", "/?lang=en", "/?lang=fr"].includes(req.url)) { res.setHeader("Content-Type", "text/html; charset=utf-8"); return res.end(fixture); }
     if (req.url === "/embedded") { res.setHeader("Content-Type", "text/html; charset=utf-8"); return res.end('<h1 style="margin-left:400px">Interaktive Roadmap</h1><button style="margin:150px 0 0 400px" onclick="this.textContent=\'Angeklickt\'">Eintrag öffnen</button>'); }
     const asset = assets.get(req.url);
     if (!asset) {res.writeHead(404);return res.end();}
@@ -61,89 +71,109 @@ try {
     assert.equal((await fetch(baseUrl + route)).status, 404, "Fixture must refuse unlisted assets");
   }
   browser = await browserType.launch({...(channel ? {channel} : {}),headless:true});
-  const page = await browser.newPage({viewport:{width:1440,height:900}});
-  const errors = [];
-  page.on("pageerror", error => errors.push(error.message));
-  await page.goto(baseUrl);
-  await page.waitForFunction(() => globalThis.moduleLoaded === true);
-  await page.evaluate(() => Hooks.call("canvasReady", canvas));
-  await page.locator("#wts-overlay iframe").waitFor();
-  await page.frameLocator("iframe").getByText("Eintrag öffnen").click();
-  assert.equal(await page.frameLocator("iframe").locator("button").textContent(), "Angeklickt");
-  await page.locator("#chat").click();
-  await page.getByText('Werkzeuge',{exact:true}).click();
-  await page.getByText('Roadmap',{exact:true}).click();
-  await page.getByText('Makros',{exact:true}).click();
-  assert.deepEqual(await page.evaluate(() => calls), ["chat"]);
-  assert.equal(await page.getByText("Alle hierher holen", {exact:true}).count(), 0);
-  assert.equal(await page.locator('.wts-toolbar, .wts-panel').count(), 0);
-  assert.deepEqual(await page.locator('#wts-overlay iframe').boundingBox(), {x:0,y:0,width:1440,height:900});
-  await page.setViewportSize({width:1100,height:700});
-  assert.deepEqual(await page.locator('#wts-overlay iframe').boundingBox(), {x:0,y:0,width:1100,height:700});
-  await page.setViewportSize({width:1440,height:900});
-  // Unrelated document updates must preserve the browsing state.
-  await page.evaluate(() => Hooks.call("updateScene", scene));
-  assert.equal(await page.frameLocator("iframe").locator("button").textContent(), "Angeklickt");
-  await page.evaluate(() => {
-    const form=document.createElement('form');form.id='config';
-    form.innerHTML='<nav><a data-action="tab" data-group="sheet" data-tab="basics">Grundlagen</a></nav><div class="tab active" data-group="sheet" data-tab="basics"></div>';
-    form.querySelector('a').addEventListener('click', event => {event.preventDefault();calls.push('tab-click')});
-    document.body.append(form);
-    const app={id:'config',isEditable:true,document:scene};
-    Hooks.call('renderSceneConfig',app,form);Hooks.call('renderSceneConfig',app,form);
-  });
-  assert.equal(await page.locator(".wts-config").count(), 1);
-  assert.equal(await page.locator('nav .wts-config').count(), 0);
-  assert.equal(await page.locator('.tab[data-tab="basics"] .wts-config').count(), 1);
-  assert.equal(await page.getByRole('checkbox',{name:'Foundry-Menüs ausblenden',exact:true}).isChecked(), false);
-  await page.getByRole('checkbox',{name:'Foundry-Menüs ausblenden',exact:true}).check();
-  await page.getByLabel('Webseite als Szene anzeigen',{exact:true}).uncheck();
-  await page.getByLabel('Webseite als Szene anzeigen',{exact:true}).check();
-  assert.equal(await page.evaluate(() => calls.includes('tab-click')), false);
-  await page.locator('input[type="text"]').fill("javascript:alert(1)");
-  assert.equal(await page.locator("#config").evaluate(form => form.checkValidity()), false);
-  await page.locator('input[type="text"]').fill("https://example.org/");
-  assert.equal(await page.locator("#config").evaluate(form => form.checkValidity()), true);
-  const data = await page.locator("#config").evaluate(form => Object.fromEntries(new FormData(form)));
-  assert.equal(data["flags.website-to-scene.website.url"], "https://example.org/");
-  assert.equal(data["flags.website-to-scene.website.hideMenus"], "on");
-  await page.getByLabel('Webseite als Szene anzeigen',{exact:true}).uncheck();
-  await page.locator('input[type="text"]').fill("");
-  assert.equal(await page.locator("#config").evaluate(form => form.checkValidity()), true);
-  await page.evaluate(() => document.querySelector("#config").remove());
-  assert.equal(await page.locator('#wts-menu-toggle').isVisible(), false);
-  await page.evaluate(() => {scene.config.hideMenus=true;Hooks.call('updateScene',scene)});
-  assert.equal(await page.locator('#interface').isVisible(), false);
-  assert.equal(await page.frameLocator('iframe').locator('button').textContent(), 'Angeklickt');
-  await page.getByRole('button',{name:'Foundry-Menüs anzeigen',exact:true}).click();
-  assert.equal(await page.locator('#interface').isVisible(), true);
-  await page.locator('#chat').click();
-  await page.evaluate(() => Hooks.call('updateScene',scene));
-  assert.equal(await page.locator('#interface').isVisible(), true);
-  await page.getByRole('button',{name:'Foundry-Menüs ausblenden',exact:true}).click();
-  assert.equal(await page.locator('#interface').isVisible(), false);
-  await page.frameLocator('iframe').getByText('Angeklickt',{exact:true}).click();
-  await page.evaluate(() => {scene.config.hideMenus=false;Hooks.call('updateScene',scene)});
-  assert.equal(await page.locator('#interface').isVisible(), true);
-  assert.equal(await page.locator('#wts-menu-toggle').isVisible(), false);
   await mkdir("artifacts", {recursive:true});
-  await page.screenshot({path:`artifacts/browser-check-${browserName}.png`});
-  await page.evaluate(() => {
-    Hooks.call('canvasTearDown');
-    game.user.isGM=false;
-    Hooks.call('canvasReady',canvas);
-  });
-  assert.equal(await page.getByText("Alle hierher holen", {exact:true}).count(), 0);
-  await page.evaluate(() => {scene.config.enabled=false;Hooks.call('updateScene',scene)});
-  assert.equal(await page.locator("#wts-overlay").count(), 0);
-  await page.evaluate(() => {scene.config.enabled=true;scene.config.hideMenus=true;Hooks.call('canvasReady',canvas)});
-  assert.equal(await page.locator('#interface').isVisible(), false);
-  await page.evaluate(() => {Hooks.call('canvasTearDown');Hooks.call('canvasReady',{scene:{getFlag:()=>undefined}})});
-  assert.equal(await page.locator("#wts-overlay").count(), 0);
-  assert.equal(await page.locator('#wts-menu-toggle').count(), 0);
-  assert.equal(await page.locator('#interface').isVisible(), true);
-  assert.deepEqual(errors, []);
-  console.log(`Browser checks passed (${browserName}, ${browser.version()}): interactive fullscreen iframe, reachable Foundry UI, responsive viewport, no extra toolbar, retained browsing state, config validation, player role, scene cleanup.`);
+  // Opposite browser locale proves that Foundry's choice controls the module texts.
+  for (const language of ["de", "en", "fr"]) {
+    const text = key => dictionaries[language === "de" ? "de" : "en"]["website-to-scene." + key];
+    const page = await browser.newPage({viewport:{width:1440,height:900},locale:language === "de" ? "en-US" : "de-DE"});
+    const errors = [];
+    page.on("pageerror", error => errors.push(error.message));
+    await page.goto(baseUrl + "/?lang=" + language);
+    await page.waitForFunction(() => globalThis.moduleLoaded === true);
+    await page.evaluate(() => Hooks.call("canvasReady", canvas));
+    await page.locator("#wts-overlay iframe").waitFor();
+    assert.equal(await page.locator("#wts-overlay").getAttribute("aria-label"), text("Scene.OverlayLabel"));
+    assert.equal(await page.locator("#wts-overlay iframe").getAttribute("title"), text("Scene.FrameTitle").replace("{name}", "Roadmap"));
+    await page.frameLocator("iframe").getByText("Eintrag öffnen").click();
+    assert.equal(await page.frameLocator("iframe").locator("button").textContent(), "Angeklickt");
+    await page.locator("#chat").click();
+    await page.getByText('Werkzeuge',{exact:true}).click();
+    await page.getByText('Roadmap',{exact:true}).click();
+    await page.getByText('Makros',{exact:true}).click();
+    assert.deepEqual(await page.evaluate(() => calls), ["chat"]);
+    assert.equal(await page.getByText("Alle hierher holen", {exact:true}).count(), 0);
+    assert.equal(await page.locator('.wts-toolbar, .wts-panel').count(), 0);
+    assert.deepEqual(await page.locator('#wts-overlay iframe').boundingBox(), {x:0,y:0,width:1440,height:900});
+    await page.setViewportSize({width:1100,height:700});
+    assert.deepEqual(await page.locator('#wts-overlay iframe').boundingBox(), {x:0,y:0,width:1100,height:700});
+    await page.setViewportSize({width:1440,height:900});
+    // Unrelated document updates must preserve the browsing state.
+    await page.evaluate(() => Hooks.call("updateScene", scene));
+    assert.equal(await page.frameLocator("iframe").locator("button").textContent(), "Angeklickt");
+    await page.evaluate(() => {
+      const form=document.createElement('form');form.id='config';
+      form.innerHTML='<nav><a data-action="tab" data-group="sheet" data-tab="basics">Grundlagen</a></nav><div class="tab active" data-group="sheet" data-tab="basics"></div>';
+      form.querySelector('a').addEventListener('click', event => {event.preventDefault();calls.push('tab-click')});
+      document.body.append(form);
+      const app={id:'config',isEditable:true,document:scene};
+      Hooks.call('renderSceneConfig',app,form);Hooks.call('renderSceneConfig',app,form);
+    });
+    assert.equal(await page.locator(".wts-config").count(), 1);
+    assert.equal(await page.locator('nav .wts-config').count(), 0);
+    assert.equal(await page.locator('.tab[data-tab="basics"] .wts-config').count(), 1);
+    assert.equal(await page.getByRole('checkbox',{name:text('Scene.HideMenus'),exact:true}).isChecked(), false);
+    assert.equal(await page.getByLabel(text('Scene.Url'),{exact:true}).getAttribute('placeholder'), text('Scene.UrlPlaceholder'));
+    assert.deepEqual(await page.locator('.wts-config .hint').allTextContents(), [text('Scene.HideMenusHint'), text('Scene.UrlHint'), text('Scene.AccessHint')]);
+    await page.screenshot({path:`artifacts/browser-config-${browserName}-${language}.png`});
+    await page.getByRole('checkbox',{name:text('Scene.HideMenus'),exact:true}).check();
+    await page.getByLabel(text('Scene.Enabled'),{exact:true}).uncheck();
+    await page.getByLabel(text('Scene.Enabled'),{exact:true}).check();
+    assert.equal(await page.evaluate(() => calls.includes('tab-click')), false);
+    await page.locator('input[type="text"]').fill("javascript:alert(1)");
+    assert.equal(await page.locator("#config").evaluate(form => form.checkValidity()), false);
+    assert.equal(await page.locator('input[type="text"]').evaluate(input => input.validationMessage), text('Errors.Protocol'));
+    for (const [value, key] of [["", "Required"], ["//example.org", "Ambiguous"], ["https://user:pass@example.org", "Credentials"], ["https://[invalid", "InvalidUrl"]]) {
+      await page.getByLabel(text('Scene.Url'),{exact:true}).fill(value);
+      assert.equal(await page.locator('input[type="text"]').evaluate(input => input.validationMessage), text('Errors.' + key));
+    }
+    await page.locator('input[type="text"]').fill("https://example.org/");
+    assert.equal(await page.locator("#config").evaluate(form => form.checkValidity()), true);
+    const data = await page.locator("#config").evaluate(form => Object.fromEntries(new FormData(form)));
+    assert.equal(data["flags.website-to-scene.website.url"], "https://example.org/");
+    assert.equal(data["flags.website-to-scene.website.hideMenus"], "on");
+    await page.getByLabel(text('Scene.Enabled'),{exact:true}).uncheck();
+    await page.locator('input[type="text"]').fill("");
+    assert.equal(await page.locator("#config").evaluate(form => form.checkValidity()), true);
+    await page.evaluate(() => document.querySelector("#config").remove());
+    assert.equal(await page.locator('#wts-menu-toggle').isVisible(), false);
+    await page.evaluate(() => {scene.config.hideMenus=true;Hooks.call('updateScene',scene)});
+    assert.equal(await page.locator('#interface').isVisible(), false);
+    assert.equal(await page.frameLocator('iframe').locator('button').textContent(), 'Angeklickt');
+    assert.equal(await page.locator('#wts-menu-toggle').getAttribute('title'), text('Menu.Show'));
+    await page.getByRole('button',{name:text('Menu.Show'),exact:true}).click();
+    assert.equal(await page.locator('#interface').isVisible(), true);
+    await page.locator('#chat').click();
+    await page.evaluate(() => Hooks.call('updateScene',scene));
+    assert.equal(await page.locator('#interface').isVisible(), true);
+    assert.equal(await page.locator('#wts-menu-toggle').getAttribute('title'), text('Menu.Hide'));
+    await page.getByRole('button',{name:text('Menu.Hide'),exact:true}).click();
+    assert.equal(await page.locator('#interface').isVisible(), false);
+    await page.frameLocator('iframe').getByText('Angeklickt',{exact:true}).click();
+    await page.evaluate(() => {scene.config.hideMenus=false;Hooks.call('updateScene',scene)});
+    assert.equal(await page.locator('#interface').isVisible(), true);
+    assert.equal(await page.locator('#wts-menu-toggle').isVisible(), false);
+    await page.screenshot({path:`artifacts/browser-check-${browserName}-${language}.png`});
+    await page.evaluate(() => {
+      Hooks.call('canvasTearDown');
+      game.user.isGM=false;
+      Hooks.call('canvasReady',canvas);
+    });
+    assert.equal(await page.getByText("Alle hierher holen", {exact:true}).count(), 0);
+    await page.evaluate(() => {scene.config.enabled=false;Hooks.call('updateScene',scene)});
+    assert.equal(await page.locator("#wts-overlay").count(), 0);
+    await page.evaluate(() => {scene.config.enabled=true;scene.config.hideMenus=true;Hooks.call('canvasReady',canvas)});
+    assert.equal(await page.locator('#interface').isVisible(), false);
+    await page.evaluate(() => {Hooks.call('canvasTearDown');Hooks.call('canvasReady',{scene:{getFlag:()=>undefined}})});
+    assert.equal(await page.locator("#wts-overlay").count(), 0);
+    assert.equal(await page.locator('#wts-menu-toggle').count(), 0);
+    assert.equal(await page.locator('#interface').isVisible(), true);
+    await page.evaluate(() => {scene.config.url='javascript:alert(1)';Hooks.call('canvasReady',canvas)});
+    assert.deepEqual(await page.evaluate(() => messages), ["Website to Scene: " + text('Errors.Protocol')]);
+    assert.equal(await page.locator('#wts-overlay').count(), 0);
+    assert.deepEqual(errors, []);
+    console.log(`Browser checks passed (${browserName}, ${browser.version()}, Foundry language ${language}): localized controls/hints/errors/accessibility, interactive fullscreen iframe, reachable Foundry UI, responsive viewport, retained browsing state, config validation, player role, scene cleanup.`);
+    await page.close();
+  }
 } finally {
   await browser?.close();
   await new Promise(done => server.close(done));

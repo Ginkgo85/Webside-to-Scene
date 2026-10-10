@@ -49,3 +49,19 @@ Chromium und Firefox sind nun in CI und Release getrennte Pflichtprüfungen gege
 ## Veröffentlichung
 
 Nach erfolgreicher Prüfung wird der öffentliche Stand auf main gepusht, CI/CodeQL kontrolliert und der beauftragte Release **v1.0.2** über Actions gestartet. Bestehende Releases bleiben erhalten. Die heruntergeladenen öffentlichen Assets werden anschließend mit dem lokalen Build verglichen.
+
+## Sprachunterstützung – 10. Oktober 2026
+
+Version **1.1.0** ist als unveröffentlichte Erweiterung vorbereitet. Foundrys `game.i18n.localize` liefert sämtliche Szenenfelder, Hinweise, Platzhalter, URL-Fehler, Menüknopf-Texte und Barrierefreiheitsbeschriftungen aus `lang/de.json` und `lang/en.json`. Formatvariablen verwenden den zweiten Parameter der Foundry-14-API. Übersetzungen werden als Text in DOM-Eigenschaften eingefügt. Szenenflags und Webseiteninhalt ändern sich nicht.
+
+README erklärt die Foundry-Sprachwahl in beiden Anleitungen, verwendet englische Feldnamen in der englischen Anleitung und unterscheidet die Vorbereitung von der weiterhin veröffentlichten Version 1.0.2. Das vom Nutzer gelieferte deutsche Bild bleibt erhalten.
+
+Tatsächlich lokal bestanden mit Node.js 24.19.0 (direkte Node-Aufrufe, da npm lokal fehlt):
+
+- Quellprüfung: Syntax, vier JSON-Dateien, Metadaten und Secret-Muster.
+- 28 Node-Tests, keine Fehler oder Skips; vollständige DE-/EN-Kataloge, Formatvariablen, sämtliche URL-Fehler und bisherige Release-Schutzregeln.
+- Vollständige Browser-Simulation in Chromium **151.0.7922.34** und Firefox **153.0**, jeweils mit Foundry-Sprache `de`, `en` und `fr` (englischer Rückfall). Abweichende Browsersprache beeinflusst die Modultexte nicht. Interaktion, Menü-Rückweg, Zustands-/Flag-Erhalt, Formularfehler, Benachrichtigungen und Szenenbereinigung bleiben geprüft. Beide Sprachansichten zusätzlich anhand der Screenshots kontrolliert.
+- Reproduzierbarer Paketbau und Paketprüfung: zehn Dateien einschließlich beider Sprachkataloge, exakte Quellbytes und CRC32.
+- `git diff --check` bestanden; vollständiger Diff geprüft.
+
+CI und CodeQL für den gepushten Commit werden anschließend kontrolliert und im Chat gemeldet. Die neue Sprachunterstützung wurde noch nicht live in Foundry oder mit mehreren Spielern geprüft. Kein Release, Tag oder Foundry-Versionseintrag wird durch diesen Entwicklungsauftrag angelegt.

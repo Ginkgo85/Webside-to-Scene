@@ -32,6 +32,8 @@ Bei UI-Änderungen zusätzlich die Browser-Tests mit Chromium und Firefox aus VA
 
 SemVer: PATCH für kompatible Korrekturen, MINOR für neue kompatible Funktionen, MAJOR bei inkompatiblen Änderungen. Versionsquelle ist module.json; package.json, README, CHANGELOG und Download-URL gemeinsam anpassen. Keine führenden Nullen, Prerelease-/Build-Suffixe oder separat gepflegten Tags.
 
+Vorbereitete Versionen in README und CHANGELOG als unveröffentlicht kennzeichnen. Erst bei beauftragter Veröffentlichung die Vorbereitungshinweise entfernen und den Changelog-Eintrag datieren; der Download-Link wird erst durch den geprüften Release gültig.
+
 Conventional Commits: `feat(scene): add optional menu hiding`, `fix(config): place inputs in the content tab`, `ci(release): verify release assets`. Imperativ, kein Schlusspunkt; kurze konkrete Nachricht, bei Bedarf Body mit Was/Warum und tatsächlich ausgeführten Tests.
 
 Nach autorisierter Entwicklung committen/pushen und CI sowie CodeQL für den exakten SHA prüfen. Tags und Releases entstehen ausschließlich im ausdrücklich gestarteten Release-Workflow. Kein Force-Push, kein Überschreiben veröffentlichter Assets. Der vorhandene Release v1.0.0 bleibt erhalten; die öffentliche Anpassung beginnt bei v1.0.1. Die deutsche und englische README-Anleitung zusammen aktuell halten und ihre Sprunglinks prüfen.
@@ -40,6 +42,7 @@ Nach autorisierter Entwicklung committen/pushen und CI sowie CodeQL für den exa
 
 - scripts/main.js: Szenenhooks, DOM-Konfiguration, iframe und lokaler Menüknopf.
 - scripts/url.js: URL-Prüfung, relative Data-Pfade und HTTPS-Regel.
+- lang/de.json und lang/en.json: vollständige Modulübersetzungen; über Foundrys `game.i18n.localize` laden, keine eigene Erkennung der Browser-/Betriebssystemsprache. Formatvariablen über den zweiten Parameter übergeben (Foundry 14). Beide Kataloge und die explizite Release-Dateiliste gemeinsam pflegen.
 - styles/website-to-scene.css: Vollbildfläche, Menüausblendung und Rückkehrknopf.
 - tests/: URL-, Release-/Workflow- und Browserprüfungen.
 - tools/: Quellprüfung, reproduzierbarer ZIP-Bau, Artefaktprüfung und geschützter Release.

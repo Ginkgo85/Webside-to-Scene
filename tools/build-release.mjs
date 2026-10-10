@@ -7,7 +7,8 @@ import assert from "node:assert/strict";
 const root = fileURLToPath(new URL("../", import.meta.url));
 export const releaseFiles = [
   "module.json", "README.md", "CHANGELOG.md", "LICENSE",
-  "scripts/main.js", "scripts/url.js", "styles/website-to-scene.css", "docs/images/scene-settings.png"
+  "scripts/main.js", "scripts/url.js", "styles/website-to-scene.css", "docs/images/scene-settings.png",
+  "lang/en.json", "lang/de.json"
 ].sort();
 
 export function validateManifest(manifest, pkg) {

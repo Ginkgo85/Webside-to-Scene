@@ -1,13 +1,23 @@
+/** Language-independent validation errors, translated by Foundry at the UI boundary. */
+export class WebsiteUrlError extends Error {
+  constructor(key) {
+    super(`website-to-scene.Errors.${key}`);
+    this.name = "WebsiteUrlError";
+  }
+}
+
 /** Accept explicit web URLs and paths relative to Foundry's Data directory. */
 export function resolveWebsiteUrl(value, base = document.baseURI) {
   const input = String(value ?? "").trim();
-  if (!input) throw new Error("Bitte eine Webseiten-Adresse eintragen.");
-  if (/^[\\/]{2}|\\/.test(input)) throw new Error("Bitte eine vollständige https://-Adresse oder einen relativen Foundry-Pfad verwenden.");
-  const url = new URL(input, base);
-  if (!["https:", "http:"].includes(url.protocol)) throw new Error("Nur HTTP(S)-Adressen oder relative Foundry-Pfade sind erlaubt.");
-  if (url.username || url.password) throw new Error("Bitte keine Zugangsdaten in der Adresse angeben.");
+  if (!input) throw new WebsiteUrlError("Required");
+  if (/^[\\/]{2}|\\/.test(input)) throw new WebsiteUrlError("Ambiguous");
+  let url;
+  try { url = new URL(input, base); }
+  catch { throw new WebsiteUrlError("InvalidUrl"); }
+  if (!["https:", "http:"].includes(url.protocol)) throw new WebsiteUrlError("Protocol");
+  if (url.username || url.password) throw new WebsiteUrlError("Credentials");
   if (new URL(base).protocol === "https:" && url.protocol === "http:") {
-    throw new Error("Foundry läuft über HTTPS. Bitte auch für die Webseite HTTPS verwenden.");
+    throw new WebsiteUrlError("MixedContent");
   }
   return url.href;
 }

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0 – unveröffentlicht
+
+- Deutsche und englische Modultexte folgen automatisch Foundrys eingestellter Sprache; andere Sprachen verwenden Foundrys englischen Rückfall.
+- Szenenbeschriftungen, Hilfetexte, Platzhalter, URL-Fehlermeldungen und Menüknopf-/Barrierefreiheitstexte übersetzt. Webseiteninhalt und gespeicherte Szenenflags bleiben erhalten.
+- Sprachdateien im Manifest und Release-ZIP enthalten; beide Sprachen sowie englischer Rückfall werden in Chromium und Firefox simuliert geprüft.
+- README um Sprachverhalten ergänzt und englische Anleitung auf die englischen Bedienelemente umgestellt.
+
 ## 1.0.2 – 2026-10-09
 
 - Verbliebene Links zur Release-Seite aus der deutschen und englischen README entfernt. Installation über die Manifest-Adresse bleibt beschrieben.
