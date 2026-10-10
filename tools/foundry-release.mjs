@@ -50,7 +50,9 @@ export async function notifyFoundry({publish = false, env = process.env, run = c
     throw new Error("Foundry submission requires a manually dispatched release workflow.");
   }
   const token = env.FOUNDRY_RELEASE_TOKEN;
-  if (!/^fvttp_[A-Za-z0-9_-]{16,}$/.test(token ?? "")) {
+  // Foundry tokens may contain punctuation. Reject whitespace and control characters.
+  if (typeof token !== "string" || !token.startsWith("fvtt" + "p_")
+    || token.length < 22 || /[^\x21-\x7e]/.test(token)) {
     throw new Error("The repository secret FOUNDRY_RELEASE_TOKEN is missing or invalid.");
   }
   const {version, tag} = await info();

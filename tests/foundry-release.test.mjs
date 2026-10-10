@@ -63,7 +63,9 @@ test("Foundry publication follows verified tag, public release and both exact an
 test("unsafe context, missing secret or unverified build prevent every Foundry request", async () => {
   for (const overrides of [{GITHUB_ACTIONS: "false"}, {GITHUB_EVENT_NAME: "push"},
     {GITHUB_REF: "refs/heads/feature"}, {GITHUB_REPOSITORY: "other/repo"},
-    {GITHUB_SHA: "b".repeat(40)}, {FOUNDRY_RELEASE_TOKEN: ""}, {FOUNDRY_RELEASE_TOKEN: "bad"}]) {
+    {GITHUB_SHA: "b".repeat(40)}, {FOUNDRY_RELEASE_TOKEN: ""}, {FOUNDRY_RELEASE_TOKEN: "bad"},
+    {FOUNDRY_RELEASE_TOKEN: token + "\n"}, {FOUNDRY_RELEASE_TOKEN: token + " "},
+    {FOUNDRY_RELEASE_TOKEN: token + "\u0000"}]) {
     const f = fixture();
     await assert.rejects(notifyFoundry({...f, publish: true, env: {...f.env, ...overrides}}));
     assert.deepEqual(f.calls, []);
@@ -71,6 +73,20 @@ test("unsafe context, missing secret or unverified build prevent every Foundry r
   const f = fixture();
   await assert.rejects(notifyFoundry({...f, publish: true, verify: async () => {throw new Error("Bad ZIP");}}));
   assert.deepEqual(f.calls, []);
+});
+
+test("Foundry punctuation tokens are passed unchanged only in the authorization boundary", async () => {
+  const f = fixture();
+  const punctuationToken = "fvtt" + "p_" + "synthetic!@#$%^&*()[]{},:;?";
+  const env = {...f.env, FOUNDRY_RELEASE_TOKEN: punctuationToken};
+  let count = 0;
+  assert.deepEqual(await notifyFoundry({...f, env, post: async (secret, body) => {
+    assert.equal(secret, punctuationToken);
+    assert.equal(JSON.stringify(body).includes(secret), false);
+    count++;
+    return {status: 200, data: {status: "success", page, message: dryMessage}};
+  }}), {version: "1.1.0", published: false});
+  assert.equal(count, 1);
 });
 
 test("wrong module, version, tag or download prevents submission", async () => {

@@ -188,6 +188,7 @@ test("known secret patterns fail without exposing the matched value", () => {
     "https://discord.com/api/webhooks/" + "1".repeat(18) + "/" + "synthetic_".repeat(4),
     "gh" + "p_" + "x".repeat(36),
     "fvtt" + "p_" + "x".repeat(40),
+    "fvtt" + "p_" + "synthetic!@#$%^&*()[]{},:;?",
     "-----BEGIN " + "PRIVATE KEY-----"
   ];
   for (const sample of samples) assert.throws(() => assertNoSecrets(sample, "fixture"), error => {
