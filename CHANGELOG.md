@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.0 – unveröffentlicht
+## 1.1.0 – 2026-10-10
 
 - Deutsche und englische Modultexte folgen automatisch Foundrys eingestellter Sprache; andere Sprachen verwenden Foundrys englischen Rückfall.
 - Szenenbeschriftungen, Hilfetexte, Platzhalter, URL-Fehlermeldungen und Menüknopf-/Barrierefreiheitstexte übersetzt. Webseiteninhalt und gespeicherte Szenenflags bleiben erhalten.

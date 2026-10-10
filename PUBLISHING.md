@@ -2,7 +2,7 @@
 
 ## Ablauf
 
-1. Gewünschte Änderungen und konsistente neue Version auf `main` pushen. **v1.0.0**, **v1.0.1** und **v1.0.2** sind veröffentlicht und bleiben erhalten; **1.1.0** ist vorbereitet. Bei beauftragter Veröffentlichung die Vorbereitungshinweise in README entfernen und den Changelog-Eintrag datieren.
+1. Gewünschte Änderungen und konsistente neue Version auf `main` pushen. **v1.0.0**, **v1.0.1**, **v1.0.2** und **v1.1.0** sind veröffentlicht und bleiben erhalten. Für die nächste Veröffentlichung eine neue Versionsnummer vorbereiten; vor dem Start die Vorbereitungshinweise in README entfernen und den Changelog-Eintrag datieren.
 2. CI und CodeQL für genau diesen Commit abwarten. Bei UI-Änderungen die relevanten Live-Foundry-Fälle aus VALIDIERUNG.md prüfen.
 3. GitHub → **Actions → Release → Run workflow → main**, Modus **release**.
 
@@ -42,7 +42,7 @@ In Foundry unter **Zusatzmodule → Modul installieren → Manifest-URL** verwen
 Alternativ die ZIP aus dem öffentlichen Release herunterladen:
 
 ```sh
-gh release download v1.0.2 --repo Ginkgo85/Webside-to-Scene --pattern website-to-scene.zip --dir downloads/v1.0.2
+gh release download v1.1.0 --repo Ginkgo85/Webside-to-Scene --pattern website-to-scene.zip --dir downloads/v1.1.0
 ```
 
 Die ZIP enthält `module.json` im Root. In `Data/modules/website-to-scene/` entpacken und Foundry neu starten. Vor einem Update eigene geänderte Moduldateien sichern. Die README enthält deutsche und englische Anleitungen mit Sprunglinks.
@@ -59,6 +59,8 @@ Der Nutzer hat am 9. Oktober 2026 zusätzlich die Einreichung im offiziellen Fou
 
 Die öffentliche Freischaltung wurde am 10. Oktober 2026 anhand der anonym erreichbaren [Modulseite](https://foundryvtt.com/packages/website-to-scene) bestätigt. Die README beschreibt die Installation über Foundrys Modulsuche und die Manifest-URL als Alternative.
 
-Foundry verweist auf die bestehenden GitHub-Dateien. Der Versionseintrag verwendet `https://github.com/Ginkgo85/Webside-to-Scene/releases/download/v1.0.2/module.json`, die Release-Notizen `https://github.com/Ginkgo85/Webside-to-Scene/releases/tag/v1.0.2` und dieselbe Kompatibilität wie module.json: Minimum/Verified **14.369**, Maximum **14**. Den festen Manifest-Link pro Version verwenden; nicht `releases/latest` in den Foundry-Versionseintrag übernehmen.
+Der Nutzer startete am 10. Oktober 2026 den Release für **1.1.0**. [Lauf 38052233200](https://github.com/Ginkgo85/Webside-to-Scene/actions/runs/38052233200) bestand CodeQL, sämtliche Node-/Browser-/Paketprüfungen, API-Dry-run, GitHub-Veröffentlichung und die automatische Foundry-Eintragung. Die öffentliche Modulseite und anonyme Downloads wurden anschließend kontrolliert; Nachweise stehen in REVIEW.md.
 
-Künftige Versionen erst nach den bisherigen Quell-, Node-, Browser-, CodeQL- und Paketprüfungen sowie verifiziertem GitHub-Release bei Foundry eintragen. Der erweiterte Release-Workflow übernimmt dies automatisch, sobald das autorisierte Secret hinterlegt ist. Bestehende Foundry-Einträge werden nicht überschrieben. Die Einrichtung ist kein Auftrag, die vorbereitete Version 1.1.0 jetzt zu veröffentlichen.
+Foundry verweist auf die bestehenden GitHub-Dateien. Der aktuelle Versionseintrag verwendet `https://github.com/Ginkgo85/Webside-to-Scene/releases/download/v1.1.0/module.json`, die Release-Notizen `https://github.com/Ginkgo85/Webside-to-Scene/releases/tag/v1.1.0` und dieselbe Kompatibilität wie module.json: Minimum/Verified **14.369**, Maximum **14**. Den festen Manifest-Link pro Version verwenden; nicht `releases/latest` in den Foundry-Versionseintrag übernehmen.
+
+Künftige Versionen erst nach den bisherigen Quell-, Node-, Browser-, CodeQL- und Paketprüfungen sowie verifiziertem GitHub-Release bei Foundry eintragen. Der erweiterte Release-Workflow übernimmt dies automatisch mit dem hinterlegten Secret. Bestehende Foundry-Einträge und GitHub-Assets werden nicht überschrieben. Eine Dokumentationskorrektur nach Veröffentlichung erzeugt keinen neuen Release; Download-Dateien sind mit dem Build des veröffentlichten Tags zu vergleichen, nicht mit einem späteren main.

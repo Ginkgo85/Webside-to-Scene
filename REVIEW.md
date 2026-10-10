@@ -1,6 +1,6 @@
 # Einrichtung und Release-Prüfstand
 
-Stand: 9. Oktober 2026. Ziel: öffentliche Anpassung und abschließende README-Korrektur **1.0.2** für Foundry **14.369**.
+Aktueller Stand: **1.1.0** ist am 10. Oktober 2026 auf GitHub und bei Foundry veröffentlicht. Die abschließende Nachkontrolle steht unten. Die früheren Abschnitte dokumentieren den jeweiligen Entwicklungsstand.
 
 ## Ausgangspunkt
 
@@ -73,3 +73,16 @@ Der Nutzer hat die Browser-Übertragung des bestehenden Paket-Tokens als Reposit
 `check-foundry` prüft API-Zugriff ohne Tag, Release oder Versionseintrag. `retry-foundry` wiederholt die vollständigen Prüfungen und nur den Foundry-Schritt; bestehende GitHub-Dateien werden nicht verändert. Ungültige Modi, unpassender Workflow/Branch/Commit, fehlende Tokens und unklare API-Antworten brechen ab. Keine automatischen POST-Wiederholungen, Rohantworten oder Token-Ausgaben. Der Quell-/ZIP-Scanner erkennt zusätzlich Foundry-Token-Muster.
 
 Lokal bestanden: 37 Node-Tests ohne Fehler oder Skips, Quellprüfung, Chromium 151.0.7922.34 und Firefox 153.0 mit allen drei Sprachvarianten, reproduzierbarer Paketbau/Quellenvergleich und actionlint für CI/CodeQL/Release. Die Node-Prüfungen verwenden künstliche Tokens und Antworten; einschließlich Token-Satzzeichen, ausgeschlossener Steuerzeichen und Secret-Erkennung. Der erste echte Prüfmodus stoppte vor dem API-Aufruf an einer zu strengen Token-Zeichenprüfung; diese wurde korrigiert. Einrichtung und erfolgreicher API-Dry-run werden separat im Chat bestätigt; dieser Auftrag veröffentlicht Version 1.1.0 nicht.
+
+## Veröffentlichung 1.1.0 und Nachkontrolle – 10. Oktober 2026
+
+Der Nutzer startete den echten Release manuell. [Lauf 38052233200](https://github.com/Ginkgo85/Webside-to-Scene/actions/runs/38052233200) ist vollständig erfolgreich: CodeQL, 37 Node-Tests, vollständige Simulation in Chromium und Firefox für Deutsch, Englisch und englischen Rückfall, Paketbau/-prüfung, Foundry-Dry-run, GitHub-Veröffentlichung und echter Foundry-Versionseintrag. Tag `v1.1.0` zeigt direkt auf den geprüften Commit `b73a8875aac71fdcc768b6b96a026168043607fa`. Keine neue Live-Foundry- oder Mehrspielerprüfung ist damit nachgewiesen.
+
+Der öffentliche stabile GitHub-Release enthält genau `module.json` (1220 Bytes) und `website-to-scene.zip` (287454 Bytes). Beide wurden ohne Authentifizierung heruntergeladen und stimmen bytegenau mit dem lokalen Build des Tags überein. Alle zehn ZIP-Dateien wurden einschließlich CRC32 und exakten Quellbytes geprüft; beide Sprachkataloge sind enthalten. Das Latest-Manifest liefert identische Bytes und Version 1.1.0.
+
+- SHA256 Manifest: `e9cb24c9b98f6c281ee5641c6d3d0bb9c0fe5f4b6c6c276037a7b5f324b113c7`
+- SHA256 ZIP: `1ee8afb0cea7e9326a086979712b542b7f4b8e546a5c293eb6e68f91b213a2e8`
+
+Die [öffentliche Foundry-Seite](https://foundryvtt.com/packages/website-to-scene) zeigt 1.1.0 mit festem GitHub-Manifest und Release-Notizen sowie Minimum/Verified 14.369 und Maximum 14. Sowohl im Browser als auch per anonymem Abruf bestätigt. Version 1.0.2 bleibt dort erhalten, alle bisherigen GitHub-Releases bleiben unverändert.
+
+Gefundener Dokumentationsfehler: README und Changelog im bereits veröffentlichten ZIP bezeichnen 1.1.0 noch als vorbereitet/unveröffentlicht. Diese Hinweise werden auf main korrigiert. Bestehende Tags/Release-Dateien werden nicht ersetzt; die Korrektur gelangt mit der nächsten ausdrücklich beauftragten Version auch in die Download-ZIP. Funktion und Sprachdateien von 1.1.0 sind vollständig enthalten und geprüft.

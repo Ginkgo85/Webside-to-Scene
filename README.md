@@ -2,7 +2,7 @@
 
 [Deutsch](#deutsch) · [English — jump to the English guide](#english)
 
-**Version 1.1.0 (vorbereitet / unreleased) · Foundry VTT 14.369 · Autor / Author: Ginkgo85 · MIT**
+**Version 1.1.0 · Foundry VTT 14.369 · Autor / Author: Ginkgo85 · MIT**
 
 ![Webseiten-Adresse und optionale Menüausblendung / Scene URL and optional menu hiding](docs/images/scene-settings.png)
 
@@ -20,7 +20,7 @@ Ab Version **1.1.0** erscheinen Beschriftungen, Erklärungen, URL-Fehlermeldunge
 
 Die eingebettete Webseite bestimmt ihre Sprache selbst. Das README-Bild oben zeigt die deutsche Ansicht und bleibt unverändert.
 
-**Veröffentlichungsstand:** Die Sprachunterstützung ist auf GitHub für 1.1.0 vorbereitet. Die derzeit veröffentlichte Version **1.0.2** verwendet weiterhin deutsche Modultexte; die folgenden Installationswege beziehen bis zum nächsten Release diese Version.
+**Veröffentlichungsstand:** Version **1.1.0** mit deutscher und englischer Sprachunterstützung ist auf GitHub und im Foundry-Modulverzeichnis veröffentlicht. Die folgenden Installationswege beziehen diese Version.
 
 ### Installation
 
@@ -92,7 +92,7 @@ Starting with version **1.1.0**, labels, help text, URL validation messages and 
 
 The embedded website controls its own language. The README image above shows the German interface and remains unchanged.
 
-**Release status:** Language support is prepared on GitHub for 1.1.0. The currently published version **1.0.2** still uses German module text; the installation methods below will install that version until the next release.
+**Release status:** Version **1.1.0**, including German and English language support, is published on GitHub and in Foundry's module directory. The installation methods below install this version.
 
 ### Installation
 
