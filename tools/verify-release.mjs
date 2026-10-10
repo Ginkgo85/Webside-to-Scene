@@ -8,7 +8,7 @@ import {releaseFiles, validateManifest} from "./build-release.mjs";
 const root = fileURLToPath(new URL("../", import.meta.url));
 export function assertNoSecrets(text, filename) {
   if (/https:\/\/[^\s"'<>]*discord[^\s"'<>]*\/webhooks\/\d{17,20}\/[A-Za-z0-9_-]{20,}/.test(text)
-    || /(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----)/.test(text)) {
+    || /(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,}|fvttp_[A-Za-z0-9_-]{16,}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----)/.test(text)) {
     throw new Error("Secret pattern detected in " + filename + "; value withheld.");
   }
 }

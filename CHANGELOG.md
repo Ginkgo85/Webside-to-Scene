@@ -6,6 +6,7 @@
 - Szenenbeschriftungen, Hilfetexte, Platzhalter, URL-Fehlermeldungen und Menüknopf-/Barrierefreiheitstexte übersetzt. Webseiteninhalt und gespeicherte Szenenflags bleiben erhalten.
 - Sprachdateien im Manifest und Release-ZIP enthalten; beide Sprachen sowie englischer Rückfall werden in Chromium und Firefox simuliert geprüft.
 - README um Sprachverhalten ergänzt und englische Anleitung auf die englischen Bedienelemente umgestellt.
+- Release-Ablauf meldet neue Versionen nach erfolgreichen Prüfungen und Bytevergleich der öffentlichen GitHub-Dateien automatisch an Foundry. Zusätzlich API-Prüfmodus ohne Speicherung und Wiederholung ausschließlich für Foundry; Paket-Token bleibt ein GitHub-Secret.
 
 ## 1.0.2 – 2026-10-09
 

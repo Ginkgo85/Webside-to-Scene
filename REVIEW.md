@@ -65,3 +65,11 @@ Tatsächlich lokal bestanden mit Node.js 24.19.0 (direkte Node-Aufrufe, da npm l
 - `git diff --check` bestanden; vollständiger Diff geprüft.
 
 CI und CodeQL für den gepushten Commit werden anschließend kontrolliert und im Chat gemeldet. Die neue Sprachunterstützung wurde noch nicht live in Foundry oder mit mehreren Spielern geprüft. Kein Release, Tag oder Foundry-Versionseintrag wird durch diesen Entwicklungsauftrag angelegt.
+
+## Automatische Foundry-Eintragung – 10. Oktober 2026
+
+Der Nutzer hat die Browser-Übertragung des bestehenden Paket-Tokens als Repository-Secret `FOUNDRY_RELEASE_TOKEN` und die Einrichtung der Automatik ausdrücklich autorisiert. Der neue Release-Ablauf behält sämtliche bisherigen Prüfungen vor GitHub-Mutationen bei und ergänzt Foundrys API-Dry-run. Nach GitHub-Veröffentlichung verlangt er exakten Tag-SHA, öffentlichen Release mit genau zwei Assets und anonymen Bytevergleich von Manifest/ZIP, bevor Foundry speichern darf.
+
+`check-foundry` prüft API-Zugriff ohne Tag, Release oder Versionseintrag. `retry-foundry` wiederholt die vollständigen Prüfungen und nur den Foundry-Schritt; bestehende GitHub-Dateien werden nicht verändert. Ungültige Modi, unpassender Workflow/Branch/Commit, fehlende Tokens und unklare API-Antworten brechen ab. Keine automatischen POST-Wiederholungen, Rohantworten oder Token-Ausgaben. Der Quell-/ZIP-Scanner erkennt zusätzlich Foundry-Token-Muster.
+
+Lokal bestanden: 36 Node-Tests ohne Fehler oder Skips, Quellprüfung, Chromium 151.0.7922.34 und Firefox 153.0 mit allen drei Sprachvarianten, reproduzierbarer Paketbau/Quellenvergleich und actionlint für CI/CodeQL/Release. Die Node-Prüfungen verwenden künstliche Tokens und Antworten. Einrichtung und echter API-Dry-run werden separat im Chat bestätigt; dieser Auftrag veröffentlicht Version 1.1.0 nicht.

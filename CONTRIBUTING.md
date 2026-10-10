@@ -46,7 +46,8 @@ Nach autorisierter Entwicklung committen/pushen und CI sowie CodeQL für den exa
 - styles/website-to-scene.css: Vollbildfläche, Menüausblendung und Rückkehrknopf.
 - tests/: URL-, Release-/Workflow- und Browserprüfungen.
 - tools/: Quellprüfung, reproduzierbarer ZIP-Bau, Artefaktprüfung und geschützter Release.
-- .github/workflows/: CI, wiederverwendbarer CodeQL-Workflow und manuell gestarteter Release. Release wiederholt alle CI-Prüfungen und verlangt zusätzlich einen erfolgreichen CodeQL-Lauf.
+- tools/foundry-release.mjs: Foundry-API-Prüfung und Versionseintrag; echte Eintragung erst nach geprüftem Tag, öffentlichem GitHub-Release und anonymem Bytevergleich beider Assets. Tests verwenden ausschließlich künstliche Tokens und Antworten.
+- .github/workflows/: CI, wiederverwendbarer CodeQL-Workflow und manuell gestarteter Release. Release wiederholt alle CI-Prüfungen und verlangt zusätzlich einen erfolgreichen CodeQL-Lauf. Modi `release`, `check-foundry` (keine Veröffentlichung) und `retry-foundry` (keine GitHub-Mutation) stehen in PUBLISHING.md. Foundry-Secret nur den beiden API-Schritten geben, niemals CI, CodeQL oder Pull-Request-Code.
 - docs/images/scene-settings.png: vom Nutzer bereitgestelltes README-Bild, ebenfalls im ZIP.
 
 Alle Szenenflags bleiben unter `flags.website-to-scene.website`: `enabled`, `url`, `hideMenus`. Unbekannte alte Felder nicht zur Migration verwenden. Der lokale Menüknopf speichert keine Änderung in Foundry.

@@ -187,6 +187,7 @@ test("known secret patterns fail without exposing the matched value", () => {
   const samples = [
     "https://discord.com/api/webhooks/" + "1".repeat(18) + "/" + "synthetic_".repeat(4),
     "gh" + "p_" + "x".repeat(36),
+    "fvtt" + "p_" + "x".repeat(40),
     "-----BEGIN " + "PRIVATE KEY-----"
   ];
   for (const sample of samples) assert.throws(() => assertNoSecrets(sample, "fixture"), error => {
@@ -207,13 +208,21 @@ test("workflow release is manual only, main-gated and publishes only after succe
   const commands = [...source.matchAll(/^\s+run: (.+)$/gm)].map(match => match[1]).filter(value => value !== "|");
   assert.deepEqual(commands, ["npm test", "npm install --no-save --package-lock=false --ignore-scripts playwright@1.62.1",
     "npx --no-install playwright install --with-deps chromium firefox", "npm run test:browser", "npm run test:browser",
-    "npm run build:release", "npm run test:release", "node tools/release.mjs --publish"]);
+    "npm run build:release", "npm run test:release", "node tools/foundry-release.mjs --dry-run",
+    "node tools/release.mjs --publish", "npm run build:release", "npm run test:release",
+    "node tools/foundry-release.mjs --publish"]);
   assert.doesNotMatch(source, /continue-on-error|always\(\)|if:.*failure|write-all|allowUpdates|--clobber/);
   const ci = await readFile(".github/workflows/ci.yml", "utf8");
   assert.match(ci, /contents: read/);
   assert.doesNotMatch(ci, /--publish|contents: write/);
   const ciCommands = [...ci.matchAll(/^\s+run: (.+)$/gm)].map(match => match[1]);
-  assert.deepEqual(ciCommands, commands.slice(0, -1), "CI and release run the same pre-publication checks");
+  assert.deepEqual(ciCommands, commands.slice(0, 7), "CI and release run the same pre-publication checks");
+  assert.match(source, /default: release/);
+  assert.match(source, /name: Validate Foundry API without saving\r?\n        if: inputs.mode != 'retry-foundry'\r?\n        run: node tools\/foundry-release.mjs --dry-run/);
+  assert.match(source, /name: Create new tag and release\r?\n        if: inputs.mode == 'release'/);
+  assert.match(source, /foundry:\r?\n    needs: release\r?\n    if: inputs.mode != 'check-foundry'\r?\n    permissions:\r?\n      contents: read/);
+  assert.equal([...source.matchAll(/FOUNDRY_RELEASE_TOKEN: \$\{\{ secrets.FOUNDRY_RELEASE_TOKEN \}\}/g)].length, 2);
+  assert.doesNotMatch(ci, /FOUNDRY_RELEASE_TOKEN|foundry-release.mjs/);
   for (const workflow of [source, ci]) {
     assert.match(workflow, /name: Test interactive scene in Chromium\r?\n        run: npm run test:browser/);
     assert.match(workflow, /name: Test interactive scene in Firefox\r?\n        run: npm run test:browser\r?\n        env:\r?\n          TEST_BROWSER: firefox/);

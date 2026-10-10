@@ -2,6 +2,15 @@ name: Release
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Release, API check without saving, or retry Foundry only
+        type: choice
+        default: release
+        options:
+          - release
+          - check-foundry
+          - retry-foundry
 
 permissions:
   contents: read
@@ -31,6 +40,12 @@ jobs:
             echo "::error::Release kann nur auf main gestartet werden."
             exit 1
           fi
+          if [[ "$RELEASE_MODE" != "release" && "$RELEASE_MODE" != "check-foundry" && "$RELEASE_MODE" != "retry-foundry" ]]; then
+            echo "::error::Unknown release mode."
+            exit 1
+          fi
+        env:
+          RELEASE_MODE: ${{ inputs.mode }}
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.sha }}
@@ -55,7 +70,37 @@ jobs:
         run: npm run build:release
       - name: Verify release artifacts
         run: npm run test:release
+      - name: Validate Foundry API without saving
+        if: inputs.mode != 'retry-foundry'
+        run: node tools/foundry-release.mjs --dry-run
+        env:
+          FOUNDRY_RELEASE_TOKEN: ${{ secrets.FOUNDRY_RELEASE_TOKEN }}
       - name: Create new tag and release
+        if: inputs.mode == 'release'
         run: node tools/release.mjs --publish
         env:
           GH_TOKEN: ${{ github.token }}
+  foundry:
+    needs: release
+    if: inputs.mode != 'check-foundry'
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Rebuild the checked commit
+        run: npm run build:release
+      - name: Verify rebuilt artifacts
+        run: npm run test:release
+      - name: Verify public assets and register Foundry version
+        run: node tools/foundry-release.mjs --publish
+        env:
+          FOUNDRY_RELEASE_TOKEN: ${{ secrets.FOUNDRY_RELEASE_TOKEN }}
