@@ -40,7 +40,7 @@ Unter PowerShell vor dem Firefox-Aufruf `$env:TEST_BROWSER = 'firefox'` setzen u
 5. Webseite deaktivieren, URL ändern und Szene löschen: Overlay wird aktualisiert/entfernt; keine verdeckten Menüs bleiben zurück.
 6. GM und Spieler in getrennten Browsern verbinden. Selbstständigen Spielerzugriff mit Alle Spieler/Navigation sowie normale Szenenaktivierung für die Runde prüfen. Lokales Menüeinblenden darf die anderen Benutzer nicht verändern.
 7. Erlaubte externe Seite, relativen Data-Pfad, HTTPS, route-prefix und eine Einbettung verweigernde Seite prüfen. Keine Sperre umgehen; Verhalten/Fehler dokumentieren.
-8. Foundry mit deutscher und englischer Sprache neu laden: Szenenfelder, Hilfetexte, URL-Fehler und ☰-/×-Tooltips prüfen. Webseite behält ihre eigene Sprache; vorhandene URL-/Checkbox-Werte bleiben erhalten. Die Sprachänderung dieses Entwicklungsstands ist noch nicht live in Foundry geprüft.
+8. Foundry mit deutscher und englischer Sprache neu laden: Szenenfelder, Hilfetexte, URL-Fehler und ☰-/×-Tooltips prüfen. Webseite behält ihre eigene Sprache; vorhandene URL-/Checkbox-Werte bleiben erhalten. Der Nutzer hat den manuellen Sprachwechsel in einer Testwelt als bestanden bestätigt; der genaue bestätigte Umfang steht unten.
 
 ## Bisherige tatsächliche Nachweise
 
@@ -48,7 +48,9 @@ Am 9. Oktober 2026 wurden in der laufenden lokalen Foundry-Version 14.369 die Sz
 
 Der Nutzer hat am 9. Oktober 2026 bestätigt, dass der bisherige manuelle Praxistest durchgeführt wurde und bestanden ist. Diese Bestätigung ergänzt die bisherigen Live-Nachweise; sie bestätigt nicht pauschal sämtliche Fälle des Testplans oder weitere Browser-, Mehrspieler- und Proxy-/HTTPS-Konfigurationen.
 
-Am selben Tag bestand der vollständige simulierte Browser-Test zusätzlich mit Playwright-Firefox **153.0** unter Windows. Die bestehende Prüfung mit Microsoft Edge **154.0.4258.62** bestand nach der Erweiterung ebenfalls. CI und Release führen ab dieser Änderung Chromium und Firefox als getrennte Pflichtprüfungen aus. Ein Live-Foundry-Praxistest in Firefox ist damit nicht nachgewiesen.
+Am 11. Oktober 2026 hat der Nutzer zusätzlich den durchgeführten manuellen Sprachtest in einer Testwelt für Website to Scene **1.1.0** mit Foundry **14.369** als bestanden bestätigt: Der Wechsel zwischen Deutsch und Englisch funktioniert, die Modultexte folgen der eingestellten Foundry-Sprache. Nach der zuvor berichteten Abweichung in der Foundry-App wurde die Sprache innerhalb der geöffneten Welt unter Core → Language Preference eingestellt; anschließend bestätigte der Nutzer die korrekte Anzeige. App und Browser können unterschiedliche clientbezogene Spracheinstellungen verwenden. Dies ist ein vom Nutzer bestätigter Live-Test, keine Browser-Simulation und kein Nachweis aller weiteren Testfälle.
+
+Am 9. Oktober 2026 bestand der vollständige simulierte Browser-Test zusätzlich mit Playwright-Firefox **153.0** unter Windows. Die bestehende Prüfung mit Microsoft Edge **154.0.4258.62** bestand nach der Erweiterung ebenfalls. CI und Release führen ab dieser Änderung Chromium und Firefox als getrennte Pflichtprüfungen aus. Ein Live-Foundry-Praxistest in Firefox ist damit nicht nachgewiesen.
 
 Für jede Veröffentlichung werden Quell-, Node-, Browser- und Paketprüfungen erneut ausgeführt. Aktuelle Ergebnisse und der genaue GitHub-Stand stehen in REVIEW.md. Mehrspielerverhalten, andere Browser/Foundry-Versionen und verschiedene Proxy-/HTTPS-Konfigurationen sind nicht vollständig live geprüft. Ein erfolgreiches iframe-Ladeereignis allein beweist keine erfolgreiche externe Seite.
 

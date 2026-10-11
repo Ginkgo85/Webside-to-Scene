@@ -68,7 +68,7 @@ Beim Verlassen der Szene erscheint die normale Oberfläche automatisch wieder. B
 - Nur vertraute Webseiten eintragen. Interaktive Skripte sind erlaubt; das Modul injiziert keine Foundry-API. Bei eigenen HTML-Dateien auf derselben Domain ist die iframe-Sandbox keine vollständige Sicherheitsgrenze.
 - Foundry-Werkzeuge bearbeiten keine Tokens oder Zeichnungen innerhalb der Webseite. Für Foundry-Tastenkürzel zuerst ein Foundry-Bedienelement anklicken.
 - Foundrys vollständig abgeschalteter Canvas wird nicht unterstützt. Andere Oberflächenmodule können zusätzliche Elemente einblenden.
-- Manueller Praxistest mit Foundry **14.369** durchgeführt und vom Nutzer bestätigt. Andere Versionen sowie Mehrspieler- und Proxy-/HTTPS-Konfigurationen sind nicht vollständig live geprüft.
+- Manueller Praxistest mit Foundry **14.369** durchgeführt und vom Nutzer bestätigt. Zusätzlich wurde der Sprachwechsel Deutsch/Englisch für Modul **1.1.0** in einer Testwelt manuell geprüft und am **11. Oktober 2026** als bestanden bestätigt. Andere Versionen sowie Mehrspieler- und Proxy-/HTTPS-Konfigurationen sind nicht vollständig live geprüft.
 
 ### Support und Lizenz
 
@@ -140,7 +140,7 @@ Leaving the scene automatically restores the normal interface. Already open wind
 - Only embed trusted websites. Interactive scripts are allowed; the module does not inject Foundry's API. For HTML hosted on Foundry's own domain, the iframe sandbox is not a complete security boundary.
 - Foundry tools cannot edit tokens or drawings inside the website. Click a Foundry control before using Foundry keyboard shortcuts.
 - Completely disabling Foundry's canvas is not supported. Other interface modules may show additional elements.
-- Manual testing with Foundry **14.369** has been completed and confirmed by the user. Other versions, multiplayer and proxy/HTTPS configurations have not been fully tested live.
+- Manual testing with Foundry **14.369** has been completed and confirmed by the user. Switching between German and English in module **1.1.0** was also manually tested in a test world and confirmed as passing on **October 11, 2026**. Other versions, multiplayer and proxy/HTTPS configurations have not been fully tested live.
 
 ### Support and license
 

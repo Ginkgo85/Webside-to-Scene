@@ -86,3 +86,9 @@ Der öffentliche stabile GitHub-Release enthält genau `module.json` (1220 Bytes
 Die [öffentliche Foundry-Seite](https://foundryvtt.com/packages/website-to-scene) zeigt 1.1.0 mit festem GitHub-Manifest und Release-Notizen sowie Minimum/Verified 14.369 und Maximum 14. Sowohl im Browser als auch per anonymem Abruf bestätigt. Version 1.0.2 bleibt dort erhalten, alle bisherigen GitHub-Releases bleiben unverändert.
 
 Gefundener Dokumentationsfehler: README und Changelog im bereits veröffentlichten ZIP bezeichnen 1.1.0 noch als vorbereitet/unveröffentlicht. Diese Hinweise werden auf main korrigiert. Bestehende Tags/Release-Dateien werden nicht ersetzt; die Korrektur gelangt mit der nächsten ausdrücklich beauftragten Version auch in die Download-ZIP. Funktion und Sprachdateien von 1.1.0 sind vollständig enthalten und geprüft.
+
+## Bestätigter manueller Sprachtest – 11. Oktober 2026
+
+Der Nutzer bestätigt den durchgeführten manuellen Test in einer Testwelt als bestanden: In Website to Scene **1.1.0** unter Foundry **14.369** funktioniert der Sprachwechsel zwischen Deutsch und Englisch; die Modultexte werden entsprechend angezeigt. Die zuvor deutsche Anzeige in der englischen Foundry-App ließ sich durch die clientbezogene Spracheinstellung innerhalb der Welt beheben. Keine Änderung am Modulcode war erforderlich.
+
+Dieser Live-Nachweis ergänzt die bisherigen automatisierten Simulationen. Er bestätigt den Sprachwechsel und die Modultexte, nicht pauschal alle URL-Fehler, Tooltips, Zustands-/Flag-Erhalt, Mehrspieler- oder Proxy-/HTTPS-Fälle des Testplans. Die früheren Aussagen „noch nicht live geprüft“ beziehen sich auf den damaligen Entwicklungs-/Release-Stand und werden durch diese spätere Nutzerbestätigung ergänzt. README und VALIDIERUNG.md sind aktualisiert; daraus entsteht kein neuer Release und keine Ersetzung bestehender Release-Dateien auf GitHub oder bei Foundry.
