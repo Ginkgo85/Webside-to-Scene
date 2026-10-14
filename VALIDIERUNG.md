@@ -33,6 +33,8 @@ Unter PowerShell vor dem Firefox-Aufruf `$env:TEST_BROWSER = 'firefox'` setzen u
 
 ## Live-Foundry-Testplan
 
+Die Prüfung einer niedrigeren Mindestversion **14.359** wird separat vorbereitet: [Testkopie, Voraussetzungen und Ergebnisprotokoll](docs/FOUNDRY-14.359-TEST.md). `node tools/prepare-foundry-test.mjs` erzeugt eine isolierte lokale Kopie und künstliche HTML-Seite unter `artifacts/`. Dies senkt die reguläre Mindestversion nicht und ist kein bestandener Live-Test.
+
 1. Modul in einer eigenen Foundry-14.369-Testwelt aktivieren. Webseite pro Szene eintragen/speichern, Formular erneut öffnen: Werte erhalten.
 2. Ohne Menü-Haken die Vollbildfläche und Foundrys Szene-/Chat-/Makro-Bedienung prüfen.
 3. Menü-Haken aktivieren/speichern: Oberfläche einschließlich DSA-Leisten verschwindet. Webseite bleibt bedienbar; ☰ blendet Menüs lokal wieder ein/aus.

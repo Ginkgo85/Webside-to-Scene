@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="de">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Website to Scene – künstliche Testseite</title>
+<style>
+  html { color-scheme: light dark; font: 18px/1.5 system-ui, sans-serif; }
+  body { margin: 0; }
+  main { max-width: 42rem; margin: auto; padding: 5rem 2rem; }
+  button, input { font: inherit; padding: .6rem; }
+  label { display: block; margin: 1rem 0; }
+  #bottom { margin-top: 100vh; padding: 2rem 0; }
+</style>
+<main>
+  <h1>Website to Scene – Testseite</h1>
+  <p>Nur künstliche Inhalte. Keine Anmeldung, Speicherung oder Verbindung zu anderen Diensten.</p>
+  <p>Diese Seite bleibt Deutsch, auch wenn Foundrys Sprache gewechselt wird.</p>
+  <button id="counter" type="button">Klicks: 0</button>
+  <label>Testnotiz <input id="note" placeholder="Zum Beispiel: Test 14.359" autocomplete="off"></label>
+  <p>Zähler und Eingabe gelten nur in diesem iframe. Ein anderer Benutzer hat eigene Werte.
+    Beim Neuladen oder Verlassen der Szene werden sie zurückgesetzt.</p>
+  <a href="#bottom">Zum Ende scrollen</a>
+  <section id="bottom"><h2>Seitenende erreicht</h2><a href="#top">Zurück nach oben</a></section>
+</main>
+<script>
+  let clicks = 0;
+  document.querySelector("main").id = "top";
+  document.querySelector("#counter").addEventListener("click", event => {
+    event.currentTarget.textContent = `Klicks: ${++clicks}`;
+  });
+</script>
+</html>

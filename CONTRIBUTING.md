@@ -46,6 +46,7 @@ Nach autorisierter Entwicklung committen/pushen und CI sowie CodeQL für den exa
 - styles/website-to-scene.css: Vollbildfläche, Menüausblendung und Rückkehrknopf.
 - tests/: URL-, Release-/Workflow- und Browserprüfungen.
 - tools/: Quellprüfung, reproduzierbarer ZIP-Bau, Artefaktprüfung und geschützter Release.
+- tools/prepare-foundry-test.mjs: lokale Testkopie für Foundry 14.359, ohne Änderungen am regulären Manifest oder an Installationen; Anleitung unter docs/FOUNDRY-14.359-TEST.md. Keine Release-/Foundry-API-Aufrufe.
 - tools/foundry-release.mjs: Foundry-API-Prüfung und Versionseintrag; echte Eintragung erst nach geprüftem Tag, öffentlichem GitHub-Release und anonymem Bytevergleich beider Assets. Tests verwenden ausschließlich künstliche Tokens und Antworten.
 - .github/workflows/: CI, wiederverwendbarer CodeQL-Workflow und manuell gestarteter Release. Release wiederholt alle CI-Prüfungen und verlangt zusätzlich einen erfolgreichen CodeQL-Lauf. Modi `release`, `check-foundry` (keine Veröffentlichung) und `retry-foundry` (keine GitHub-Mutation) stehen in PUBLISHING.md. Foundry-Secret nur den beiden API-Schritten geben, niemals CI, CodeQL oder Pull-Request-Code.
 - docs/images/scene-settings.png: vom Nutzer bereitgestelltes README-Bild, ebenfalls im ZIP.

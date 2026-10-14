@@ -53,10 +53,12 @@ const assets = new Map(await Promise.all([
   type: file.endsWith(".js") ? "text/javascript" : "text/css",
   data: await readFile(new URL("../" + file, import.meta.url))
 }])));
+const manualTestPage = await readFile(new URL("fixtures/manual-scene.html", import.meta.url));
 const server = createServer(async (req, res) => {
   try {
     if (["/", "/?lang=de", "/?lang=en", "/?lang=fr"].includes(req.url)) { res.setHeader("Content-Type", "text/html; charset=utf-8"); return res.end(fixture); }
     if (req.url === "/embedded") { res.setHeader("Content-Type", "text/html; charset=utf-8"); return res.end('<h1 style="margin-left:400px">Interaktive Roadmap</h1><button style="margin:150px 0 0 400px" onclick="this.textContent=\'Angeklickt\'">Eintrag öffnen</button>'); }
+    if (req.url === "/manual-test-page") { res.setHeader("Content-Type", "text/html; charset=utf-8"); return res.end(manualTestPage); }
     const asset = assets.get(req.url);
     if (!asset) {res.writeHead(404);return res.end();}
     res.setHeader("Content-Type", asset.type);
@@ -71,6 +73,17 @@ try {
     assert.equal((await fetch(baseUrl + route)).status, 404, "Fixture must refuse unlisted assets");
   }
   browser = await browserType.launch({...(channel ? {channel} : {}),headless:true});
+  // Exercise the page supplied for real Foundry tests without claiming any Core compatibility.
+  const manualPage = await browser.newPage({viewport:{width:1100,height:700}});
+  await manualPage.goto(baseUrl + "/manual-test-page");
+  await manualPage.getByRole("button", {name:"Klicks: 0"}).click();
+  assert.equal(await manualPage.locator("#counter").textContent(), "Klicks: 1");
+  await manualPage.getByLabel("Testnotiz").fill("Test 14.359");
+  assert.equal(await manualPage.locator("#note").inputValue(), "Test 14.359");
+  await manualPage.getByRole("link", {name:"Zum Ende scrollen"}).click();
+  const bottom = await manualPage.locator("#bottom").boundingBox();
+  assert.ok(bottom.y >= 0 && bottom.y < 700, "Manual fixture must scroll to its end");
+  await manualPage.close();
   await mkdir("artifacts", {recursive:true});
   // Opposite browser locale proves that Foundry's choice controls the module texts.
   for (const language of ["de", "en", "fr"]) {
