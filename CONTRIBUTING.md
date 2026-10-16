@@ -19,6 +19,8 @@ Erwartet: `main` und `https://github.com/Ginkgo85/Webside-to-Scene.git`. Bei fre
 
 ## Lokal prüfen
 
+Für die Wiederherstellung nach einer Neuinstallation unter Windows: [Lokale Testeinrichtung](docs/LOKALE-TESTEINRICHTUNG.md) mit Node.js/npm, Git-Einstellungen, Playwright und dauerhaftem Browsercache.
+
 ```sh
 npm test
 npm run build:release

@@ -16,7 +16,9 @@ Ohne npm sind die äquivalenten Befehle `node tools/check-project.mjs`, `node --
 
 ## Browser-Test
 
-Die CI und der Release installieren die feste Testversion Playwright 1.62.1 nur im Runner und laden Chromium sowie Firefox. Beide führen denselben vollständigen Browser-Test aus; ein Fehler in einem der Browser verhindert die Veröffentlichung:
+Die [lokale Einrichtung unter Windows](docs/LOKALE-TESTEINRICHTUNG.md) beschreibt die Wiederherstellung von npm und beiden Testbrowsern sowie den hier erprobten dauerhaften Browsercache. Nach einem Terminal-/App-Neustart sind keine manuellen Pfadangaben pro Testlauf nötig.
+
+Die CI und der Release installieren die feste Testversion Playwright 1.62.1 im Runner und laden Chromium sowie Firefox. Beide führen denselben vollständigen Browser-Test aus; ein Fehler in einem der Browser verhindert die Veröffentlichung:
 
 ```sh
 npm install --no-save --package-lock=false --ignore-scripts playwright@1.62.1
