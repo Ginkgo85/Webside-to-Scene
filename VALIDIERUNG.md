@@ -67,6 +67,16 @@ Die Prüfung einer niedrigeren Mindestversion **14.359** wird separat vorbereite
 
 ## Bisherige tatsächliche Nachweise
 
+### Bestandener DSA-Praxistest mit 14.370 – 5. November 2026
+
+Website to Scene **1.1.1** wurde über die sichtbare Oberfläche einer tatsächlich laufenden, gehosteten HTTPS-Welt mit Foundry **14.370**, **Das Schwarze Auge 8.2.1**, **99 aktiven Modulen insgesamt** und Microsoft Edge geprüft. Eine eigene, nur für die Spielleitung zugängliche Testszene diente für die Änderungen. Dies ist ein echter Praxistest, keine Simulation. Der Nutzer bestätigte während des Tests: „scheint ja alles zu klappen“.
+
+Bestanden: deutsche Szenenfelder und gespeicherte Werte, Ablehnung einer HTTP-Adresse unter HTTPS, sichtbare HTTPS-Webseite, Texteingaben und Auswahl im eingebetteten Formular, Ausblenden einschließlich DSA-Leisten/Kalender, lokale Wiederanzeige über den Rückkehrknopf sowie vollständige Entfernung von Webseite und Knopf beim Wechsel zurück zur ursprünglichen Szene. Auch nach einer im iframe verweigerten externen Navigation blieb der Rückkehrknopf bedienbar. Keine Testformulare wurden abgesendet.
+
+Es wurde eine GM-Sitzung geprüft; die aktive Szene für die Runde blieb unverändert. Anschließend wurden die ursprüngliche Szenenansicht und die Oberfläche wiederhergestellt; die eigene Testszene blieb für Wiederholungen erhalten. Keine bestehenden Szeneninhalte wurden bearbeitet. Der Nachweis gilt für diesen Ablauf mit gleichzeitig aktiven Zusatzmodulen, nicht für deren sämtliche Funktionen oder für Mehrspielerbetrieb in dieser gehosteten Welt. Details einschließlich der verweigerten externen Zielseite stehen im [Praxistestprotokoll](REVIEW.md#gehosteter-dsa-praxistest--5-november-2026). Private Weltinhalte, Hostadresse und Screenshots werden nicht ins Repository übernommen.
+
+### Frühere Nachweise
+
 Am 9. Oktober 2026 wurden in der laufenden lokalen Foundry-Version 14.369 die Szenenfelder, iframe-Navigation des Notizbuchs, randlose Vollbildgröße, Seitenleistenbedienung sowie Speichern/Lesen des Menü-Hakens und Rückkehrknopf geprüft. Zusätzlich bestanden die lokalen Browserprüfungen der Entwicklungsstände bis 0.1.3.
 
 Der Nutzer hat am 9. Oktober 2026 bestätigt, dass der bisherige manuelle Praxistest durchgeführt wurde und bestanden ist. Diese Bestätigung ergänzt die bisherigen Live-Nachweise; sie bestätigt nicht pauschal sämtliche Fälle des Testplans oder weitere Browser-, Mehrspieler- und Proxy-/HTTPS-Konfigurationen.

@@ -150,3 +150,36 @@ Die automatisierten Simulationen verwenden weiterhin Node **24.19.0**/Playwright
 ### Übergabe für den Release
 
 Version **1.1.1** wird nur als geprüfter Quellstand auf `main` bereitgestellt. CI und CodeQL für den exakten gepushten Commit müssen erfolgreich sein. Danach kann der Nutzer **Actions → Release → Run workflow → main → release** starten. Der Workflow wiederholt alle Schutzprüfungen und führt anschließend die bereits eingerichtete Foundry-Eintragung aus. Dieser Entwicklungsauftrag startet keinen Release und ändert keine bestehenden Tags oder Assets. Der GitHub-API-Prüfmodus `check-foundry` kann zur letzten Validierung ohne Veröffentlichung genutzt werden.
+
+## Gehosteter DSA-Praxistest – 5. November 2026
+
+**Ergebnis: Die unten aufgeführten Praxisfälle sind bestanden.** Ergänzend zu den isolierten lokalen Tests wurde Website to Scene über die sichtbare Oberfläche in der echten gehosteten DSA-Welt des Nutzers geprüft. Der Nutzer bestätigte während des Tests: „scheint ja alles zu klappen“. Die Ergebnisse beruhen auf tatsächlich beobachteten Bedienabläufen, nicht nur auf dieser Bestätigung oder einem iframe-Ladeereignis.
+
+### Umgebung und Vorgehen
+
+- Foundry Virtual Tabletop **14 Stable, Build 370**; **Das Schwarze Auge 8.2.1**.
+- Website to Scene **1.1.1**, im Modulmanager als aktiviert geprüft; **99 aktive Module insgesamt** (einschließlich Website to Scene).
+- Microsoft Edge, deutsche Foundry-Oberfläche, entfernte Foundry-Instanz über **HTTPS**; eine angemeldete GM-Sitzung.
+- Eigene synthetische Testszene mit Zugang nur für die Spielleitung. Nur die eigene Ansicht wurde gewechselt; die aktive Szene für die Runde und bestehende Szeneninhalte blieben unverändert. Das Spiel blieb pausiert.
+
+### Beobachtete Ergebnisse
+
+| Praxisfall | Ergebnis |
+| --- | --- |
+| Modul und Szenenformular | Bestanden: Version und Aktivierung sichtbar; deutsche Modulfelder im Grundlagen-Inhaltsbereich vorhanden; gespeicherte URL und Checkboxen beim erneuten Öffnen erhalten. |
+| HTTPS-Validierung | Bestanden: `http://example.org` wird vor dem Speichern mit „Foundry läuft über HTTPS. Bitte auch für die Webseite HTTPS verwenden.“ abgewiesen. |
+| Webseitenanzeige | Bestanden: `https://example.org/` wird als echte Seite in der Szenenfläche angezeigt; Foundry-Menüs können zunächst sichtbar bleiben. |
+| DSA-Oberfläche ausblenden | Bestanden: Navigation, Seitenleiste, Werkzeug-/Makroleisten sowie sichtbare DSA-Leisten und Kalender verschwinden. Die Webseite füllt die Fläche, der Rückkehrknopf oben rechts bleibt erreichbar. |
+| Lokale Wiederanzeige | Bestanden: Der Rückkehrknopf stellt die Oberfläche wieder her. Der gespeicherte Menü-Haken bleibt beim erneuten Öffnen des Szenenformulars gesetzt. |
+| Externe Navigation mit Fehler | Die Navigation über den Link der Beispielseite erreicht ein IANA-Ziel, das im iframe die Verbindung verweigert. Das ist **kein bestandener Ladevorgang dieser Zielseite**; die genaue Ursache wurde nicht untersucht. Bestanden ist der Rückweg: Der Modulknopf bleibt auch in diesem Fehlerzustand bedienbar und stellt Foundrys Oberfläche wieder her. |
+| URL-Wechsel und Interaktion | Bestanden: Nach Speichern von `https://httpbin.org/forms/post` erscheint das Testformular. Künstlicher Testtext in einzeiligem Feld und Textbereich sowie eine Radio-Auswahl werden sichtbar übernommen. Das Formular wurde nicht abgesendet. |
+| Zustand beim Menüeinblenden | Bestanden: Die eingegebenen Testtexte und die Auswahl bleiben beim lokalen Wiederanzeigen der Foundry-Menüs erhalten. |
+| Rückkehr zur ursprünglichen Szene | Bestanden: Webseitenfläche und Rückkehrknopf verschwinden vollständig; Foundry-/DSA-Oberfläche erscheint wieder. Die ursprüngliche Szenenansicht wurde wiederhergestellt und der Suchfilter entfernt. |
+
+Die eigene Testszene blieb für spätere Wiederholungen erhalten. Es waren für diese Praxisfälle keine weiteren Änderungen am Modulcode erforderlich. Der Test wurde ohne Änderung der Modulkonfiguration der Welt und ohne Bearbeitung bestehender Spielinhalte durchgeführt. Der lokale Bildnachweis zeigt nur das künstliche Testformular; Screenshots, private Weltinhalte, Dokument-IDs und Hostadresse bleiben außerhalb von Git.
+
+### Aussagegrenzen
+
+Dieser Nachweis ergänzt die zuvor dokumentierten Live-Tests in Chromium/Firefox mit D&D 5e um den echten **DSA-/HTTPS-Praxistest in Edge**. Die früher genannten Einschränkungen zu DSA und HTTPS beschreiben den damaligen isolierten Testlauf und werden für die hier aufgeführten Fälle ergänzt. Die gleichzeitige Aktivierung von 99 Modulen bestätigt keinen vollständigen Funktionstest aller Zusatzmodule. Weitere Spieler, andere Browser auf diesem Host, die Foundry-App, andere Proxy-Konfigurationen, Videoübertragung und Lastverhalten wurden hier nicht zusätzlich geprüft. Die getrennten GM-/Spielertests bleiben die bereits dokumentierten lokalen Tests.
+
+Diese Dokumentation veröffentlicht die Testergebnisse auf GitHub; sie startet keinen Release, verändert keine bestehenden Release-Dateien und legt keinen Foundry-Versionseintrag an.
