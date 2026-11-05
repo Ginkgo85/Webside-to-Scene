@@ -1,6 +1,8 @@
 # Kompatibilitätsprüfung: Foundry 14.359
 
-Status: **Noch nicht durchgeführt.** Die Vorbereitung und Browser-Simulationen beweisen keine Live-Kompatibilität. Die reguläre Mindestversion bleibt **14.369**, Modulversion **1.1.0**. Es wird kein Release gestartet.
+Status: **Noch nicht durchgeführt.** Die Vorbereitung und Browser-Simulationen beweisen keine Live-Kompatibilität. Die reguläre Mindestversion bleibt **14.369**; die Testkopie übernimmt die aktuelle Modulversion aus `module.json`. Es wird kein Release gestartet.
+
+**Korrektur vom 5. November 2026:** HTML im Data-Ordner darf nicht als funktionierende interaktive Webseite vorausgesetzt werden. Foundry liefert solche Dateien in Version 14 absichtlich als Text aus ([Erklärung](https://github.com/foundryvtt/foundryvtt/issues/14375)); das wurde mit 14.370 live bestätigt. Für Interaktionstests die künstliche Seite über einen separaten Webserver bereitstellen. Die Erreichbarkeit eines relativen Pfades und die Ausführung einer HTML-Seite sind unterschiedliche Prüfungen.
 
 Ziel ist die erste stabile Foundry-14-Version [14.359](https://foundryvtt.com/releases/14.359). Ein Erfolg auf 14.359 und 14.369 ist kein Einzeltest aller Zwischenversionen; relevante Core-Änderungen dazwischen müssen zusätzlich bewertet und gegebenenfalls getestet werden. Frühere Prototype-/Development-/Testing-Builds sind nicht Teil des Ziels.
 
@@ -33,14 +35,14 @@ Für einen Vergleich unter 14.369 dieselben Dateien in eine weitere eigene Testu
 
 ## Ablauf und erwartetes Ergebnis
 
-Zwei Szenen anlegen: **Webtest** und **Normale Szene**. Beide in der Navigation anzeigen, Webtest für **Alle Spieler** zugänglich machen. Szenenaktivierung und unabhängiges Betrachten getrennt prüfen. In Webtest die Adresse `assets/website-to-scene-test/index.html` verwenden.
+Zwei Szenen anlegen: **Webtest** und **Normale Szene**. Beide in der Navigation anzeigen, Webtest für **Alle Spieler** zugänglich machen. Szenenaktivierung und unabhängiges Betrachten getrennt prüfen. Die erzeugte `index.html` auf einem separaten Test-Webserver bereitstellen und dessen vollständige HTTP(S)-Adresse eintragen. Bei mehreren Rechnern muss dieser Server für alle erreichbar sein. Den relativen Data-Pfad zusätzlich prüfen und den tatsächlichen Inhaltstyp protokollieren; Quelltextanzeige ist kein bestandener Interaktionstest.
 
 Für jeden tatsächlich ausgeführten Browser und Core-Build die folgenden Ergebnisse getrennt protokollieren. Bei Fehlern konkrete Schritte, sichtbares Verhalten und bereinigte Konsolenfehler notieren. Nicht ausgeführte Fälle bleiben offen.
 
 | Fall | Schritte und Erwartung | Ergebnis / Browser / Core |
 | --- | --- | --- |
 | A – Formular | Grundlagen/Basics öffnen: Felder stehen im Inhaltsreiter. URL und beide Haken speichern, schließen und erneut öffnen: Werte unverändert. Keine doppelten Felder. | Offen |
-| B – Lokale Seite | Webseite einschalten, Menüs zunächst sichtbar lassen. Szene öffnen: Testseite lädt randlos. Zähler klicken, Notiz eingeben, zum Ende scrollen. Fenstergröße ändern: iframe passt sich an. | Offen |
+| B – Gehostete Testseite | Webseite einschalten, Menüs zunächst sichtbar lassen. Szene öffnen: separat gehostete Testseite lädt randlos. Zähler klicken, Notiz eingeben, zum Ende scrollen. Fenstergröße ändern: iframe passt sich an. | Offen |
 | C – Menüs | Chat, Navigation, Werkzeuge und Makroleiste bleiben erreichbar. Menü-Haken speichern: normale Oberfläche verschwindet; ☰ zeigt sie wieder, × versteckt sie. Bereits offene Fenster und Benachrichtigungen bleiben zugänglich. | Offen |
 | D – Zustand | Zähler/Notiz verändern, dann nur den Szenennamen ändern: iframe-Zustand bleibt erhalten. Bei temporär eingeblendeten Menüs darf eine Namensänderung sie nicht wieder ausblenden. | Offen |
 | E – Bereinigung | Andere Szene öffnen: Overlay und Knopf verschwinden, Menüs erscheinen. Zurück zu Webtest: Haken gilt wieder. Webseite deaktivieren, URL ändern und Webtest löschen: keine alte Fläche/versteckten Menüs bleiben zurück. | Offen |

@@ -2,7 +2,7 @@
 
 [Deutsch](#deutsch) · [English — jump to the English guide](#english)
 
-**Version 1.1.0 · Foundry VTT 14.369 · Autor / Author: Ginkgo85 · MIT**
+**Version 1.1.1 · Foundry VTT 14.369–14.370 · Autor / Author: Ginkgo85 · MIT**
 
 ![Webseiten-Adresse und optionale Menüausblendung / Scene URL and optional menu hiding](docs/images/scene-settings.png)
 
@@ -20,7 +20,7 @@ Ab Version **1.1.0** erscheinen Beschriftungen, Erklärungen, URL-Fehlermeldunge
 
 Die eingebettete Webseite bestimmt ihre Sprache selbst. Das README-Bild oben zeigt die deutsche Ansicht und bleibt unverändert.
 
-**Veröffentlichungsstand:** Version **1.1.0** mit deutscher und englischer Sprachunterstützung ist auf GitHub und im Foundry-Modulverzeichnis veröffentlicht. Die folgenden Installationswege beziehen diese Version.
+**Versionsstand:** Diese Anleitung beschreibt **1.1.1**, geprüft mit Foundry **14.370**. Die folgenden Installationswege beziehen jeweils die zuletzt veröffentlichte Version; ein neuer Quellstand auf GitHub allein ist noch kein veröffentlichtes Update.
 
 ### Installation
 
@@ -42,7 +42,7 @@ Die Manifest-URL benötigt keine GitHub-Anmeldung. Neue Versionen lassen sich ü
 
 1. Szene bearbeiten → **Grundlagen → Website to Scene**.
 2. **Webseite als Szene anzeigen** aktivieren.
-3. Unter **Webseiten-Adresse** eine vollständige URL wie `https://example.org/roadmap` oder einen Pfad innerhalb von Foundrys Data-Ordner wie `worlds/meine-welt/roadmap.html` eintragen.
+3. Unter **Webseiten-Adresse** die vollständige URL einer gehosteten Webseite wie `https://example.org/roadmap` eintragen. Eigene interaktive HTML-Seiten benötigen einen separaten Webserver, der für alle Mitspieler erreichbar ist.
 4. Szene speichern und öffnen. Die Webseite füllt den gesamten Browserbereich, ohne eigenes Fenster oder Kopfzeile.
 5. Für die ganze Runde Foundrys normale **Szenenaktivierung** verwenden. Für selbstständigen Spielerzugriff zusätzlich **Zeige in Navigation** und die Zugänglichkeit **Alle Spieler** aktivieren.
 
@@ -64,11 +64,12 @@ Beim Verlassen der Szene erscheint die normale Oberfläche automatisch wieder. B
 ### Hinweise und Grenzen
 
 - Die Webseite muss Einbettung im iframe erlauben. `X-Frame-Options` oder CSP `frame-ancestors` können sie blockieren.
+- Foundry 14 liefert HTML-Dateien aus seinem Data-Ordner absichtlich als `text/plain`: Ein Pfad wie `worlds/meine-welt/roadmap.html` zeigt daher Quelltext statt einer interaktiven Seite. Relative Pfade werden weiterhin aufgelöst, ändern aber nicht den Inhaltstyp. Eigene Webseiten separat als HTML hosten; siehe [Foundrys Erklärung](https://github.com/foundryvtt/foundryvtt/issues/14375). Das Modul wandelt solche Antworten nicht in ausführbares HTML um.
 - Bei Foundry über HTTPS muss auch die Webseite HTTPS verwenden. `localhost` bezeichnet den Rechner des jeweiligen Spielers.
 - Nur vertraute Webseiten eintragen. Interaktive Skripte sind erlaubt; das Modul injiziert keine Foundry-API. Bei eigenen HTML-Dateien auf derselben Domain ist die iframe-Sandbox keine vollständige Sicherheitsgrenze.
 - Foundry-Werkzeuge bearbeiten keine Tokens oder Zeichnungen innerhalb der Webseite. Für Foundry-Tastenkürzel zuerst ein Foundry-Bedienelement anklicken.
 - Foundrys vollständig abgeschalteter Canvas wird nicht unterstützt. Andere Oberflächenmodule können zusätzliche Elemente einblenden.
-- Manueller Praxistest mit Foundry **14.369** durchgeführt und vom Nutzer bestätigt. Zusätzlich wurde der Sprachwechsel Deutsch/Englisch für Modul **1.1.0** in einer Testwelt manuell geprüft und am **11. Oktober 2026** als bestanden bestätigt. Andere Versionen sowie Mehrspieler- und Proxy-/HTTPS-Konfigurationen sind nicht vollständig live geprüft.
+- Praxistests mit Foundry **14.369** wurden vom Nutzer bestätigt. Für **14.370** wurden am **5. November 2026** echte lokale Tests in einer isolierten Welt mit D&D 5e **6.0.6**, Chromium und Firefox durchgeführt: deutsche/englische Formulare, Webseite, Menüknopf, Szenenwechsel und getrennte GM-/Spielersitzungen. Andere Spielsysteme, entfernte Rechner, Foundry-App und Proxy-/HTTPS-Konfigurationen wurden dabei nicht live geprüft.
 
 ### Support und Lizenz
 
@@ -92,7 +93,7 @@ Starting with version **1.1.0**, labels, help text, URL validation messages and 
 
 The embedded website controls its own language. The README image above shows the German interface and remains unchanged.
 
-**Release status:** Version **1.1.0**, including German and English language support, is published on GitHub and in Foundry's module directory. The installation methods below install this version.
+**Version status:** This guide describes **1.1.1**, tested with Foundry **14.370**. The installation methods below fetch the latest published version; a new source revision on GitHub alone is not a published update.
 
 ### Installation
 
@@ -114,7 +115,7 @@ No GitHub login is required. Use Foundry's regular module updater for future ver
 
 1. Edit a scene → **Basics → Website to Scene**.
 2. Enable **Display website as a scene**.
-3. Under **Website address**, enter a full URL such as `https://example.org/roadmap` or a path inside Foundry's Data folder such as `worlds/my-world/roadmap.html`.
+3. Under **Website address**, enter the full URL of a hosted website, such as `https://example.org/roadmap`. Host your own interactive HTML pages on a separate web server reachable by every player.
 4. Save and view the scene. The website fills the browser viewport without a separate window or title bar.
 5. Use Foundry's normal **scene activation** to show it to the group. For independent player access, also enable **Show in Navigation** and accessibility for **All Players**.
 
@@ -136,11 +137,12 @@ Leaving the scene automatically restores the normal interface. Already open wind
 ### Notes and limitations
 
 - The website must allow iframe embedding. `X-Frame-Options` or CSP `frame-ancestors` can block it.
+- Foundry 14 intentionally serves HTML files from its Data folder as `text/plain`: a path such as `worlds/my-world/roadmap.html` therefore displays source text instead of an interactive page. Relative paths still resolve, but do not change the content type. Host your own websites separately as HTML; see [Foundry's explanation](https://github.com/foundryvtt/foundryvtt/issues/14375). The module does not turn these responses into executable HTML.
 - If Foundry uses HTTPS, the website must also use HTTPS. `localhost` refers to each player's own computer.
 - Only embed trusted websites. Interactive scripts are allowed; the module does not inject Foundry's API. For HTML hosted on Foundry's own domain, the iframe sandbox is not a complete security boundary.
 - Foundry tools cannot edit tokens or drawings inside the website. Click a Foundry control before using Foundry keyboard shortcuts.
 - Completely disabling Foundry's canvas is not supported. Other interface modules may show additional elements.
-- Manual testing with Foundry **14.369** has been completed and confirmed by the user. Switching between German and English in module **1.1.0** was also manually tested in a test world and confirmed as passing on **October 11, 2026**. Other versions, multiplayer and proxy/HTTPS configurations have not been fully tested live.
+- The user confirmed practical testing with Foundry **14.369**. On **November 5, 2026**, real local **14.370** tests used an isolated world with D&D 5e **6.0.6**, Chromium and Firefox: German/English forms, website interaction, menu controls, scene changes and separate GM/player sessions. Other systems, remote computers, the Foundry desktop app and proxy/HTTPS configurations were not tested live in this run.
 
 ### Support and license
 

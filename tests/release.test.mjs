@@ -14,7 +14,7 @@ test('final module identity, author, npm publication disabled and tested Foundry
   assert.equal(manifest.id,'website-to-scene');
   assert.equal(pkg.private,true);
   assert.equal(pkg.author,'Ginkgo85');
-  assert.deepEqual(manifest.compatibility,{minimum:'14.369',verified:'14.369',maximum:'14'});
+  assert.deepEqual(manifest.compatibility,{minimum:'14.369',verified:'14.370',maximum:'14'});
   assert.equal(manifest.license,'LICENSE');
   assert.equal(pkg.license,'MIT');
 });

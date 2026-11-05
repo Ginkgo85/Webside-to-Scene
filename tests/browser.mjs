@@ -59,6 +59,8 @@ const server = createServer(async (req, res) => {
     if (["/", "/?lang=de", "/?lang=en", "/?lang=fr"].includes(req.url)) { res.setHeader("Content-Type", "text/html; charset=utf-8"); return res.end(fixture); }
     if (req.url === "/embedded") { res.setHeader("Content-Type", "text/html; charset=utf-8"); return res.end('<h1 style="margin-left:400px">Interaktive Roadmap</h1><button style="margin:150px 0 0 400px" onclick="this.textContent=\'Angeklickt\'">Eintrag öffnen</button>'); }
     if (req.url === "/manual-test-page") { res.setHeader("Content-Type", "text/html; charset=utf-8"); return res.end(manualTestPage); }
+    // Foundry 14 deliberately serves uploaded HTML as text, not as executable pages.
+    if (req.url === "/plain-html") { res.setHeader("Content-Type", "text/plain; charset=utf-8"); return res.end(manualTestPage); }
     const asset = assets.get(req.url);
     if (!asset) {res.writeHead(404);return res.end();}
     res.setHeader("Content-Type", asset.type);
@@ -183,6 +185,12 @@ try {
     await page.evaluate(() => {scene.config.url='javascript:alert(1)';Hooks.call('canvasReady',canvas)});
     assert.deepEqual(await page.evaluate(() => messages), ["Website to Scene: " + text('Errors.Protocol')]);
     assert.equal(await page.locator('#wts-overlay').count(), 0);
+    await page.evaluate(() => {scene.config.url='/plain-html';Hooks.call('canvasReady',canvas)});
+    const plainFrame=page.frameLocator('#wts-overlay iframe');
+    await plainFrame.locator('pre').waitFor();
+    assert.ok((await plainFrame.locator('pre').textContent()).includes('<button id="counter"'));
+    assert.equal(await plainFrame.locator('#counter').count(),0,'Plain HTML source must not be reinterpreted as active content');
+    await page.evaluate(() => Hooks.call('canvasTearDown'));
     assert.deepEqual(errors, []);
     console.log(`Browser checks passed (${browserName}, ${browser.version()}, Foundry language ${language}): localized controls/hints/errors/accessibility, interactive fullscreen iframe, reachable Foundry UI, responsive viewport, retained browsing state, config validation, player role, scene cleanup.`);
     await page.close();

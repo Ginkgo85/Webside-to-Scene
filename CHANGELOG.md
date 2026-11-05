@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1 – 2026-11-05
+
+- Kompatibilität mit Foundry **14.370** anhand offizieller Änderungen, installiertem Core und einer isolierten Live-Testwelt geprüft. Mindestversion bleibt **14.369**, Verified steigt auf **14.370**, Maximum bleibt **14**.
+- Deutsche und englische URL-Hinweise korrigiert: Foundry liefert HTML im Data-Ordner absichtlich als Quelltext. Interaktive HTML-Seiten benötigen einen separaten Webserver. Relative Pfade bleiben erlaubt; keine Umwandlung von Textantworten in ausführbares HTML.
+- Szenenlogik, gespeicherte Flags, Modul-ID und iframe-Berechtigungen bleiben erhalten. Die Kalender-, Chat- und Canvas-API-Änderungen verlangen keinen Eingriff in die verwendeten Schnittstellen.
+- Browser-Regression für Textantworten ergänzt; echte Formular-, Sprach- und Zwei-Client-Tests für 14.370 getrennt von den CI-Simulationen dokumentiert.
+
 ## 1.1.0 – 2026-10-10
 
 - Deutsche und englische Modultexte folgen automatisch Foundrys eingestellter Sprache; andere Sprachen verwenden Foundrys englischen Rückfall.

@@ -1,6 +1,6 @@
 # Einrichtung und Release-Prüfstand
 
-Aktueller Stand: **1.1.0** ist am 10. Oktober 2026 auf GitHub und bei Foundry veröffentlicht. Die abschließende Nachkontrolle steht unten. Die früheren Abschnitte dokumentieren den jeweiligen Entwicklungsstand.
+Aktueller Entwicklungsstand: **1.1.1** für Foundry **14.370**, geprüft am **5. November 2026**; Veröffentlichung wird vom Nutzer separat über GitHub gestartet. Zu Beginn dieser Prüfung ist **1.1.0** der veröffentlichte Stand. Der neue Abgleich steht am Ende dieser Datei. Frühere Abschnitte dokumentieren den damaligen Entwicklungsstand.
 
 ## Ausgangspunkt
 
@@ -98,3 +98,55 @@ Dieser Live-Nachweis ergänzt die bisherigen automatisierten Simulationen. Er be
 Der Nutzer beauftragt die Testvorbereitung ohne Veröffentlichung. Foundry 14.359 ist bei ihm noch nicht vorhanden; ein echter Test damit wurde nicht ausgeführt. `tools/prepare-foundry-test.mjs` erstellt eine isolierte lokale Modulkopie mit niedrigerer Mindestversion, ohne direkte Manifest-/Download-Update-Links, eine künstliche HTML-Seite, das Ergebnisprotokoll und SHA256-Nachweise. Alle übrigen Manifestwerte und sämtliche Laufzeitdateien bleiben erhalten. Das reguläre Manifest verlangt weiterhin 14.369; Version und veröffentlichte Dateien bleiben unverändert.
 
 Lokal bestanden: Quell-/Metadatenprüfung, **38 Node-Tests**, Paketbau/-prüfung und vollständige Browser-Simulationen in Chromium **151.0.7922.34** und Firefox **153.0** mit Deutsch, Englisch und englischem Rückfall. Beide Browser prüfen zusätzlich Klickzähler, Eingabefeld und Scroll-Link der neuen manuellen Testseite. Der neue Node-Test bestätigt unveränderte Produktionsmetadaten und identische Runtime-Bytes in der Testkopie. Diese Ergebnisse sind keine Bestätigung der Live-Kompatibilität mit 14.359. Voraussetzungen, Testfälle und offene Ergebnisfelder stehen in [docs/FOUNDRY-14.359-TEST.md](docs/FOUNDRY-14.359-TEST.md).
+
+## Foundry 14.370 – 5. November 2026
+
+### Grundlage und Ergebnis des Abgleichs
+
+Ausgangscommit: `05759d5c7b98f1cb75a5823ad3623bebcd76939c`. GitHub-Anmeldung, `origin/main` und lokaler sauberer `main` wurden vor Änderungen abgeglichen. Die installierte Core-Version wurde über ihre Paketmetadaten und später über `game.version` als **14.370** bestätigt. Der gesamte Inhalt der [offiziellen Versionshinweise](https://foundryvtt.com/releases/14.370) wurde gelesen; relevante Einzelmeldungen wurden zusätzlich im offiziellen Issue-Tracker geprüft. Die öffentliche API-Dokumentation ist teils älter gecacht, deshalb wurden die tatsächlich installierten Schnittstellen zusätzlich lesend kontrolliert. Keine Core-Datei wurde verändert oder übernommen.
+
+Die Änderungsliste umfasst Sicherheit/Laufzeit, Dokumente, Oberflächen, Canvas, Paketverwaltung, Würfel/Karten und Dokumentation. Unser Modul verwendet nur Szenenflags, wenige Hooks, Lokalisierung und DOM/CSS. Für keine der angekündigten API-Änderungen wurde eine notwendige Änderung dieser Szenenlogik gefunden. Die Entscheidung beruht zusätzlich auf echten Tests und nicht allein auf Versionsnummern.
+
+| Bereich / offizielle Quelle | Vergleich mit Website to Scene und Entscheidung |
+| --- | --- |
+| [Kalender, #14864](https://github.com/foundryvtt/foundryvtt/issues/14864) | Die zusätzliche `deltaTime`-Position in `CalendarData#onUpdateWorldTime` betrifft keine Modulaufrufe. Das Ausblenden eines DSA-Kalender-DOM-Elements verwendet keine Kalender-API. Keine Migration. |
+| [Szenenladen, #14911](https://github.com/foundryvtt/foundryvtt/issues/14911), [Updates beim Laden, #14845](https://github.com/foundryvtt/foundryvtt/issues/14845) | Keine Überschreibung des Texture-Loaders und keine Token-Updates. Das Modul wartet auf `canvasReady`; bei `updateScene` prüft es `canvas.ready` und die aktuelle Szenen-ID. Echte Aktivierung, Wechsel und Bereinigung getestet. |
+| [Canvas-Start](https://foundryvtt.com/api/v14/functions/hookEvents.canvasReady.html), [Canvas-Abbau](https://foundryvtt.com/api/v14/functions/hookEvents.canvasTearDown.html) | Die installierte Version ruft weiterhin diese Hooks auf. Zusätzliche Abbauoptionen sind für unsere vollständige Overlay-Bereinigung nicht nötig. Kein Ersatz durch private Canvas-Funktionen. |
+| [Szenenformular](https://foundryvtt.com/api/v14/classes/foundry.applications.sheets.SceneConfig.html), [Tabwechsel, #14815](https://github.com/foundryvtt/foundryvtt/issues/14815) | `renderSceneConfig`, `app.document`, `isEditable` und der Basics-Inhaltsreiter bestehen weiter. Das Modul ruft kein `changeTab` auf. Checkboxen und URL wurden mit dem echten Formular gespeichert und erneut gelesen. |
+| [URL-Feldstil, #14937](https://github.com/foundryvtt/foundryvtt/issues/14937) | Unser Feld bleibt bewusst `type="text"`, weil auch relative Pfade syntaktisch zulässig sind. Eigene URL-Prüfung bleibt erforderlich; kein Wechsel zu nativer URL-Validierung. |
+| [CameraViews/Sidebar, #13975](https://github.com/foundryvtt/foundryvtt/issues/13975) | Die adressierten DOM-IDs und CSS-Ebenen sind im installierten Core weiterhin vorhanden. Die Modulklasse blendet nur die vorgesehenen Container aus und entfernt sich beim Verlassen. Keine zusätzliche Core-CSS-Überschreibung. Echte Videoübertragung wurde nicht getestet. |
+| [Chat-iframes, #14517](https://github.com/foundryvtt/foundryvtt/issues/14517#issuecomment-6504413842) | Neue Einschränkungen betreffen Chatinhalt abhängig von Rolle/Safe Mode. Das Modul erzeugt keine Chatnachrichten und verwendet nicht deren Aufbereitung. Die GM-konfigurierte Szenenfläche bleibt ein eigenes iframe; vorhandene Sandbox-Berechtigungen werden nicht erweitert. |
+| [HTML aus Data, #14375](https://github.com/foundryvtt/foundryvtt/issues/14375) | Reproduzierter Befund: HTTP 200, aber `Content-Type: text/plain` und sichtbarer HTML-Quelltext. Dies ist eine absichtliche, bereits ältere V14-Einschränkung. README, DE/EN-Hilfe und alter Testplan versprachen zu viel und wurden korrigiert. Separate Webseiten funktionieren. Kein Fetch/Blob/`srcdoc`-Umbau zum Umgehen des Inhaltstyps. |
+| [Node 24.22.1](https://nodejs.org/en/blog/release/v24.22.1) | Der installierte Foundry-Server verlangt `>=24.22.1 <25`. Der Live-Test nutzt separat Node 24.22.1, Download gegen offiziellen SHA256 geprüft. Das ausgelieferte Modul bleibt Browser-JavaScript ohne npm-Laufzeitabhängigkeit. CI verwendet weiterhin Node 24. |
+
+Die übrigen Einträge wurden nach verwendeten Schnittstellen gegengeprüft: frühe Core-Settings, Level-Metadaten, Token-Mesh, Region-/Rasterwerkzeuge, Tile-Namen, Benutzerpasswörter und Einladungen werden vom Modul nicht implementiert. Gleiches gilt für Datenmodellfelder/-operatoren, Compendium-/Journal-/Ownership-Logik, Audio/VFX, Nebel, Tokenbewegung, Würfel-/Kartenklassen, Texteditoren, Datei-Picker sowie Setup-/Backup-/Paketfunktionen. Das Modul überschreibt keine dieser Klassen. Deshalb ergeben sich daraus keine zusätzlichen Laufzeitpatches. Oberflächenänderungen in angrenzenden Bereichen begründen die erneuten Formular-, Menü- und Szenenwechseltests, aber keine pauschale Überarbeitung.
+
+### Änderungen für 1.1.1
+
+- `compatibility.verified` auf **14.370**; Minimum **14.369** und Maximum **14** bleiben erhalten. Die noch offene 14.359-Prüfung wird dadurch nicht als bestanden markiert.
+- Version, Download-URL, Paketmetadaten, README, Changelog und Metadatentest gemeinsam angepasst. Der neue Download existiert erst nach dem ausdrücklich gestarteten Release.
+- DE/EN-Hinweis und Platzhalter empfehlen eine richtig gehostete Webseite. Relative Pfade und gespeicherte Szenenflags bleiben unverändert nutzbar; ihr Inhaltstyp wird nicht verändert.
+- Browser-Simulation ergänzt um eine echte `text/plain`-Antwort mit HTML-Inhalt: Sie muss Quelltext bleiben. Der vollständige bisherige Testumfang bleibt erhalten.
+- Optionaler, wiederholbarer Test `tests/foundry-live.mjs` gegen echten Core. Er ersetzt weder CI noch die Pflichtprüfungen des Release-Workflows.
+
+### Tatsächlicher Testumfang
+
+Die Live-Umgebung ist eine neue Wegwerf-Welt mit eigenem Datenordner, kopiertem **D&D 5e 6.0.6** und ausschließlich Website to Scene. Keine private Spielwelt wurde geöffnet oder migriert. Foundry lief als separater Server unter Windows. Zwei unabhängige Browser-Kontexte stellen GM und Spieler dar. Die Testwebseite stammt aus der künstlichen Fixture und läuft auf einem zweiten lokalen HTTP-Port. Die geladenen JS-, CSS- und Sprachdateien werden vor dem Test bytegenau gegen den Checkout verglichen.
+
+| Prüfung | Nachweis |
+| --- | --- |
+| Quellprüfung und Node | 38 Tests; Syntax, JSON, Metadaten, Übersetzungen, URLs sowie Release-/Foundry-Schutzregeln |
+| Chromium-Simulation | Vollständiger Ablauf für Deutsch, Englisch und französischen Rückfall; einschließlich Textantwort-Regression |
+| Firefox-Simulation | Derselbe vollständige Ablauf für alle drei Sprachvarianten |
+| Echter Core in Chromium 151.0.7922.34 | Deutsche/englische Formulare und URL-Validierung; gespeicherte Checkboxen/URL; interaktive Webseite und Größenänderung; Zustandserhalt bei Umbenennung; Menü-Rückweg; Szenenwechsel, URL-Wechsel, Deaktivieren und Löschen |
+| Echter Core in Firefox 153.0 | Derselbe Live-Ablauf einschließlich getrennter GM-/Spielersitzungen |
+| Zwei Clients je Live-Browser | Aktivierung folgt auf beiden Clients; unabhängige Spieleransicht möglich; Zähler und Texteingabe getrennt; lokaler Menüknopf erzeugt kein `updateScene` und verändert den anderen Client nicht |
+| Lokales Data-HTML | Tatsächliche Textantwort in 14.370 festgestellt; keine erfolgreiche HTML-Ausführung behauptet |
+| Release-Paket | Reproduzierbarer Bau und Prüfung aller zehn erlaubten Dateien; keine Testwelt, Core-/Systemdateien oder Zugangsdaten enthalten |
+| Git | Vollständiger Diff und `git diff --check`; nach Push exakter Remote-SHA sowie CI und CodeQL kontrollieren |
+
+Die automatisierten Simulationen verwenden weiterhin Node **24.19.0**/Playwright **1.62.1**, der echte Server Node **24.22.1**. Die komplette Foundry-App (Electron), echte Videoübertragung, DSA mit seinen Zusatzleisten, entfernte Rechner sowie HTTPS-/Proxy-/Einbettungssperren wurden in diesem Live-Lauf nicht geprüft. Die Browser liefen automatisiert/headless; das ist kein Leistungsbenchmark für hardwarebeschleunigten Canvas. Der französische Rückfall ist nur simuliert geprüft, da Französisch in der isolierten Core-Installation nicht als Sprache verfügbar war. Fehlgeschlagene Vorversuche mit Data-HTML oder einer nicht installierten Sprache zählen nicht als bestandene Live-Fälle.
+
+### Übergabe für den Release
+
+Version **1.1.1** wird nur als geprüfter Quellstand auf `main` bereitgestellt. CI und CodeQL für den exakten gepushten Commit müssen erfolgreich sein. Danach kann der Nutzer **Actions → Release → Run workflow → main → release** starten. Der Workflow wiederholt alle Schutzprüfungen und führt anschließend die bereits eingerichtete Foundry-Eintragung aus. Dieser Entwicklungsauftrag startet keinen Release und ändert keine bestehenden Tags oder Assets. Der GitHub-API-Prüfmodus `check-foundry` kann zur letzten Validierung ohne Veröffentlichung genutzt werden.

@@ -1,4 +1,4 @@
-# Validierung – Version 1.1.0
+# Validierung – Version 1.1.1
 
 ## Wiederholbare Prüfungen
 
@@ -35,6 +35,25 @@ Unter PowerShell vor dem Firefox-Aufruf `$env:TEST_BROWSER = 'firefox'` setzen u
 
 ## Live-Foundry-Testplan
 
+Der ausführliche Abgleich für **14.370** und die tatsächlich ausgeführten Tests vom **5. November 2026** stehen in [REVIEW.md](REVIEW.md#foundry-14370--5-november-2026). Die folgende ältere 14.359-Vorbereitung bleibt davon unabhängig.
+
+### Wiederholbarer Live-Test für 14.370
+
+`tests/foundry-live.mjs` ist ein **optionaler Integrationstest**, keine CI-Simulation. Er benötigt eine separat gestartete lizenzierte Foundry-14.370-Instanz auf `http://127.0.0.1:30001` mit eigenem Datenordner, D&D 5e **6.0.6** und der leeren Wegwerf-Testwelt **wts-compatibility**. Einen GM namens **Gamemaster** ohne Testpasswort anlegen, ausschließlich dieses Modul aus dem aktuellen Checkout aktivieren und zuvor keine privaten Daten übernehmen. Nur eine Kopie des Spielsystems verwenden, da Foundry dessen Datenbanken migrieren kann. Die produktive Installation bleibt geschlossen/unverändert. Beim separaten Server UPnP und IP-Erkennung abschalten; Node-Anforderung siehe [lokale Testeinrichtung](docs/LOKALE-TESTEINRICHTUNG.md).
+
+Der Test prüft Welt-ID, Core-/Systemversion, aktivierte Modulversion und bytegleichen Laufzeitcode vor Dokumentänderungen. Er erzeugt einen künstlichen Spieler und Testszenen, ändert die Sprache der Testsitzung und löscht erfolgreich geprüfte Szenen wieder. Bei einem Abbruch können Szenen in dieser Wegwerf-Welt zurückbleiben. Der temporäre Webserver auf `127.0.0.1:30002` liefert ausschließlich die künstliche HTML-Testseite; er wird danach beendet. Die festen Loopback-Adressen sind nur für diesen lokalen Test geeignet.
+
+```powershell
+node tests/foundry-live.mjs --test-world
+$env:TEST_BROWSER = 'firefox'
+try { node tests/foundry-live.mjs --test-world }
+finally { Remove-Item Env:TEST_BROWSER }
+```
+
+Beide Läufe nacheinander ausführen: Sie verwenden dieselbe Testwelt und denselben Webseitenport. Ergebnisse und Screenshots entstehen unter `artifacts/foundry-14.370/`. Deutsch und Englisch laufen gegen den echten Core; der französische Rückfall bleibt Bestandteil der vollständigen Browser-Simulation, weil die Testwelt keine französische Core-Sprache installiert hat. Diese Datei und sämtliche Foundry-Daten gehören nicht ins Release-ZIP. Lizenz, Spielsystem, Core und lokale Daten bleiben außerhalb von Git.
+
+### Manueller ergänzender Plan
+
 Die Prüfung einer niedrigeren Mindestversion **14.359** wird separat vorbereitet: [Testkopie, Voraussetzungen und Ergebnisprotokoll](docs/FOUNDRY-14.359-TEST.md). `node tools/prepare-foundry-test.mjs` erzeugt eine isolierte lokale Kopie und künstliche HTML-Seite unter `artifacts/`. Dies senkt die reguläre Mindestversion nicht und ist kein bestandener Live-Test.
 
 1. Modul in einer eigenen Foundry-14.369-Testwelt aktivieren. Webseite pro Szene eintragen/speichern, Formular erneut öffnen: Werte erhalten.
@@ -43,7 +62,7 @@ Die Prüfung einer niedrigeren Mindestversion **14.359** wird separat vorbereite
 4. Eine andere Szene öffnen: Webseite und Rückkehrknopf verschwinden, normale Menüs erscheinen. Webseite erneut öffnen: Einstellung gilt wieder.
 5. Webseite deaktivieren, URL ändern und Szene löschen: Overlay wird aktualisiert/entfernt; keine verdeckten Menüs bleiben zurück.
 6. GM und Spieler in getrennten Browsern verbinden. Selbstständigen Spielerzugriff mit Alle Spieler/Navigation sowie normale Szenenaktivierung für die Runde prüfen. Lokales Menüeinblenden darf die anderen Benutzer nicht verändern.
-7. Erlaubte externe Seite, relativen Data-Pfad, HTTPS, route-prefix und eine Einbettung verweigernde Seite prüfen. Keine Sperre umgehen; Verhalten/Fehler dokumentieren.
+7. Erlaubte externe Seite, relativen Data-Pfad, HTTPS, route-prefix und eine Einbettung verweigernde Seite prüfen. Foundry liefert HTML aus Data als Text; für Interaktionstests einen separaten Webseitenserver verwenden. Ein korrekt aufgelöster Pfad beweist keine HTML-Ausführung. Keine Sperre umgehen; Verhalten/Fehler dokumentieren.
 8. Foundry mit deutscher und englischer Sprache neu laden: Szenenfelder, Hilfetexte, URL-Fehler und ☰-/×-Tooltips prüfen. Webseite behält ihre eigene Sprache; vorhandene URL-/Checkbox-Werte bleiben erhalten. Der Nutzer hat den manuellen Sprachwechsel in einer Testwelt als bestanden bestätigt; der genaue bestätigte Umfang steht unten.
 
 ## Bisherige tatsächliche Nachweise
