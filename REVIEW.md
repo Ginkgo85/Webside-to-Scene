@@ -1,6 +1,6 @@
 # Einrichtung und Release-Prüfstand
 
-Für den manuellen Release ist **1.1.2** mit Foundry **14.371** als geprüfter Version vorbereitet. Die lokalen Browserläufe und der DSA-Praxistest sind im [Bericht vom 27. November 2026](#foundry-14371--27-november-2026) dokumentiert.
+Website to Scene **1.1.2** wurde am **27. November 2026** auf [GitHub](https://github.com/Ginkgo85/Webside-to-Scene/releases/tag/v1.1.2) veröffentlicht. Das [Foundry-Modulverzeichnis](https://foundryvtt.com/packages/website-to-scene) führt **14.371** als geprüfte Version. Die lokalen Browserläufe und der DSA-Praxistest stehen im [Testbericht](#foundry-14371--27-november-2026).
 
 ## Ausgangspunkt
 
@@ -201,4 +201,6 @@ Beide lokalen Live-Läufe prüften das Speichern und erneute Öffnen der Szenenf
 
 Nach dem Abschalten der Webseitenanzeige in der Testszene waren Webseite und Rückkehrknopf entfernt und die Foundry-Oberfläche wieder sichtbar. Dasselbe Ergebnis wurde beim Wechsel von einer Webseiten-Szene zur normalen Szene beobachtet. Am Ende wurde die Testszene wieder für HTTPS eingerichtet und die ursprüngliche Ansicht geöffnet. Die aktive Szene der Runde blieb während des Tests dieselbe. Der [frühere Test mit 99 aktiven Modulen](#gehosteter-dsa-praxistest--5-november-2026) gehört zu Build 14.370.
 
-Auf dieser Grundlage setzt das Manifest der vorbereiteten Version **1.1.2** die geprüfte Core-Version auf **14.371**. Skripte, Stylesheet und Sprachdateien entsprechen dem getesteten Modulstand **1.1.1**.
+Das veröffentlichte Manifest von **1.1.2** führt **14.371** als geprüfte Core-Version. Skripte, Stylesheet und Sprachdateien entsprechen dem getesteten Modulstand **1.1.1**.
+
+Der [Release-Lauf für v1.1.2](https://github.com/Ginkgo85/Webside-to-Scene/actions/runs/46078895008) bestand CodeQL, alle 38 Node-Tests, die Browsertests in Chromium und Firefox sowie die Paketprüfung. Er veröffentlichte die Dateien auf GitHub und trug die Version bei Foundry ein. Tag und Release-Lauf verweisen auf Commit `a53fd4e59392b6b61808b13fd5c652d4be3d600b`. Bei der Nachkontrolle stimmten das öffentlich heruntergeladene Manifest und die ZIP bytegenau mit dem Build dieses Tags überein. Auch die stabile Manifest-Adresse lieferte Version **1.1.2**.
