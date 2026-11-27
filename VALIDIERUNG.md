@@ -1,4 +1,4 @@
-# Validierung – Version 1.1.1
+# Validierung – Version 1.1.2
 
 ## Wiederholbare Prüfungen
 
@@ -67,7 +67,7 @@ Die Prüfung einer niedrigeren Mindestversion **14.359** wird separat vorbereite
 
 ## Bisherige tatsächliche Nachweise
 
-Am **27. November 2026** bestand Website to Scene **1.1.1** auf Foundry **14.371** die lokalen Live-Tests in Chromium und Firefox mit D&D 5e **6.0.6**, jeweils mit deutscher und englischer Oberfläche sowie getrennten Spielleiter- und Spielersitzungen. Umfang und Stand der gehosteten DSA-Prüfung stehen im [Testbericht zu 14.371](REVIEW.md#foundry-14371--27-november-2026).
+Am **27. November 2026** bestand Website to Scene **1.1.1** auf Foundry **14.371** die lokalen Live-Tests in Chromium und Firefox mit D&D 5e **6.0.6**, jeweils mit deutscher und englischer Oberfläche sowie getrennten Spielleiter- und Spielersitzungen. Der ergänzende Praxistest in Edge bestand in einer gehosteten HTTPS-Welt mit **DSA 8.2.2** und Website to Scene als einzigem aktiven Modul. Version **1.1.2** übernimmt den geprüften Laufzeitcode. Die einzelnen Beobachtungen stehen im [Testbericht zu 14.371](REVIEW.md#foundry-14371--27-november-2026).
 
 ### Bestandener DSA-Praxistest mit 14.370 – 5. November 2026
 

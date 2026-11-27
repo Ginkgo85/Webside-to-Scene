@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.2 – 2026-11-27
+
+- Foundry **14.371** als geprüft eingetragen. Der Modulcode entspricht der live getesteten Version **1.1.1**.
+- Chromium und Firefox bestanden die lokalen Live-Tests mit getrennten Spielleiter- und Spielersitzungen. In der gehosteten HTTPS-Welt mit **DSA 8.2.2** bestand der Praxistest in Edge einschließlich Formulareingabe, Menü-Rückweg und Szenenwechsel.
+
 ## 1.1.1 – 2026-11-05
 
 - Kompatibilität mit Foundry **14.370** anhand offizieller Änderungen, installiertem Core und einer isolierten Live-Testwelt geprüft. Mindestversion bleibt **14.369**, Verified steigt auf **14.370**, Maximum bleibt **14**.

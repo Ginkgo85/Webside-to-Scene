@@ -1,6 +1,6 @@
 # Einrichtung und Release-Prüfstand
 
-Aktueller Entwicklungsstand: **1.1.1** für Foundry **14.370**, geprüft am **5. November 2026**; Veröffentlichung wird vom Nutzer separat über GitHub gestartet. Zu Beginn dieser Prüfung ist **1.1.0** der veröffentlichte Stand. Der neue Abgleich steht am Ende dieser Datei. Frühere Abschnitte dokumentieren den damaligen Entwicklungsstand.
+Für den manuellen Release ist **1.1.2** mit Foundry **14.371** als geprüfter Version vorbereitet. Die lokalen Browserläufe und der DSA-Praxistest sind im [Bericht vom 27. November 2026](#foundry-14371--27-november-2026) dokumentiert.
 
 ## Ausgangspunkt
 
@@ -193,6 +193,12 @@ Website to Scene **1.1.1** bestand die lokalen Live-Tests mit dem installierten 
 | Chromium 151.0.7922.34, echter Core | Bestanden, jeweils auf Deutsch und Englisch mit getrennten Sitzungen für Spielleitung und Spieler. |
 | Firefox 153.0, echter Core | Derselbe Ablauf in beiden Sprachen bestanden. Beide Browserprotokolle enthalten keine unbehandelten Seitenfehler. |
 | Browser-Simulation | Chromium und Firefox bestanden zusätzlich alle Fälle für Deutsch, Englisch und den englischen Rückfall bei französischer Foundry-Sprache. |
-| Gehostete DSA-Welt | Praxistest für **14.371 offen**. Beim Aufruf der Spieladresse meldete der Hostinganbieter den Server als inaktiv. Der letzte bestandene [DSA-Praxistest](#gehosteter-dsa-praxistest--5-november-2026) gilt für **14.370**. |
+| Gehostete DSA-Welt, Edge | Bestanden in einer deutschsprachigen HTTPS-Welt mit **14.371**, **Das Schwarze Auge 8.2.2** und Website to Scene **1.1.1** als einzigem aktiven Modul. Eine GM-Sitzung. |
 
-Beide Live-Läufe prüften das Speichern und erneute Öffnen der Szenenfelder, URL-Validierung, Klick und Texteingabe auf der Webseite sowie Vollbild nach Größenänderung. Der lokale Menüknopf löste kein Szenenupdate aus und ließ die Spielersicht unverändert. Beim Umbenennen blieb die Eingabe erhalten. Szenenaktivierung, selbstständiger Szenenwechsel des Spielers, URL-Wechsel, Deaktivieren und Löschen der Testszene bestanden ebenfalls. Die Moduldeklaration nennt bis zum ausstehenden DSA-Praxistest weiterhin **14.370** als geprüft.
+Beide lokalen Live-Läufe prüften das Speichern und erneute Öffnen der Szenenfelder, URL-Validierung, Klick und Texteingabe auf der Webseite sowie Vollbild nach Größenänderung. Der lokale Menüknopf löste kein Szenenupdate aus und ließ die Spielersicht unverändert. Beim Umbenennen blieb die Eingabe erhalten. Szenenaktivierung, selbstständiger Szenenwechsel des Spielers, URL-Wechsel, Deaktivieren und Löschen der Testszene bestanden ebenfalls.
+
+**Praxistest in der gehosteten DSA-Welt.** Eine bestehende Zielseite verweigerte die Einbettung. Der sichtbare Menüknopf führte auch aus dieser Fehleransicht zurück zu Foundry. In einer separaten Szene für die Spielleitung wies das Szenenformular eine HTTP-Adresse mit dem deutschen HTTPS-Hinweis ab. Eine externe HTTPS-Formularseite lud erfolgreich. Texteingabe und Auswahl blieben beim Wiedereinblenden der Menüs erhalten. Beim erneuten Öffnen des Szenenformulars waren Adresse und beide Haken gespeichert.
+
+Nach dem Abschalten der Webseitenanzeige in der Testszene waren Webseite und Rückkehrknopf entfernt und die Foundry-Oberfläche wieder sichtbar. Dasselbe Ergebnis wurde beim Wechsel von einer Webseiten-Szene zur normalen Szene beobachtet. Am Ende wurde die Testszene wieder für HTTPS eingerichtet und die ursprüngliche Ansicht geöffnet. Die aktive Szene der Runde blieb während des Tests dieselbe. Der [frühere Test mit 99 aktiven Modulen](#gehosteter-dsa-praxistest--5-november-2026) gehört zu Build 14.370.
+
+Auf dieser Grundlage setzt das Manifest der vorbereiteten Version **1.1.2** die geprüfte Core-Version auf **14.371**. Skripte, Stylesheet und Sprachdateien entsprechen dem getesteten Modulstand **1.1.1**.

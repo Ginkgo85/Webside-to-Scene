@@ -2,7 +2,7 @@
 
 [Deutsch](#deutsch) · [English — jump to the English guide](#english)
 
-**Version 1.1.1 · Foundry VTT 14.369–14.370 · Autor / Author: Ginkgo85 · MIT**
+**Version 1.1.2 · Foundry VTT 14.369–14.371 · Autor / Author: Ginkgo85 · MIT**
 
 ![Webseiten-Adresse und optionale Menüausblendung / Scene URL and optional menu hiding](docs/images/scene-settings.png)
 
@@ -20,7 +20,7 @@ Ab Version **1.1.0** erscheinen Beschriftungen, Erklärungen, URL-Fehlermeldunge
 
 Die eingebettete Webseite bestimmt ihre Sprache selbst. Das README-Bild oben zeigt die deutsche Ansicht und bleibt unverändert.
 
-**Versionsstand:** Diese Anleitung beschreibt **1.1.1**, geprüft mit Foundry **14.370**. Die folgenden Installationswege beziehen jeweils die zuletzt veröffentlichte Version; ein neuer Quellstand auf GitHub allein ist noch kein veröffentlichtes Update.
+**Versionsstand:** Dieser Quellstand beschreibt **1.1.2** mit Foundry **14.371** als geprüfter Version. Der Modulcode bestand die Live-Tests in Chromium und Firefox sowie den Praxistest in einer gehosteten DSA-8.2.2-Welt in Edge. Die folgenden Installationswege beziehen die zuletzt veröffentlichte Version. [Testbericht zu 14.371](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/REVIEW.md#foundry-14371--27-november-2026)
 
 ### Installation
 
@@ -93,7 +93,7 @@ Starting with version **1.1.0**, labels, help text, URL validation messages and 
 
 The embedded website controls its own language. The README image above shows the German interface and remains unchanged.
 
-**Version status:** This guide describes **1.1.1**, tested with Foundry **14.370**. The installation methods below fetch the latest published version; a new source revision on GitHub alone is not a published update.
+**Version status:** This source revision describes **1.1.2** with Foundry **14.371** marked as verified. The module code passed live tests in Chromium and Firefox and a practical test in Edge in a hosted DSA 8.2.2 world. The installation methods below fetch the latest published version. [14.371 test report](https://github.com/Ginkgo85/Webside-to-Scene/blob/main/REVIEW.md#foundry-14371--27-november-2026)
 
 ### Installation
 
