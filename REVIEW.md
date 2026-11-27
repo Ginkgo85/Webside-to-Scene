@@ -183,3 +183,16 @@ Die eigene Testszene blieb für spätere Wiederholungen erhalten. Es waren für 
 Dieser Nachweis ergänzt die zuvor dokumentierten Live-Tests in Chromium/Firefox mit D&D 5e um den echten **DSA-/HTTPS-Praxistest in Edge**. Die früher genannten Einschränkungen zu DSA und HTTPS beschreiben den damaligen isolierten Testlauf und werden für die hier aufgeführten Fälle ergänzt. Die gleichzeitige Aktivierung von 99 Modulen bestätigt keinen vollständigen Funktionstest aller Zusatzmodule. Weitere Spieler, andere Browser auf diesem Host, die Foundry-App, andere Proxy-Konfigurationen, Videoübertragung und Lastverhalten wurden hier nicht zusätzlich geprüft. Die getrennten GM-/Spielertests bleiben die bereits dokumentierten lokalen Tests.
 
 Diese Dokumentation veröffentlicht die Testergebnisse auf GitHub; sie startet keinen Release, verändert keine bestehenden Release-Dateien und legt keinen Foundry-Versionseintrag an.
+
+## Foundry 14.371 – 27. November 2026
+
+Website to Scene **1.1.1** bestand die lokalen Live-Tests mit dem installierten Foundry-Core **14.371**. Foundry migrierte eine Kopie der bisherigen D&D-5e-Testwelt (**6.0.6**) im regulären Setup. Der Server lief unter Windows mit Node **24.22.3** und war nur auf der Loopback-Adresse erreichbar. Der Test verglich die geladenen Modulskripte, das Stylesheet und die Sprachdateien mit dem Checkout.
+
+| Umgebung | Ergebnis |
+| --- | --- |
+| Chromium 151.0.7922.34, echter Core | Bestanden, jeweils auf Deutsch und Englisch mit getrennten Sitzungen für Spielleitung und Spieler. |
+| Firefox 153.0, echter Core | Derselbe Ablauf in beiden Sprachen bestanden. Beide Browserprotokolle enthalten keine unbehandelten Seitenfehler. |
+| Browser-Simulation | Chromium und Firefox bestanden zusätzlich alle Fälle für Deutsch, Englisch und den englischen Rückfall bei französischer Foundry-Sprache. |
+| Gehostete DSA-Welt | Praxistest für **14.371 offen**. Beim Aufruf der Spieladresse meldete der Hostinganbieter den Server als inaktiv. Der letzte bestandene [DSA-Praxistest](#gehosteter-dsa-praxistest--5-november-2026) gilt für **14.370**. |
+
+Beide Live-Läufe prüften das Speichern und erneute Öffnen der Szenenfelder, URL-Validierung, Klick und Texteingabe auf der Webseite sowie Vollbild nach Größenänderung. Der lokale Menüknopf löste kein Szenenupdate aus und ließ die Spielersicht unverändert. Beim Umbenennen blieb die Eingabe erhalten. Szenenaktivierung, selbstständiger Szenenwechsel des Spielers, URL-Wechsel, Deaktivieren und Löschen der Testszene bestanden ebenfalls. Die Moduldeklaration nennt bis zum ausstehenden DSA-Praxistest weiterhin **14.370** als geprüft.

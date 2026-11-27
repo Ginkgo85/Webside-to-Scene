@@ -37,9 +37,9 @@ Unter PowerShell vor dem Firefox-Aufruf `$env:TEST_BROWSER = 'firefox'` setzen u
 
 Der ausführliche Abgleich für **14.370** und die tatsächlich ausgeführten Tests vom **5. November 2026** stehen in [REVIEW.md](REVIEW.md#foundry-14370--5-november-2026). Die folgende ältere 14.359-Vorbereitung bleibt davon unabhängig.
 
-### Wiederholbarer Live-Test für 14.370
+### Wiederholbarer Live-Test für 14.371 und 14.370
 
-`tests/foundry-live.mjs` ist ein **optionaler Integrationstest**, keine CI-Simulation. Er benötigt eine separat gestartete lizenzierte Foundry-14.370-Instanz auf `http://127.0.0.1:30001` mit eigenem Datenordner, D&D 5e **6.0.6** und der leeren Wegwerf-Testwelt **wts-compatibility**. Einen GM namens **Gamemaster** ohne Testpasswort anlegen, ausschließlich dieses Modul aus dem aktuellen Checkout aktivieren und zuvor keine privaten Daten übernehmen. Nur eine Kopie des Spielsystems verwenden, da Foundry dessen Datenbanken migrieren kann. Die produktive Installation bleibt geschlossen/unverändert. Beim separaten Server UPnP und IP-Erkennung abschalten; Node-Anforderung siehe [lokale Testeinrichtung](docs/LOKALE-TESTEINRICHTUNG.md).
+`tests/foundry-live.mjs` ist ein **optionaler Integrationstest**, keine CI-Simulation. Er benötigt eine separat gestartete lizenzierte Foundry-Instanz der erwarteten Version auf `http://127.0.0.1:30001` mit eigenem Datenordner, D&D 5e **6.0.6** und der leeren Wegwerf-Testwelt **wts-compatibility**. Einen GM namens **Gamemaster** ohne Testpasswort anlegen, ausschließlich dieses Modul aus dem aktuellen Checkout aktivieren und zuvor keine privaten Daten übernehmen. Nur eine Kopie des Spielsystems verwenden, da Foundry dessen Datenbanken migrieren kann. Die produktive Installation bleibt geschlossen/unverändert. Beim separaten Server UPnP und IP-Erkennung abschalten; Node-Anforderung siehe [lokale Testeinrichtung](docs/LOKALE-TESTEINRICHTUNG.md).
 
 Der Test prüft Welt-ID, Core-/Systemversion, aktivierte Modulversion und bytegleichen Laufzeitcode vor Dokumentänderungen. Er erzeugt einen künstlichen Spieler und Testszenen, ändert die Sprache der Testsitzung und löscht erfolgreich geprüfte Szenen wieder. Bei einem Abbruch können Szenen in dieser Wegwerf-Welt zurückbleiben. Der temporäre Webserver auf `127.0.0.1:30002` liefert ausschließlich die künstliche HTML-Testseite; er wird danach beendet. Die festen Loopback-Adressen sind nur für diesen lokalen Test geeignet.
 
@@ -50,7 +50,7 @@ try { node tests/foundry-live.mjs --test-world }
 finally { Remove-Item Env:TEST_BROWSER }
 ```
 
-Beide Läufe nacheinander ausführen: Sie verwenden dieselbe Testwelt und denselben Webseitenport. Ergebnisse und Screenshots entstehen unter `artifacts/foundry-14.370/`. Deutsch und Englisch laufen gegen den echten Core; der französische Rückfall bleibt Bestandteil der vollständigen Browser-Simulation, weil die Testwelt keine französische Core-Sprache installiert hat. Diese Datei und sämtliche Foundry-Daten gehören nicht ins Release-ZIP. Lizenz, Spielsystem, Core und lokale Daten bleiben außerhalb von Git.
+Beide Läufe nacheinander ausführen, da sie dieselbe Testwelt und denselben Webseitenport verwenden. Der Test erwartet standardmäßig **14.371** und schreibt die Nachweise nach `artifacts/foundry-14.371/`. Für eine Wiederholung auf der älteren Testinstanz vor beiden Läufen `$env:TEST_FOUNDRY_VERSION = '14.370'` setzen und anschließend mit `Remove-Item Env:TEST_FOUNDRY_VERSION` zurücksetzen. Die Ergebnisse liegen je Core-Version in einem eigenen Ordner. Deutsch und Englisch laufen gegen den echten Core; der französische Rückfall bleibt Bestandteil der vollständigen Browser-Simulation, weil die Testwelt keine französische Core-Sprache installiert hat. Diese Datei und sämtliche Foundry-Daten gehören nicht ins Release-ZIP. Lizenz, Spielsystem, Core und lokale Daten bleiben außerhalb von Git.
 
 ### Manueller ergänzender Plan
 
@@ -66,6 +66,8 @@ Die Prüfung einer niedrigeren Mindestversion **14.359** wird separat vorbereite
 8. Foundry mit deutscher und englischer Sprache neu laden: Szenenfelder, Hilfetexte, URL-Fehler und ☰-/×-Tooltips prüfen. Webseite behält ihre eigene Sprache; vorhandene URL-/Checkbox-Werte bleiben erhalten. Der Nutzer hat den manuellen Sprachwechsel in einer Testwelt als bestanden bestätigt; der genaue bestätigte Umfang steht unten.
 
 ## Bisherige tatsächliche Nachweise
+
+Am **27. November 2026** bestand Website to Scene **1.1.1** auf Foundry **14.371** die lokalen Live-Tests in Chromium und Firefox mit D&D 5e **6.0.6**, jeweils mit deutscher und englischer Oberfläche sowie getrennten Spielleiter- und Spielersitzungen. Umfang und Stand der gehosteten DSA-Prüfung stehen im [Testbericht zu 14.371](REVIEW.md#foundry-14371--27-november-2026).
 
 ### Bestandener DSA-Praxistest mit 14.370 – 5. November 2026
 

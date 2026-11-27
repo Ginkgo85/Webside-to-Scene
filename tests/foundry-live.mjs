@@ -6,6 +6,9 @@ import {createServer} from 'node:http';
 // Never point this at a campaign: identities below are checked before document writes.
 if (!process.argv.includes('--test-world')) throw new Error('Use --test-world with the isolated wts-compatibility world; see VALIDIERUNG.md.');
 const manifest=JSON.parse(await readFile('module.json','utf8'));
+const expectedCore = process.env.TEST_FOUNDRY_VERSION ?? '14.371';
+assert.ok(['14.370', '14.371'].includes(expectedCore), 'Unsupported Foundry test version');
+const artifactDir = `artifacts/foundry-${expectedCore}`;
 const fixture=await readFile('tests/fixtures/manual-scene.html');
 const server=createServer((req,res)=>{
   if (!['/','/?changed=1'].includes(req.url)) {res.writeHead(404);return res.end();}
@@ -27,7 +30,7 @@ async function login(name) {
   await page.locator('button[name=join]').click();
   await page.waitForFunction(()=>globalThis.game?.ready);
   assert.equal(await page.evaluate(()=>game.world.id),'wts-compatibility');
-  assert.equal(await page.evaluate(()=>game.version),'14.370');
+  assert.equal(await page.evaluate(()=>game.version),expectedCore);
   assert.equal(await page.evaluate(()=>game.system.id),'dnd5e');
   assert.equal(await page.evaluate(()=>game.system.version),'6.0.6');
   assert.equal(await page.evaluate(id=>game.modules.get(id)?.active,ID),true);
@@ -36,7 +39,7 @@ async function login(name) {
 }
 async function until(page, fn, arg) {await page.waitForFunction(fn,arg,{timeout:30000});}
 try {
-  await mkdir('artifacts/foundry-14.370',{recursive:true});
+  await mkdir(artifactDir,{recursive:true});
   await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(30002,'127.0.0.1',resolve);});
   browser=await ({chromium,firefox}[browserName]).launch({headless:true});
   const gm=await login('Gamemaster');
@@ -80,7 +83,7 @@ try {
     assert.equal(await url.evaluate(n=>n.checkValidity()),false);
     await url.fill('http://127.0.0.1:30002/');
     await hidden.check();
-    await gm.screenshot({path:`artifacts/foundry-14.370/config-${browserName}-${language}.png`});
+    await gm.screenshot({path:`${artifactDir}/config-${browserName}-${language}.png`});
     await gm.evaluate(async id=>{await game.scenes.get(id).sheet.submit();},ids.web);
     console.log('Submitted');
     await until(gm,()=>document.body.classList.contains('wts-hide-ui'));
@@ -109,7 +112,7 @@ try {
     assert.deepEqual(await gm.locator('#wts-overlay iframe').boundingBox(),{x:0,y:0,width:1100,height:700});
     await gm.setViewportSize({width:1440,height:1000});
     await gm.locator('#wts-menu-toggle').click();
-    await gm.screenshot({path:`artifacts/foundry-14.370/scene-${browserName}-${language}.png`});
+    await gm.screenshot({path:`${artifactDir}/scene-${browserName}-${language}.png`});
     await gm.evaluate(async id=>{await game.scenes.get(id).activate();},ids.normal);
     for(const p of [gm,player]) {
       await until(p,()=>canvas.ready && !document.querySelector('#wts-overlay'));
@@ -132,11 +135,11 @@ try {
     for(const p of [gm,player]) {await until(p,()=>!document.querySelector('#wts-overlay'));assert.equal(await p.locator('#interface').isVisible(),true);}
     await player.context().close();
     await gm.evaluate(async id=>{await game.scenes.get(id).delete();},ids.normal);
-    evidence.push({language,browser:browserName,version:browser.version(),module:manifest.version,foundry:'14.370',system:'dnd5e 6.0.6',result:'passed'});
+    evidence.push({language,browser:browserName,version:browser.version(),module:manifest.version,foundry:expectedCore,system:'dnd5e 6.0.6',result:'passed'});
     console.log(JSON.stringify(evidence.at(-1)));
   }
   assert.deepEqual(errors,[]);
-  await writeFile(`artifacts/foundry-14.370/result-${browserName}.json`,JSON.stringify({evidence,errors},null,2));
+  await writeFile(`${artifactDir}/result-${browserName}.json`,JSON.stringify({evidence,errors},null,2));
 } finally {
   await browser?.close();
   if(server.listening) await new Promise(resolve=>server.close(resolve));

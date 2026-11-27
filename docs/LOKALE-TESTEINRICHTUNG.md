@@ -8,6 +8,8 @@ Node.js **24 mit npm** über die [offizielle Node.js-Downloadseite](https://node
 
 Git und GitHub CLI müssen ebenfalls installiert und im Suchpfad erreichbar sein. Nach einer Installation bereits geöffnete Terminals und die App neu starten. Dann prüfen:
 
+Für den **14.371-Testserver** eine Node-Version ab **24.22.3** aus der 24er-Reihe oder ab **26.13.1** aus der 26er-Reihe verwenden. Der installierte Core nennt beide Bereiche in seinen Paketmetadaten. Für den Versionswechsel den separaten Datenordner der Wegwerf-Welt kopieren und die Kopie im Foundry-Setup starten. Foundry bietet vor der Migration eine Sicherung an. Sobald die Beitrittsseite sichtbar ist, beide [Live-Tests](../VALIDIERUNG.md#wiederholbarer-live-test-für-14371-und-14370) ausführen.
+
 Für den separaten **Foundry-14.370-Server** verlangt dessen installiertes Paket Node **>=24.22.1 und <25**. Die normalen Modultests können weiterhin mit der bisherigen Node-24-Installation laufen. Für echte 14.370-Tests eine passende aktuelle Node-24-Version oder Foundrys mitgelieferte Laufzeit verwenden. Die Prüfung vom 5. November nutzte eine isolierte Node **24.22.1**; der globale Suchpfad wurde dafür nicht geändert.
 
 ```powershell
